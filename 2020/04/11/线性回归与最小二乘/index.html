@@ -17,19 +17,21 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="线性回归与最小二乘简介线性回归是一个简单易用且十分强大的工具。 线性回归在一些情况下，我们的数据呈现出线性，这时我们通常会尝试用形似  y &#x3D; a x +b \tag{1}的线性方程来做拟合、预测。上式还可以被推广至多维，即  y &#x3D; a_1 x_1 + a_2 x_2 + \cdots + a_n x_n + b \tag{2}上述两个方程在实际情况中为预测方程。以最简单的情况为例，更合适的写法">
+  <meta name="description" content="线性回归与最小二乘简介线性回归是一个简单易用且十分强大的工具。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性回归与最小二乘">
 <meta property="og:url" content="http://yoursite.com/2020/04/11/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E4%B8%8E%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98/index.html">
-<meta property="og:site_name" content="菜鸡">
-<meta property="og:description" content="线性回归与最小二乘简介线性回归是一个简单易用且十分强大的工具。 线性回归在一些情况下，我们的数据呈现出线性，这时我们通常会尝试用形似  y &#x3D; a x +b \tag{1}的线性方程来做拟合、预测。上式还可以被推广至多维，即  y &#x3D; a_1 x_1 + a_2 x_2 + \cdots + a_n x_n + b \tag{2}上述两个方程在实际情况中为预测方程。以最简单的情况为例，更合适的写法">
+<meta property="og:site_name" content="行者·无疆">
+<meta property="og:description" content="线性回归与最小二乘简介线性回归是一个简单易用且十分强大的工具。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-04-10T16:05:34.753Z">
-<meta property="article:modified_time" content="2020-04-10T16:36:54.442Z">
+<meta property="article:published_time" content="2020-04-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-04-12T11:42:40.794Z">
 <meta property="article:author" content="Xiaotian13">
+<meta property="article:tag" content="线性回归">
+<meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/04/11/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E4%B8%8E%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98/">
@@ -45,7 +47,7 @@
   };
 </script>
 
-  <title>线性回归与最小二乘 | 菜鸡</title>
+  <title>线性回归与最小二乘 | 行者·无疆</title>
   
 
 
@@ -96,13 +98,15 @@
 
     <a href="/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">菜鸡</h1>
+      <h1 class="site-title">行者·无疆</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
+      <p class="site-subtitle" itemprop="description">bend, but don't break</p>
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -117,16 +121,53 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -153,13 +194,13 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/04/11/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E4%B8%8E%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Xiaotian13">
       <meta itemprop="description" content="哈哈哈哈哈哈哈哈">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="菜鸡">
+      <meta itemprop="name" content="行者·无疆">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -172,9 +213,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-04-11 00:05:34 / 修改时间：00:36:54" itemprop="dateCreated datePublished" datetime="2020-04-11T00:05:34+08:00">2020-04-11</time>
+              <time title="创建时间：2020-04-11 00:00:00" itemprop="dateCreated datePublished" datetime="2020-04-11T00:00:00+08:00">2020-04-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-04-12 19:42:40" itemprop="dateModified" datetime="2020-04-12T19:42:40+08:00">2020-04-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%A8%A1%E5%9E%8B/" itemprop="url" rel="index"><span itemprop="name">算法与模型</span></a>
+                </span>
             </span>
 
           
@@ -189,6 +245,7 @@
 
       
         <h1 id="线性回归与最小二乘"><a href="#线性回归与最小二乘" class="headerlink" title="线性回归与最小二乘"></a>线性回归与最小二乘</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>线性回归是一个简单易用且十分强大的工具。</p>
+<a id="more"></a>
 <h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><p>在一些情况下，我们的数据呈现出线性，这时我们通常会尝试用形似</p>
 <script type="math/tex; mode=display">
 y = a x +b \tag{1}</script><p>的线性方程来做拟合、预测。上式还可以被推广至多维，即</p>
@@ -341,6 +398,10 @@ X^{T} X \Theta = X^{T} Y \tag{17}</script><p>如果 $X^{T} X$ 可逆，则有</p
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92/" rel="tag"># 线性回归</a>
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
 
         
 
@@ -416,6 +477,8 @@ X^{T} X \Theta = X^{T} Y \tag{17}</script><p>如果 $X^{T} X$ 可逆，则有</p
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Xiaotian13"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Xiaotian13</p>
   <div class="site-description" itemprop="description">哈哈哈哈哈哈哈哈</div>
 </div>
@@ -427,6 +490,18 @@ X^{T} X \Theta = X^{T} Y \tag{17}</script><p>如果 $X^{T} X$ 可逆，则有</p
           <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -495,6 +570,10 @@ X^{T} X \Theta = X^{T} Y \tag{17}</script><p>如果 $X^{T} X$ 可逆，则有</p
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 

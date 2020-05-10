@@ -1,117 +1,245 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2020/04/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+    <title>近端梯度下降与软阈值迭代：PGD and ISTA</title>
+    <url>/2020/05/09/%E8%BF%91%E7%AB%AF%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E4%B8%8E%E8%BD%AF%E9%98%88%E5%80%BC%E8%BF%AD%E4%BB%A3%EF%BC%9APGD%20and%20ISTA/</url>
+    <content><![CDATA[<h1 id="近端梯度下降与软阈值迭代：PGD-and-ISTA"><a href="#近端梯度下降与软阈值迭代：PGD-and-ISTA" class="headerlink" title="近端梯度下降与软阈值迭代：PGD and ISTA"></a>近端梯度下降与软阈值迭代：PGD and ISTA</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>对于包含不可微部分的优化目标如lasso回归的求解，梯度下降等算法已不再适用。近端梯度下降(Proximal Gradient Descent)即被用来解决包含不可导项的优化问题。</p>
 <a id="more"></a>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>梯度下降：BGD、SGD、Mini-Batch GD</title>
-    <url>/2020/04/19/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%9ABGD%E3%80%81SGD%E3%80%81Mini-Batch%20GD/</url>
-    <content><![CDATA[<h1 id="梯度下降：BGD、SGD、Mini-Batch-GD"><a href="#梯度下降：BGD、SGD、Mini-Batch-GD" class="headerlink" title="梯度下降：BGD、SGD、Mini-Batch GD"></a>梯度下降：BGD、SGD、Mini-Batch GD</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>梯度下降(Gradient Descent)是常见的优化算法，它是一系列优化算法的基石，是一个良好的思路。</p>
-<a id="more"></a>
-<h2 id="Preliminaries-and-Notation：优化模型"><a href="#Preliminaries-and-Notation：优化模型" class="headerlink" title="Preliminaries and Notation：优化模型"></a>Preliminaries and Notation：优化模型</h2><p>给定一个无约束优化问题形如</p>
+<h2 id="回顾梯度下降"><a href="#回顾梯度下降" class="headerlink" title="回顾梯度下降"></a>回顾梯度下降</h2><p>给定一个无约束优化问题形如</p>
 <script type="math/tex; mode=display">
 \min_\mathbf{x} f(\mathbf{x})
-\tag{1}</script><p>其中 $\mathbf{x} \in \mathbb R^n, f:\mathbb R^{n} \rightarrow \mathbb R$ ；函数 $f(\mathbf{x})$ 连续可微，且关于 $\mathbf x$ 是（下）凸函数。凸函数可以保证我们得到的最优解是全局最优，即 $\forall \mathbf{x}_1, \mathbf{x}_2 \in \mathbb C, \ \mathbf{x}_1 \neq \mathbf{x}_2$ ，其中 $\mathbb C$ 为函数的定义域且是凸集，有</p>
+\tag{1}</script><p>其中 $\mathbf{x} \in \mathbb R^n, f:\mathbb R^{n} \rightarrow \mathbb R$ ；</p>
+<p>函数 $f(\mathbf{x})$ 连续可微，且关于 $\mathbf x$ 是（下）凸函数。需要指出的是，在下面的推导中，如未特殊说明，则所使用的向量均为列向量。</p>
+<p>对于函数 $f(\mathbf{x})$ ，我们在点 $\mathbf x_0$ 做二阶泰勒展开，将其用来近似原函数：</p>
 <script type="math/tex; mode=display">
-f(\mathbf{x}_2) \geq f(\mathbf{x}_1) + \nabla f(\mathbf{x}_1)^T(\mathbf{x}_2 - \mathbf{x}_1)
-\tag{2}</script><p>举个简单的例子，函数 $y = x^2$ 是凸的；函数 $f(x, y) = x^2 - y^2$（马鞍面）是非凸的。对于凸函数，我们可以通过求导的方式来计算得到函数极小值，并且该极小值就是函数的最小值，这是一个非常好的性质。</p>
-<p>回顾线性回归模型，我们假设自变量与因变量呈线性，即</p>
+\begin{aligned} 
+f(\mathbf{x})
+& \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2} (\mathbf{x} - \mathbf{x}_0)^T\nabla^{2} f(\mathbf{x})(\mathbf{x} - \mathbf{x}_0) \\ 
+\end{aligned}
+\tag{2}</script><p>其中，$\nabla f(\mathbf x_0)$ 为函数 $f(\mathbf x)$ 在点 $\mathbf x_0$ 处的梯度；$\nabla^2 f(\mathbf x_0)$ 为函数 $f(\mathbf x)$ 在点 $\mathbf x_0$ 处的Hessian矩阵；对于上式中的 $\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0)$ 项，通常也可以用内积的形式表示，即 $&lt;\nabla f(\mathbf{x}_0), (\mathbf{x} - \mathbf{x}_0)&gt;$ 。</p>
 <script type="math/tex; mode=display">
-y = x\beta = \left [
+\nabla f(\mathbf x_0) = \left [
 \begin{matrix}
-1 & x_1 &\cdots x_n
-\end{matrix}
-\right ]
-\left [
-\begin{matrix}
-\beta_0 \\
-\beta_1 \\
+\frac{\partial f}{\partial x_{1}} \\
+\frac{\partial f}{\partial x_{2}} \\
 \vdots \\
-\beta_n \\
+\frac{\partial f}{\partial x_{n}} \\
 \end{matrix}
-\right ] = \beta_0 + \beta_1x_1 + \cdots +\beta_nx_n
-\tag{3}</script><p>对线性回归模型中的系数求解，即是一个优化问题。通常，我们有着成本函数形如</p>
+\right ]_{\mathbf x = \mathbf x_0} \ ; 
+\nabla^2 f(\mathbf x_0) = Hf(\mathbf x_0) =\left[\begin{array}{cccc}
+\frac{\partial^{2} f}{\partial x_{1}^{2}} & \frac{\partial^{2} f}{\partial x_{1} \partial x_{2}} & \cdots & \frac{\partial^{2} f}{\partial x_{1} \partial x_{n}} \\
+\frac{\partial^{2} f}{\partial x_{2} \partial x_{1}} & \frac{\partial^{2} f}{\partial x_{2}^{2}} & \cdots & \frac{\partial^{2} f}{\partial x_{2} \partial x_{n}} \\
+\vdots & \vdots & \ddots & \vdots \\
+\frac{\partial^{2} f}{\partial x_{n} \partial x_{1}} & \frac{\partial^{2} f}{\partial x_{n} \partial x_{2}} & \cdots & \frac{\partial^{2} f}{\partial x_{n}^{2}}
+\end{array}\right]_{\mathbf x = \mathbf x_0}</script><p>二阶导相对一阶导要难求很多，并且从时间复杂度的角度上来讲，求二阶导信息即Hessian矩阵要花去许多时间。我们将二阶导用 $\frac{1}{t} I_n$ 代替，其中 $t &gt; 0$ ，$I_n$ 为 $n$ 阶单位矩阵，便有</p>
 <script type="math/tex; mode=display">
-J(\beta) = \frac{1}{m}\sum_{i=1}^m(y_i - \hat y_i)^2 = \frac{1}{m}\sum_{i=1}^m(y_i - \ x_i \beta)^2 = \frac{1}{m}||Y-X\beta||_2^2
-\tag{4}</script><p>对应最优的系数估计 $\beta$ 即为</p>
+\begin{aligned} 
+f(\mathbf{x})
+& \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \\ 
+\end{aligned}
+\tag{3}</script><p>我们求解上述 $(3)$ 对原函数 $f(\mathbf{x})$ 的近似式，并用 $\mathbf{x}^+$ 来表示最优解，即</p>
 <script type="math/tex; mode=display">
-\hat \beta = \mathop{\arg\min}_{\beta} J(\beta) = \mathop{\arg\min}_{\beta} \frac{1}{m}||Y-X\beta||_2^2
-\tag{5}</script><h2 id="批梯度下降（Batch-Gradient-Descent）"><a href="#批梯度下降（Batch-Gradient-Descent）" class="headerlink" title="批梯度下降（Batch Gradient Descent）"></a>批梯度下降（Batch Gradient Descent）</h2><p>首先给出我们的问题形式。</p>
-<p>已知成本函数 $J(\beta)$ ，其中 $\beta \in \mathbb R^{n}$ ，我们的问题即为：</p>
+\mathbf{x}^+ = \mathop{\arg\min}_\mathbf{x} \{f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \}
+\tag{4}</script><p>由于 $f(\mathbf{x}_0)$ 是常数，对该优化问题没有影响，故上式等价于</p>
+<script type="math/tex; mode=display">
+\mathbf{x}^+ = \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \}
+\tag{5}</script><p>上面这个目标函数是关于自变量 $\mathbf x$ 的“二次函数”，能够轻松的得到其最小值。我们再做一定化简：</p>
+<script type="math/tex; mode=display">
+\begin{align} 
+\mathbf{x}^+ &= \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \} \nonumber\\
+& = \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} (\mathbf{x} - \mathbf{x}_0)^T(\mathbf{x} - \mathbf{x}_0) \} \nonumber\\ 
+& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}[\mathbf{x} - (\mathbf{x}_0 - 2t\nabla f(\mathbf{x}_0)]^T(\mathbf{x} - \mathbf{x}_0) \} \tag{6} \\ 
+\end{align}</script><p>化简后，可以明显看出该“二次函数”的两个零点。因此，自变量取两个零点的中点时，函数值最小，即有</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\mathbf{x}^+ &= \frac{1}{2}[\mathbf{x}_0 - 2t\nabla f(\mathbf{x}_0) + \mathbf{x}_0] \\
+& = \mathbf{x}_0 - t \nabla f(\mathbf{x}_0)
+\end{aligned}</script><p>亦或者，我们可将 $(6)$ 式再做化简：</p>
+<script type="math/tex; mode=display">
+\begin{align} 
+\mathbf{x}^+ 
+& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}[\mathbf{x} - (\mathbf{x}_0 - 2t\nabla f(\mathbf{x}_0)]^T(\mathbf{x} - \mathbf{x}_0) \} \nonumber \\ 
+& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}[\mathbf{x} - (\mathbf{x}_0 - t\nabla f(\mathbf{x}_0) + t\nabla f(\mathbf{x}_0)]^T[\mathbf{x} - (\mathbf{x}_0 - t\nabla f(\mathbf{x}_0) - t\nabla f(\mathbf{x}_0)] \} \nonumber \\
+& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}\|\mathbf{x} - (\mathbf{x}_0 - t\nabla f(\mathbf{x}_0)\|_2^2 - \frac{t}{2}\|\nabla f(\mathbf{x}_0)\|_2^2 \} \nonumber \\
+& = \mathop{\arg\min}_\mathbf{x} \frac{1}{2t}\|\mathbf{x} - (\mathbf{x}_0 - t\nabla f(\mathbf{x}_0)\|_2^2 \tag{7} \\
+& = \mathbf{x}_0 - t\nabla f(\mathbf{x}_0) \tag{8}
+\end{align}</script><p>我们将 $(8)$ 式中的符号做出一点小改动，就得到</p>
+<script type="math/tex; mode=display">
+\mathbf{x}^k = \mathbf{x}^{k-1} - t \nabla f(\mathbf{x}^{k-1}) \tag{9}</script><p>这就是梯度下降的迭代公式。</p>
+<blockquote>
+<p>直观的看 $(7)$ 式，不难发现，前面的二阶泰勒展开等做法，本质为将原问题转化为求解其二阶近似( quadratic approximation)；</p>
+<p>在得到 $(3)$ 式的过程中，我们用 $\frac{1}{t} I_n$ 去替换 $(2)$ 中的 $\nabla^2 f(\mathbf x_0)$ ，这并不是空穴来风。通常来说，我们会假设目标函数 $f(\mathbf x)$ 在 $\mathbb R^n$ 满足Lipchitz连续，即 $\forall \mathbf{x}_1, \mathbf{x}_2 \in \mathbb R^n$ ，$\exists \ L &gt; 0$ ， 满足</p>
+<script type="math/tex; mode=display">
+|\nabla f(\mathbf x_1) - \nabla f(\mathbf x_2)| \leq L |\mathbf x_1 - \mathbf x_2|</script><p>上式中的 $\leq$ 表示两向量中对应分量满足该关系。直观的看，函数满足Lipchitz连续意味着，导函数曲线上任两点间的连线斜率不能无穷大；也即表明，函数的二阶导是有穷的，我们可以找到一个有穷的大整数来作为二阶导的上界。因此，我们取 $t = \frac{1}{L}$ ，也就是 $L = \frac{1}{t}$ ，我们将 $L I_n$ 或 $\frac{1}{t} I_n$ 视为 $\nabla^2 f(\mathbf x_0)$ 的一个上界，并用其替换Hessian矩阵，以简化求解。</p>
+</blockquote>
+<h2 id="临近点算子"><a href="#临近点算子" class="headerlink" title="临近点算子"></a>临近点算子</h2><p>对于lasso回归，我们的优化问题为</p>
 <script type="math/tex; mode=display">
 \begin{array}{ll}
-\min_\limits\beta J(\beta) \\
-\text { s.t. } \ \beta\in \mathbb R^n
-\end{array}\tag{6}</script><p>对应的最优解为：</p>
+\min_\limits\beta \frac{1}{2}\|Y - X\beta\|_2^2 + \lambda|\beta|_1 \\
+\text { s.t. } \ Y, \beta\in \mathbb R^n, X\in \mathbb R^{m\times(n+1)},\lambda>0
+\end{array}
+\tag{10}</script><p>可以看到，由于 $l_1$-norm 的存在，该目标函数不可导。类似地，我们研究这样一种目标函数，即其可拆分为两部分：</p>
 <script type="math/tex; mode=display">
-\hat \beta = \mathop{\arg\min}_\beta J(\beta) \tag{7}</script><p>在成本函数满足连续可微且是凸函数的条件下，BGD算法的流程即为：</p>
+f(\mathbf x) = g(\mathbf x) + h(\mathbf x)</script><script type="math/tex; mode=display">
+\min_{\mathbf x} f(\mathbf x) \Leftrightarrow \min_{\mathbf x} g(\mathbf x) + h(\mathbf x)</script><p>其中 $g(\mathbf x)$ 是连续可导的凸函数；$h(\mathbf x)$ 是连续的凸函数，可以是不光滑的（不可导）(not necessarily differentiable)。</p>
+<p>对应上面的lasso回归 $(10)$，我们即对应</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+& f(\beta) = g(\beta) + h(\beta) \\
+& g(\beta) = \frac{1}{2}\|Y - X\beta\|_2^2 \\
+& h(\beta) = \lambda|\beta|_1
+\end{aligned}</script><p>这样，我们将目标函数不可导的部分与可导的部分拆分开来。对于可导的部分 $g(\mathbf x)$ ，我们可以做类似上面的 $(3) \sim (8)$ 式的处理，有</p>
+<script type="math/tex; mode=display">
+\begin{align} 
+\mathbf{x}^+ 
+& = \mathop{\arg\min}_\mathbf{x} \{g(\mathbf{x}_0) + \nabla g(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} +h(\mathbf x) \} \nonumber\\ 
+& = \mathop{\arg\min}_\mathbf{x} \{ \frac{1}{2t}\|\mathbf{x} - (\mathbf{x}_0 - t\nabla g(\mathbf{x}_0)\|_2^2 + h(\mathbf x) \} \tag{12} \\
+\end{align}</script><p>这次我们不能直接给出 $\mathbf x^+$ 的显式解了，因为有着不可导项 $h(\mathbf x)$ 项的存在。下面给出<strong>临近点算子/近端算子(proximal operator)</strong>的定义：</p>
+<script type="math/tex; mode=display">
+\text{prox}_{t,h(\cdot)}(\mathbf z) = \mathop{\arg\min}_\mathbf{x} \{ \frac{1}{2t}\|\mathbf{x} - \mathbf z\|_2^2 + h(\mathbf x) \} \tag{13}</script><blockquote>
+<p>需注意，形如</p>
+<script type="math/tex; mode=display">
+\text{prox}_{t,h} (\mathbf z) = \mathop{\arg\min}_{\mathbf x} \{ \frac{1}{2}\|\mathbf x - \mathbf z\|_2^2 + th(\mathbf x) \} \\</script><script type="math/tex; mode=display">
+\text{prox}_{t,h} (\mathbf x) = \mathop{\arg\min}_{\mathbf z} \{ \frac{1}{2}\|\mathbf x - \mathbf z\|_2^2 + th(\mathbf z) \}</script><p>与式 $(13)$ 是等价的。</p>
+</blockquote>
+<p>有了 $(13)$ 的符号表示，我们可将式 $(12)$ 等价转化为：</p>
+<script type="math/tex; mode=display">
+\mathbf x^+ = \text{prox}_{t, h(\cdot)}(\mathbf x_0 - t \nabla g(\mathbf x_0))</script><p>对上式做类似 $(8) \sim (9)$ 的符号变动，即有</p>
+<script type="math/tex; mode=display">
+\mathbf x^{k} = \text{prox}_{t, h(\cdot)}(\mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1})) \tag{14}</script><p>$(14)$ 式即为近端梯度下降算法的核心迭代式。对于很多不同的函数形式 $h(\cdot)$ ，如 $l_0$ 范数、$l_1$ 范数、$l_2$ 范数、二次函数等，近端算子都有着对应的闭式解(closed-form)（或者说显式解），下表我们就列出了几个简单的情况。更详细的可参考文末的ref [3]。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">$h(\cdot)$</th>
+<th style="text-align:center">$\text{prox}_{t,h(\cdot)}(\mathbf z)$</th>
+<th style="text-align:center">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">$\mathbf z$</td>
+<td style="text-align:center">Obviously</td>
+</tr>
+<tr>
+<td style="text-align:center">$\vert\vert \cdot\vert\vert_0$</td>
+<td style="text-align:center">$z_i = \left\{\begin{array}{ll}z_i &amp; \vert z_i\vert \geq t \\0 &amp; \text { otherwise }\end{array}\right.$</td>
+<td style="text-align:center">Elementwise hard-thresholding</td>
+</tr>
+<tr>
+<td style="text-align:center">$\vert\vert\cdot\vert\vert_1$</td>
+<td style="text-align:center">$z_i = \text{sign}(z_i)\max(\vert z_i\vert -t, 0)$</td>
+<td style="text-align:center">Elementwise soft-thresholding</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h3 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h3><p>线性回归即对应 $h(\cdot) = 0$ 的情况，此时我们的迭代式即为：</p>
+<script type="math/tex; mode=display">
+\mathbf x^{k} = \text{prox}_{t, h(\cdot)=0}(\mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1})) = \mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1})</script><hr>
+<h3 id="l-1-范数"><a href="#l-1-范数" class="headerlink" title="$l_1$ 范数"></a>$l_1$ 范数</h3><p>lasso回归中使用了 $l_1$ 范数，故对应 $h(\cdot) = \lambda|\cdot|_1$ 的情况，此时迭代式 $(14)$ 即可化为：</p>
+<script type="math/tex; mode=display">
+\mathbf x^{k} = \text{prox}_{t, \lambda\|\cdot\|_1}(\mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1})) = S_{\lambda t}(\mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1}))
+\tag{15}</script><p>其中 $S_{\lambda t}(\cdot)$ 称为<strong>软阈值算子(soft-thresholding operator)</strong>，可以看到该算子即为临近点算子中 $h(\cdot) = \lambda|\cdot|_1$ 的情况。考虑标量 $z$ ，我们有</p>
+<script type="math/tex; mode=display">
+\text{prox}_{t, \lambda\|\cdot\|_1}(z) = S_{\lambda t}(z) = \text{sign}(z)\max(|z|-\lambda t, 0)
+= 
+\left\{\begin{array}{ll}
+z - \lambda t &  z > \lambda t \\
+z & -\lambda t \leq z \leq \lambda t \\
+z + \lambda t & z < -\lambda t
+\end{array}\right.
+\tag{16}</script><p>其中，$\text{sign}(\cdot)$ 为符号函数，即</p>
+<script type="math/tex; mode=display">
+\text{sign}(z)
+= 
+\left\{\begin{array}{ll}
+1 &  z > 0 \\
+0 & z = 0 \\
+-1 & z < 0
+\end{array}\right.</script><p>考虑向量 $\mathbf z = [z_1, \cdots,z_n]^T \in \mathbb R^n$ ，则 $S_{\lambda t}(\mathbf z) = [S_{\lambda t}(z_1),\cdots, S_{\lambda t}(z_n)]^T$ ，即为对其每个分量均做 $(16)$ 式的操作。我们也可推导出其具体形式，如下：</p>
+<script type="math/tex; mode=display">
+\begin{align} 
+S_{\lambda t}(z_i)
+& = \text{sign}(z_i)\max(|z_i|-t, 0) \nonumber\\ 
+& = \text{sign}(z_i)|z_i|\max(\frac{|z_i|-t}{|z_i|}, 0) \nonumber\\
+& = z_i\max(\frac{|z_i|-t}{|z_i|}, 0) \nonumber\\
+& = z_i\max(1 - \frac{t}{|z_i|}, 0) \nonumber\\
+\end{align} \\</script><script type="math/tex; mode=display">
+\therefore S_{\lambda t}(\mathbf z) = \mathbf z \circ [1 - \frac{t}{|\mathbf z|}]_+ 
+\tag{17}</script><p>其中 $|\mathbf z|$ 为对向量 $\mathbf z$ 的每个分量取绝对值后组成的向量；$[\cdot]_+$ 表示取正，即 $\max(\cdot, 0)$ ；$A\circ B$ 代表 $A_{m\times n}$ 与 $B_{m\times n}$ 的Hadamard乘积，即对应元素相乘，满足 $(A\circ B)_{ij} = a_{ij} \times b_{ij}$ 。通常也可用符号 $\odot$ 表示。</p>
 <blockquote>
-<p>$\mathbf{Algorithm \ 1. \ \ \ \ BGD}$ </p>
+<p>我们简单推导一下为什么一范数对应的临近点算子的显式解是这个形式，下面的推导不是严格推导。</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{prox}_{t,\|\cdot\|_1}(\mathbf z)
+& =  \mathop{\arg\min}_\mathbf{x} \{ \frac{1}{2t}\|\mathbf{x} - \mathbf z\|_2^2 + \|\mathbf x\|_1 \} \\ & = \mathop{\arg\min}_\mathbf{x}  \sum_{i=1}^n [\frac{1}{2t}(x_i - z_i)^2 + |x_i|\ ]  
+\end{aligned}</script><script type="math/tex; mode=display">
+\therefore [\text{prox}_{t,\|\cdot\|_1}(\mathbf z)]_i = \mathop{\arg\min}_{x_i} \{ \frac{1}{2t}(x_i - z_i)^2 + |x_i|\ \}= \mathop{\arg\min}_{x_i} f(x_i)</script><p>对函数 $f(x_i)$ “求导”并令其等于0，</p>
+<script type="math/tex; mode=display">
+\frac{df}{d x{_i}} = \frac{1}{t} (x_i - z_i) + \text{sign}(x_i)  = 0</script><p>化简，即有</p>
+<script type="math/tex; mode=display">
+x_i = z_i - t \cdot \text{sign}(x_i)</script><p>当 $x_i &gt; 0$ ，上式即为 $x_i = z_i - t &gt; 0 $ ；</p>
+<p>当 $x_i &lt; 0$ ，上式即为 $x_i = z_i + t &lt; 0 $ ；</p>
+<p>当 $x_i = 0$ ，上式即为 $x_i = z_i$ ；</p>
+<p>分别对应上面三种情况，我们即可得到</p>
+<script type="math/tex; mode=display">
+[\text{prox}_{t,\|\cdot\|_1}(\mathbf z)]_i= \left\{\begin{array}{ll}z_i -  t &  z_i > t \\z_i & -t \leq z_i \leq t \\z_i + t & z < -t\end{array}\right.</script></blockquote>
+<hr>
+<h3 id="l-2-范数"><a href="#l-2-范数" class="headerlink" title="$l_2$ 范数"></a>$l_2$ 范数</h3><p>对于 $h(\cdot) = |\cdot|_2$ 的情况，我们即有</p>
+<script type="math/tex; mode=display">
+\text{prox}_{t,\|\cdot\|_2}(\mathbf z) = \mathbf z \circ [1 - \frac{t}{\|\mathbf z\|_2}]_+ 
+\tag{18}</script><h2 id="近端梯度下降与软阈值迭代算法"><a href="#近端梯度下降与软阈值迭代算法" class="headerlink" title="近端梯度下降与软阈值迭代算法"></a>近端梯度下降与软阈值迭代算法</h2><p>通常我们将 $l_1$ 范数对应的临近点算子称为软阈值，将 $l_0$ 范数对应的临近点算子称为硬阈值。<strong>软阈值迭代算法(ISTA, iterative soft-thresholding algorithm)</strong>，即为用软阈值作为包含 $l_1$ 范数的目标函数的“梯度”，使用“梯度下降”来得到最优值的算法。回顾lasso回归的优化问题 $(10)$ 与迭代式 $(14)$ ，我们可以计算得到</p>
+<script type="math/tex; mode=display">
+\begin{align}
+\nabla g(\beta) & = \nabla \frac{1}{2}\|Y - X\beta\|_2^2 = X^T(X\beta - Y), \nonumber\\
+\therefore \beta^{k}
+& =  \text{prox}_{t, \lambda \|\cdot\|_1}(\beta^{k-1} - t \nabla g(\beta^{k-1})) \nonumber\\ 
+& = S_{\lambda t}(\beta^{k-1} - t X^T(X\beta^{k-1} - Y)) \tag{19} \\
+& = \beta^{k-1} \circ [1 - \frac{\lambda t}{|\beta^{k-1}|}]_+ \tag{20}
+\end{align}</script><p>下面我们给出完整的ISTA步骤。</p>
+<blockquote>
+<p> $\mathbf{Algorithm \ 1. \ \ \ \ ISTA}$ </p>
 <p>input: a small number $\epsilon$ or maxiterations.</p>
 <p>output: $ \hat \beta $</p>
-<p>Initialize $\beta, \alpha$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, \alpha=0.1$ ), set $t=1$ </p>
-<p><strong>while</strong> $\left|J^{t}-J^{t-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
-<p>​    <strong>for</strong> $i = 1:n$ <strong>do</strong></p>
-<p>​        $\beta_i^t = \beta_i^{t-1} - \alpha \frac{\partial}{\partial \beta_i} J(\beta^{t-1})$</p>
-<p>​    <strong>end for</strong></p>
-<p>​    compute $J^t(\beta) = J(\beta^t),$ where $\beta^t = [\beta_1^t, \cdots, \beta_n^t]^T$</p>
-<p>​    $t:=t+1$</p>
+<p>Initialize $\beta, t, \lambda$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, t=0.1, \lambda = 0.1$), set $k=1$ </p>
+<p><strong>while</strong> $\left|J^{k}-J^{k-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
+<p>​    update $\beta^k$ using $(19)$ or $(20)$ .</p>
+<p>​    compute $J^k(\beta),$ where $J^k(\beta) = \frac{1}{2}|Y-X\beta^k|_2^2 + \lambda|\beta^k|_1$</p>
+<p>​    $k := k+1$</p>
 <p><strong>end while</strong></p>
-<p>Output result given by $\hat \beta = \beta^{t-1}$</p>
+<p> Output result given by $\hat \beta = \beta^{k-1}$</p>
 </blockquote>
-<p>这个算法的思路非常简单直观，我们可以用一个简单的凸函数 $y = x^2$ 为构想。我们的目标是找到这个函数的最小值，也就是函数图像上的最低点；把这个过程类比为，我们向这样一个下凸的山坡上扔一个小球，希望这个小球能够顺利的滚到最低点。为了模拟这个过程，我们首先给定一个初始值，也就是小球在 $t = 0$ 时在山坡上的位置；之后，我们使小球沿着当前位置下降速度最快的方向——也就是该点的梯度方向——也就是山坡最陡的方向前进一小步，前进的步长就是由我们的超参数 $\alpha$ 所控制。</p>
-<p>就线性回归问题而言，我们对应的成本函数为上面给出的 $(4)$ 式，我们可以很轻松的求出该函数对各分量的偏导数。</p>
-<script type="math/tex; mode=display">
-J(\beta) = J(\beta_0, \beta_1, \cdots, \beta_n) = \frac{1}{m}\sum_{i=1}^m(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)})^2</script><script type="math/tex; mode=display">
-\begin{aligned}
-\therefore \ & \frac{\partial}{\partial \beta_0}J(\beta) = -\frac{2}{m}\sum_{i=1}^m(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)}) \\ 
-& \frac{\partial}{\partial \beta_k}J(\beta) = -\frac{2}{m}\sum_{i=1}^mx_i^{(k)}(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)}),k=1,\cdots,n
-\end{aligned}
-\tag{8}</script><p>上式看起来也许有些冗长，我们同样可以用矩阵的形式给出我们的结果。</p>
-<script type="math/tex; mode=display">
-J(\beta) = \frac{1}{m}||Y-X\beta||_2^2 = \frac{1}{m}(Y-X\beta)^T(Y-X\beta)</script><script type="math/tex; mode=display">
-\therefore \frac{\partial J(\beta)}{\partial \beta} = X^T(X\beta - Y)
-\tag{9}</script><p>因此我们的迭代公式为</p>
-<script type="math/tex; mode=display">
-\beta^t = \beta^{t-1} - \alpha X^T(X\beta^{t-1} - Y)
-\tag{10}</script><h2 id="随机梯度下降（Stochastic-Gradient-Descent）"><a href="#随机梯度下降（Stochastic-Gradient-Descent）" class="headerlink" title="随机梯度下降（Stochastic Gradient Descent）"></a>随机梯度下降（Stochastic Gradient Descent）</h2><p>对于上面的批梯度下降，我们可以直观的感受到，在每次迭代更新系数的过程中，我们均使用了所有的数据。这对于数据量较大的情况而言，是非常不利的。随机梯度下降即从这方面入手考虑，每次迭代中，我们仅使用一个数据用于更新系数，这样会使得算法运算大大加快。虽然不能保证每次迭代均是向着最优方向进行的，但总体而言，最终的系数会收敛于最优解。</p>
-<p>我们结合线性回归，给出以下SGD的算法流程：</p>
+<p>更一般的，我们给出近端梯度下降(PGD)的算法框架如下：</p>
 <blockquote>
-<p>$\mathbf{Algorithm \ 2. \ \ \ \ SGD}$ </p>
-<p>input: dataset $\{x\}_{i=1}^m$</p>
+<p>$\mathbf{Algorithm \ 2. \ \ \ \ PGD}$ </p>
+<p>input: a small number $\epsilon$ or maxiterations.</p>
 <p>output: $ \hat \beta $</p>
-<p>Initialize $\beta, \alpha$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, \alpha=0.1$ ), set $t=1$ </p>
-<p><strong>while</strong> $\left|J^{t}-J^{t-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
-<p>​    randomly generate $k$ , where $k \in \{1, \cdots, n\}$</p>
-<p>​    $\beta_0^t = \beta_0^{t-1} - \alpha \frac{2}{m}(\beta_0^{t-1} + \beta_1^{t-1}x_k^{(1)} + \cdots+\beta_n^{t-1}x_k^{(n)} - y_k)$</p>
-<p>​    <strong>for</strong> $i = 1:n$ <strong>do</strong></p>
-<p>​        $\beta_i^t = \beta_0^{t-1} - \alpha \frac{2}{m} x_k^{(i)}(\beta_0^{t-1} + \beta_1^{t-1}x_k^{(1)} + \cdots+\beta_n^{t-1}x_k^{(n)} - y_k)$</p>
-<p>​    <strong>end for</strong></p>
-<p>​    compute $J^t(\beta) = J(\beta^t),$ where $\beta^t = [\beta_1^t, \cdots, \beta_n^t]^T$</p>
-<p>​    $t:=t+1$</p>
+<p>Initialize $\beta, t, \lambda$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, t=0.1, \lambda = 0.1$), set $k=1$ </p>
+<p><strong>while</strong> $\left|J^{k}-J^{k-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
+<p>​    update $\beta^k$ using $(14)$ , i.e., $\beta^k = \text{prox}_{t, h(\cdot)}(\beta^{k-1} - t \nabla g(\beta^{k-1}))$</p>
+<p>​    compute $J^k(\beta),$ where $J^k(\beta) = g(\beta^k) + \lambda h(\beta^k)$</p>
+<p>​    $k := k+1$</p>
 <p><strong>end while</strong></p>
-<p>Output result given by $\hat \beta = \beta^{t-1}$</p>
+<p>Output result given by $\hat \beta = \beta^{k-1}$</p>
 </blockquote>
-<p>可以看到，每次更新中我们仅使用了一个随机挑选出的数据，这就是SGD与BGD最大的区别所在。</p>
-<h2 id="小批次梯度下降-Mini-Batch-Gradient-Descent"><a href="#小批次梯度下降-Mini-Batch-Gradient-Descent" class="headerlink" title="小批次梯度下降(Mini-Batch Gradient Descent)"></a>小批次梯度下降(Mini-Batch Gradient Descent)</h2><p>小批次梯度下降是对BGD与SGD的一个折中：既不使用全部的数据做更新迭代，也不仅使用一个数据。所以，我们每次从全集中选出一小部分的数据作为一个批次，用于更新迭代中。具体算法流程此处省略。</p>
-<h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>编程实现有时间再补。</p>
+<h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>有时间再补。</p>
 <h2 id="总结与反思"><a href="#总结与反思" class="headerlink" title="总结与反思"></a>总结与反思</h2><p>下面我们提出几点思考。</p>
 <ul>
-<li>步长参数 $\alpha$ 如何选取？如果太大，则有可能导致算法不收敛，或收敛至一个较大的数值；如果太小，则算法的收敛速度可能过慢。</li>
-<li>如果目标函数是连续凸函数，但不可导，此时上面的算法就已不再适用，因为我们不能求出一阶导。能否在BGD算法的基础上做出改进？</li>
+<li>步长参数 $t$ 如何选取？</li>
+<li>算法的时间复杂度如何？</li>
 </ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p><a href="http://stat.cmu.edu/~ryantibs/convexopt/lectures/prox-grad.pdf" target="_blank" rel="noopener">http://stat.cmu.edu/~ryantibs/convexopt/lectures/prox-grad.pdf</a></p>
+</li>
+<li><p><a href="https://angms.science/doc/CVX/ISTA0.pdf" target="_blank" rel="noopener">https://angms.science/doc/CVX/ISTA0.pdf</a></p>
+</li>
+<li><p><a href="https://www.math.ucla.edu/~wotaoyin/summer2016/4_proximal.pdf" target="_blank" rel="noopener">https://www.math.ucla.edu/~wotaoyin/summer2016/4_proximal.pdf</a></p>
+<p>（各种 $h(\cdot)$ 对应近端算子闭式解）</p>
+</li>
+</ol>
 ]]></content>
       <categories>
         <category>算法与模型</category>
@@ -276,6 +404,21 @@ X^TX x = -\lambda x \tag{18}</script><p>根据特征向量的定义，可知 $x$
         <tag>线性回归</tag>
         <tag>python</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/04/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>线性回归与最小二乘</title>
@@ -444,252 +587,102 @@ X^{T} X \Theta = X^{T} Y \tag{17}</script><p>如果 $X^{T} X$ 可逆，则有</p
       </tags>
   </entry>
   <entry>
-    <title>近端梯度下降与软阈值迭代：PGD and ISTA</title>
-    <url>/2020/05/09/%E8%BF%91%E7%AB%AF%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E4%B8%8E%E8%BD%AF%E9%98%88%E5%80%BC%E8%BF%AD%E4%BB%A3%EF%BC%9APGD%20and%20ISTA/</url>
-    <content><![CDATA[<h1 id="近端梯度下降与软阈值迭代：PGD-and-ISTA"><a href="#近端梯度下降与软阈值迭代：PGD-and-ISTA" class="headerlink" title="近端梯度下降与软阈值迭代：PGD and ISTA"></a>近端梯度下降与软阈值迭代：PGD and ISTA</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>对于包含不可微部分的优化目标如lasso回归的求解，梯度下降等算法已不再适用。近端梯度下降(Proximal Gradient Descent)即被用来解决包含不可导项的优化问题。</p>
+    <title>梯度下降：BGD、SGD、Mini-Batch GD</title>
+    <url>/2020/04/19/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%9ABGD%E3%80%81SGD%E3%80%81Mini-Batch%20GD/</url>
+    <content><![CDATA[<h1 id="梯度下降：BGD、SGD、Mini-Batch-GD"><a href="#梯度下降：BGD、SGD、Mini-Batch-GD" class="headerlink" title="梯度下降：BGD、SGD、Mini-Batch GD"></a>梯度下降：BGD、SGD、Mini-Batch GD</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>梯度下降(Gradient Descent)是常见的优化算法，它是一系列优化算法的基石，是一个良好的思路。</p>
 <a id="more"></a>
-<h2 id="回顾梯度下降"><a href="#回顾梯度下降" class="headerlink" title="回顾梯度下降"></a>回顾梯度下降</h2><p>给定一个无约束优化问题形如</p>
+<h2 id="Preliminaries-and-Notation：优化模型"><a href="#Preliminaries-and-Notation：优化模型" class="headerlink" title="Preliminaries and Notation：优化模型"></a>Preliminaries and Notation：优化模型</h2><p>给定一个无约束优化问题形如</p>
 <script type="math/tex; mode=display">
 \min_\mathbf{x} f(\mathbf{x})
-\tag{1}</script><p>其中 $\mathbf{x} \in \mathbb R^n, f:\mathbb R^{n} \rightarrow \mathbb R$ ；</p>
-<p>函数 $f(\mathbf{x})$ 连续可微，且关于 $\mathbf x$ 是（下）凸函数。需要指出的是，在下面的推导中，如未特殊说明，则所使用的向量均为列向量。</p>
-<p>对于函数 $f(\mathbf{x})$ ，我们在点 $\mathbf x_0$ 做二阶泰勒展开，将其用来近似原函数：</p>
+\tag{1}</script><p>其中 $\mathbf{x} \in \mathbb R^n, f:\mathbb R^{n} \rightarrow \mathbb R$ ；函数 $f(\mathbf{x})$ 连续可微，且关于 $\mathbf x$ 是（下）凸函数。凸函数可以保证我们得到的最优解是全局最优，即 $\forall \mathbf{x}_1, \mathbf{x}_2 \in \mathbb C, \ \mathbf{x}_1 \neq \mathbf{x}_2$ ，其中 $\mathbb C$ 为函数的定义域且是凸集，有</p>
 <script type="math/tex; mode=display">
-\begin{aligned} 
-f(\mathbf{x})
-& \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2} (\mathbf{x} - \mathbf{x}_0)^T\nabla^{2} f(\mathbf{x})(\mathbf{x} - \mathbf{x}_0) \\ 
-\end{aligned}
-\tag{2}</script><p>其中，$\nabla f(\mathbf x_0)$ 为函数 $f(\mathbf x)$ 在点 $\mathbf x_0$ 处的梯度；$\nabla^2 f(\mathbf x_0)$ 为函数 $f(\mathbf x)$ 在点 $\mathbf x_0$ 处的Hessian矩阵；对于上式中的 $\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0)$ 项，通常也可以用内积的形式表示，即 $&lt;\nabla f(\mathbf{x}_0), (\mathbf{x} - \mathbf{x}_0)&gt;$ 。</p>
+f(\mathbf{x}_2) \geq f(\mathbf{x}_1) + \nabla f(\mathbf{x}_1)^T(\mathbf{x}_2 - \mathbf{x}_1)
+\tag{2}</script><p>举个简单的例子，函数 $y = x^2$ 是凸的；函数 $f(x, y) = x^2 - y^2$（马鞍面）是非凸的。对于凸函数，我们可以通过求导的方式来计算得到函数极小值，并且该极小值就是函数的最小值，这是一个非常好的性质。</p>
+<p>回顾线性回归模型，我们假设自变量与因变量呈线性，即</p>
 <script type="math/tex; mode=display">
-\nabla f(\mathbf x_0) = \left [
+y = x\beta = \left [
 \begin{matrix}
-\frac{\partial f}{\partial x_{1}} \\
-\frac{\partial f}{\partial x_{2}} \\
-\vdots \\
-\frac{\partial f}{\partial x_{n}} \\
+1 & x_1 &\cdots x_n
 \end{matrix}
-\right ]_{\mathbf x = \mathbf x_0} \ ; 
-\nabla^2 f(\mathbf x_0) = Hf(\mathbf x_0) =\left[\begin{array}{cccc}
-\frac{\partial^{2} f}{\partial x_{1}^{2}} & \frac{\partial^{2} f}{\partial x_{1} \partial x_{2}} & \cdots & \frac{\partial^{2} f}{\partial x_{1} \partial x_{n}} \\
-\frac{\partial^{2} f}{\partial x_{2} \partial x_{1}} & \frac{\partial^{2} f}{\partial x_{2}^{2}} & \cdots & \frac{\partial^{2} f}{\partial x_{2} \partial x_{n}} \\
-\vdots & \vdots & \ddots & \vdots \\
-\frac{\partial^{2} f}{\partial x_{n} \partial x_{1}} & \frac{\partial^{2} f}{\partial x_{n} \partial x_{2}} & \cdots & \frac{\partial^{2} f}{\partial x_{n}^{2}}
-\end{array}\right]_{\mathbf x = \mathbf x_0}</script><p>二阶导相对一阶导要难求很多，并且从时间复杂度的角度上来讲，求二阶导信息即Hessian矩阵要花去许多时间。我们将二阶导用 $\frac{1}{t} I_n$ 代替，其中 $t &gt; 0$ ，$I_n$ 为 $n$ 阶单位矩阵，便有</p>
+\right ]
+\left [
+\begin{matrix}
+\beta_0 \\
+\beta_1 \\
+\vdots \\
+\beta_n \\
+\end{matrix}
+\right ] = \beta_0 + \beta_1x_1 + \cdots +\beta_nx_n
+\tag{3}</script><p>对线性回归模型中的系数求解，即是一个优化问题。通常，我们有着成本函数形如</p>
 <script type="math/tex; mode=display">
-\begin{aligned} 
-f(\mathbf{x})
-& \approx f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \\ 
-\end{aligned}
-\tag{3}</script><p>我们求解上述 $(3)$ 对原函数 $f(\mathbf{x})$ 的近似式，并用 $\mathbf{x}^+$ 来表示最优解，即</p>
+J(\beta) = \frac{1}{m}\sum_{i=1}^m(y_i - \hat y_i)^2 = \frac{1}{m}\sum_{i=1}^m(y_i - \ x_i \beta)^2 = \frac{1}{m}||Y-X\beta||_2^2
+\tag{4}</script><p>对应最优的系数估计 $\beta$ 即为</p>
 <script type="math/tex; mode=display">
-\mathbf{x}^+ = \mathop{\arg\min}_\mathbf{x} \{f(\mathbf{x}_0) + \nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \}
-\tag{4}</script><p>由于 $f(\mathbf{x}_0)$ 是常数，对该优化问题没有影响，故上式等价于</p>
-<script type="math/tex; mode=display">
-\mathbf{x}^+ = \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \}
-\tag{5}</script><p>上面这个目标函数是关于自变量 $\mathbf x$ 的“二次函数”，能够轻松的得到其最小值。我们再做一定化简：</p>
-<script type="math/tex; mode=display">
-\begin{aligned} 
-\mathbf{x}^+ &= \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \} \\
-& = \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} (\mathbf{x} - \mathbf{x}_0)^T(\mathbf{x} - \mathbf{x}_0) \} \\ 
-& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}[\mathbf{x} - (\mathbf{x}_0 - 2t\nabla f(\mathbf{x}_0)]^T(\mathbf{x} - \mathbf{x}_0) \} \\ 
-\end{aligned}
-\tag{6}</script><p>化简后，可以明显看出该“二次函数”的两个零点。因此，自变量取两个零点的中点时，函数值最小，即有</p>
-<script type="math/tex; mode=display">
-\begin{aligned} 
-\mathbf{x}^+ &= \frac{1}{2}[\mathbf{x}_0 - 2t\nabla f(\mathbf{x}_0) + \mathbf{x}_0] \\
-& = \mathbf{x}_0 - t \nabla f(\mathbf{x}_0)
-\end{aligned}</script><p>亦或者，我们可将 $(6)$ 式再做化简：</p>
-<script type="math/tex; mode=display">
-\begin{align} 
-\mathbf{x}^+ 
-& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}[\mathbf{x} - (\mathbf{x}_0 - 2t\nabla f(\mathbf{x}_0)]^T(\mathbf{x} - \mathbf{x}_0) \} \nonumber \\ 
-& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}[\mathbf{x} - (\mathbf{x}_0 - t\nabla f(\mathbf{x}_0) + t\nabla f(\mathbf{x}_0)]^T[\mathbf{x} - (\mathbf{x}_0 - t\nabla f(\mathbf{x}_0) - t\nabla f(\mathbf{x}_0)] \} \nonumber \\
-& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}\|\mathbf{x} - (\mathbf{x}_0 - t\nabla f(\mathbf{x}_0)\|_2^2 - \frac{t}{2}\|\nabla f(\mathbf{x}_0)\|_2^2 \} \nonumber \\
-& = \mathop{\arg\min}_\mathbf{x} \frac{1}{2t}\|\mathbf{x} - (\mathbf{x}_0 - t\nabla f(\mathbf{x}_0)\|_2^2 \tag{7} \\
-& = \mathbf{x}_0 - t\nabla f(\mathbf{x}_0) \tag{8}
-\end{align}</script><p>我们将 $(8)$ 式中的符号做出一点小改动，就得到</p>
-<script type="math/tex; mode=display">
-\mathbf{x}^k = \mathbf{x}^{k-1} - t \nabla f(\mathbf{x}^{k-1}) \tag{9}</script><p>这就是梯度下降的迭代公式。</p>
-<blockquote>
-<p>直观的看 $(7)$ 式，不难发现，前面的二阶泰勒展开等做法，本质为将原问题转化为求解其二阶近似( quadratic approximation)；</p>
-<p>在得到 $(3)$ 式的过程中，我们用 $\frac{1}{t} I_n$ 去替换 $(2)$ 中的 $\nabla^2 f(\mathbf x_0)$ ，这并不是空穴来风。通常来说，我们会假设目标函数 $f(\mathbf x)$ 在 $\mathbb R^n$ 满足Lipchitz连续，即 $\forall \mathbf{x}_1, \mathbf{x}_2 \in \mathbb R^n$ ，$\exists \ L &gt; 0$ ， 满足</p>
-<script type="math/tex; mode=display">
-|\nabla f(\mathbf x_1) - \nabla f(\mathbf x_2)| \leq L |\mathbf x_1 - \mathbf x_2|</script><p>上式中的 $\leq$ 表示两向量中对应分量满足该关系。直观的看，函数满足Lipchitz连续意味着，导函数曲线上任两点间的连线斜率不能无穷大；也即表明，函数的二阶导是有穷的，我们可以找到一个有穷的大整数来作为二阶导的上界。因此，我们取 $t = \frac{1}{L}$ ，也就是 $L = \frac{1}{t}$ ，我们将 $L I_n$ 或 $\frac{1}{t} I_n$ 视为 $\nabla^2 f(\mathbf x_0)$ 的一个上界，并用其替换Hessian矩阵，以简化求解。</p>
-</blockquote>
-<h2 id="临近点算子"><a href="#临近点算子" class="headerlink" title="临近点算子"></a>临近点算子</h2><p>对于lasso回归，我们的优化问题为</p>
+\hat \beta = \mathop{\arg\min}_{\beta} J(\beta) = \mathop{\arg\min}_{\beta} \frac{1}{m}||Y-X\beta||_2^2
+\tag{5}</script><h2 id="批梯度下降（Batch-Gradient-Descent）"><a href="#批梯度下降（Batch-Gradient-Descent）" class="headerlink" title="批梯度下降（Batch Gradient Descent）"></a>批梯度下降（Batch Gradient Descent）</h2><p>首先给出我们的问题形式。</p>
+<p>已知成本函数 $J(\beta)$ ，其中 $\beta \in \mathbb R^{n}$ ，我们的问题即为：</p>
 <script type="math/tex; mode=display">
 \begin{array}{ll}
-\min_\limits\beta \frac{1}{2}\|Y - X\beta\|_2^2 + \lambda|\beta|_1 \\
-\text { s.t. } \ Y, \beta\in \mathbb R^n, X\in \mathbb R^{m\times(n+1)},\lambda>0
-\end{array}
-\tag{10}</script><p>可以看到，由于 $l_1$-norm 的存在，该目标函数不可导。类似地，我们研究这样一种目标函数，即其可拆分为两部分：</p>
+\min_\limits\beta J(\beta) \\
+\text { s.t. } \ \beta\in \mathbb R^n
+\end{array}\tag{6}</script><p>对应的最优解为：</p>
 <script type="math/tex; mode=display">
-\begin{equation}
-f(\mathbf x) = g(\mathbf x) + h(\mathbf x) \\ 
-\min_{\mathbf x} f(\mathbf x) \Leftrightarrow \min_{\mathbf x} g(\mathbf x) + h(\mathbf x)
-\end{equation}</script><p>其中 $g(\mathbf x)$ 是连续可导的凸函数；$h(\mathbf x)$ 是连续的凸函数，可以是不光滑的（不可导）(not necessarily differentiable)。</p>
-<p>对应上面的lasso回归 $(10)$，我们即对应</p>
-<script type="math/tex; mode=display">
-\begin{align}
-& f(\beta) = g(\beta) + h(\beta) \\
-& g(\beta) = \frac{1}{2}\|Y - X\beta\|_2^2 \\
-& h(\beta) = \lambda|\beta|_1
-\end{align}</script><p>这样，我们将目标函数不可导的部分与可导的部分拆分开来。对于可导的部分 $g(\mathbf x)$ ，我们可以做类似上面的 $(3) \sim (8)$ 式的处理，有</p>
-<script type="math/tex; mode=display">
-\begin{align} 
-\mathbf{x}^+ 
-& = \mathop{\arg\min}_\mathbf{x} \{g(\mathbf{x}_0) + \nabla g(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} +h(\mathbf x) \} \\ 
-& = \mathop{\arg\min}_\mathbf{x} \{ \frac{1}{2t}\|\mathbf{x} - (\mathbf{x}_0 - t\nabla g(\mathbf{x}_0)\|_2^2 + h(\mathbf x) \} \tag{12} \\
-\end{align}</script><p>这次我们不能直接给出 $\mathbf x^+$ 的显式解了，因为有着不可导项 $h(\mathbf x)$ 项的存在。下面给出<strong>临近点算子/近端算子(proximal operator)</strong>的定义：</p>
-<script type="math/tex; mode=display">
-\text{prox}_{t,h(\cdot)}(\mathbf z) = \mathop{\arg\min}_\mathbf{x} \{ \frac{1}{2t}\|\mathbf{x} - \mathbf z\|_2^2 + h(\mathbf x) \} \tag{13}</script><blockquote>
-<p>需注意，形如</p>
-<script type="math/tex; mode=display">
-\text{prox}_{t,h} (\mathbf z) = \mathop{\arg\min}_{\mathbf x} \{ \frac{1}{2}\|\mathbf x - \mathbf z\|_2^2 + th(\mathbf x) \} \\</script><script type="math/tex; mode=display">
-\text{prox}_{t,h} (\mathbf x) = \mathop{\arg\min}_{\mathbf z} \{ \frac{1}{2}\|\mathbf x - \mathbf z\|_2^2 + th(\mathbf z) \}</script><p>与式 $(13)$ 是等价的。</p>
-</blockquote>
-<p>有了 $(13)$ 的符号表示，我们可将式 $(12)$ 等价转化为：</p>
-<script type="math/tex; mode=display">
-\mathbf x^+ = \text{prox}_{t, h(\cdot)}(\mathbf x_0 - t \nabla g(\mathbf x_0))</script><p>对上式做类似 $(8) \sim (9)$ 的符号变动，即有</p>
-<script type="math/tex; mode=display">
-\mathbf x^{k} = \text{prox}_{t, h(\cdot)}(\mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1})) \tag{14}</script><p>$(14)$ 式即为近端梯度下降算法的核心迭代式。对于很多不同的函数形式 $h(\cdot)$ ，如 $l_0$ 范数、$l_1$ 范数、$l_2$ 范数、二次函数等，近端算子都有着对应的闭式解(closed-form)（或者说显式解），下表我们就列出了几个简单的情况。更详细的可参考文末的ref [3]。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">$h(\cdot)$</th>
-<th style="text-align:center">$\text{prox}_{t,h(\cdot)}(\mathbf z)$</th>
-<th style="text-align:center">Comment</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">0</td>
-<td style="text-align:center">$\mathbf z$</td>
-<td style="text-align:center">Obviously</td>
-</tr>
-<tr>
-<td style="text-align:center">$\</td>
-<td style="text-align:center">\cdot\</td>
-<td style="text-align:center">_0$</td>
-<td>$z_i = \left\{\begin{array}{ll}z_i &amp; \vert z_i\vert \geq t \\0 &amp; \text { otherwise }\end{array}\right.$</td>
-<td>Elementwise hard-thresholding</td>
-</tr>
-<tr>
-<td style="text-align:center">$\</td>
-<td style="text-align:center">\cdot\</td>
-<td style="text-align:center">_1$</td>
-<td>$z_i = \text{sign}(z_i)\max(\vert z_i\vert -t, 0)$</td>
-<td>Elementwise soft-thresholding</td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr>
-<h3 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h3><p>线性回归即对应 $h(\cdot) = 0$ 的情况，此时我们的迭代式即为：</p>
-<script type="math/tex; mode=display">
-\mathbf x^{k} = \text{prox}_{t, h(\cdot)=0}(\mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1})) = \mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1})</script><hr>
-<h3 id="l-1-范数"><a href="#l-1-范数" class="headerlink" title="$l_1$ 范数"></a>$l_1$ 范数</h3><p>lasso回归中使用了 $l_1$ 范数，故对应 $h(\cdot) = \lambda|\cdot|_1$ 的情况，此时迭代式 $(14)$ 即可化为：</p>
-<script type="math/tex; mode=display">
-\mathbf x^{k} = \text{prox}_{t, \lambda\|\cdot\|_1}(\mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1})) = S_{\lambda t}(\mathbf x^{k-1} - t \nabla g(\mathbf x^{k-1}))
-\tag{15}</script><p>其中 $S_{\lambda t}(\cdot)$ 称为<strong>软阈值算子(soft-thresholding operator)</strong>，可以看到该算子即为临近点算子中 $h(\cdot) = \lambda|\cdot|_1$ 的情况。考虑标量 $z$ ，我们有</p>
-<script type="math/tex; mode=display">
-\text{prox}_{t, \lambda\|\cdot\|_1}(z) = S_{\lambda t}(z) = \text{sign}(z)\max(|z|-\lambda t, 0)
-= 
-\left\{\begin{array}{ll}
-z - \lambda t &  z > \lambda t \\
-z & -\lambda t \leq z \leq \lambda t \\
-z + \lambda t & z < -\lambda t
-\end{array}\right.
-\tag{16}</script><p>其中，$\text{sign}(\cdot)$ 为符号函数，即</p>
-<script type="math/tex; mode=display">
-\text{sign}(z)
-= 
-\left\{\begin{array}{ll}
-1 &  z > 0 \\
-0 & z = 0 \\
--1 & z < 0
-\end{array}\right.</script><p>考虑向量 $\mathbf z = [z_1, \cdots,z_n]^T \in \mathbb R^n$ ，则 $S_{\lambda t}(\mathbf z) = [S_{\lambda t}(z_1),\cdots, S_{\lambda t}(z_n)]^T$ ，即为对其每个分量均做 $(16)$ 式的操作。我们也可推导出其具体形式，如下：</p>
-<script type="math/tex; mode=display">
-\begin{align} 
-S_{\lambda t}(z_i)
-& = \text{sign}(z_i)\max(|z_i|-t, 0) \\ 
-& = \text{sign}(z_i)|z_i|\max(\frac{|z_i|-t}{|z_i|}, 0)\\
-& = z_i\max(\frac{|z_i|-t}{|z_i|}, 0) \\
-& = z_i\max(1 - \frac{t}{|z_i|}, 0)\\
-\end{align} \\</script><script type="math/tex; mode=display">
-\therefore S_{\lambda t}(\mathbf z) = \mathbf z \circ [1 - \frac{t}{|\mathbf z|}]_+ 
-\tag{17}</script><p>其中 $|\mathbf z|$ 为对向量 $\mathbf z$ 的每个分量取绝对值后组成的向量；$[\cdot]_+$ 表示取正，即 $\max(\cdot, 0)$ ；$A\circ B$ 代表 $A_{m\times n}$ 与 $B_{m\times n}$ 的Hadamard乘积，即对应元素相乘，满足 $(A\circ B)_{ij} = a_{ij} \times b_{ij}$ 。通常也可用符号 $\odot$ 表示。</p>
+\hat \beta = \mathop{\arg\min}_\beta J(\beta) \tag{7}</script><p>在成本函数满足连续可微且是凸函数的条件下，BGD算法的流程即为：</p>
 <blockquote>
-<p>我们简单推导一下为什么一范数对应的临近点算子的显式解是这个形式，下面的推导不是严格推导。</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\text{prox}_{t,\|\cdot\|_1}(\mathbf z)
-& =  \mathop{\arg\min}_\mathbf{x} \{ \frac{1}{2t}\|\mathbf{x} - \mathbf z\|_2^2 + \|\mathbf x\|_1 \} \\ & = \mathop{\arg\min}_\mathbf{x}  \sum_{i=1}^n [\frac{1}{2t}(x_i - z_i)^2 + |x_i|\ ]  
-\end{align}</script><script type="math/tex; mode=display">
-\therefore [\text{prox}_{t,\|\cdot\|_1}(\mathbf z)]_i = \mathop{\arg\min}_{x_i} \{ \frac{1}{2t}(x_i - z_i)^2 + |x_i|\ \}= \mathop{\arg\min}_{x_i} f(x_i)</script><p>对函数 $f(x_i)$ “求导”并令其等于0，</p>
-<script type="math/tex; mode=display">
-\frac{df}{d x{_i}} = \frac{1}{t} (x_i - z_i) + \text{sign}(x_i)  = 0</script><p>化简，即有</p>
-<script type="math/tex; mode=display">
-x_i = z_i - t \cdot \text{sign}(x_i)</script><p>当 $x_i &gt; 0$ ，上式即为 $x_i = z_i - t &gt; 0 $ ；</p>
-<p>当 $x_i &lt; 0$ ，上式即为 $x_i = z_i + t &lt; 0 $ ；</p>
-<p>当 $x_i = 0$ ，上式即为 $x_i = z_i$ ；</p>
-<p>分别对应上面三种情况，我们即可得到</p>
-<script type="math/tex; mode=display">
-[\text{prox}_{t,\|\cdot\|_1}(\mathbf z)]_i= \left\{\begin{array}{ll}z_i -  t &  z_i > t \\z_i & -t \leq z_i \leq t \\z_i + t & z < -t\end{array}\right.</script></blockquote>
-<hr>
-<h3 id="l-2-范数"><a href="#l-2-范数" class="headerlink" title="$l_2$ 范数"></a>$l_2$ 范数</h3><p>对于 $h(\cdot) = |\cdot|_2$ 的情况，我们即有</p>
-<script type="math/tex; mode=display">
-\text{prox}_{t,\|\cdot\|_2}(\mathbf z) = \mathbf z \circ [1 - \frac{t}{\|\mathbf z\|_2}]_+ 
-\tag{18}</script><h2 id="近端梯度下降与软阈值迭代算法"><a href="#近端梯度下降与软阈值迭代算法" class="headerlink" title="近端梯度下降与软阈值迭代算法"></a>近端梯度下降与软阈值迭代算法</h2><p>通常我们将 $l_1$ 范数对应的临近点算子称为软阈值，将 $l_0$ 范数对应的临近点算子称为硬阈值。<strong>软阈值迭代算法(ISTA, iterative soft-thresholding algorithm)</strong>，即为用软阈值作为包含 $l_1$ 范数的目标函数的“梯度”，使用“梯度下降”来得到最优值的算法。回顾lasso回归的优化问题 $(10)$ 与迭代式 $(14)$ ，我们可以计算得到</p>
-<script type="math/tex; mode=display">
-\begin{align}
-\nabla g(\beta) & = \nabla \frac{1}{2}\|Y - X\beta\|_2^2 = X^T(X\beta - Y), \\
-\therefore \beta^{k}
-& =  \text{prox}_{t, \lambda \|\cdot\|_1}(\beta^{k-1} - t \nabla g(\beta^{k-1})) \\ 
-& = S_{\lambda t}(\beta^{k-1} - t X^T(X\beta^{k-1} - Y)) \tag{19} \\
-& = \beta^{k-1} \circ [1 - \frac{\lambda t}{|\beta^{k-1}|}]_+ \tag{20}
-\end{align}</script><p>下面我们给出完整的ISTA步骤。</p>
-<blockquote>
-<p> $\mathbf{Algorithm \ 1. \ \ \ \ ISTA}$ </p>
+<p>$\mathbf{Algorithm \ 1. \ \ \ \ BGD}$ </p>
 <p>input: a small number $\epsilon$ or maxiterations.</p>
 <p>output: $ \hat \beta $</p>
-<p>Initialize $\beta, t, \lambda$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, t=0.1, \lambda = 0.1$), set $k=1$ </p>
-<p><strong>while</strong> $\left|J^{k}-J^{k-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
-<p>​    update $\beta^k$ using $(19)$ or $(20)$ .</p>
-<p>​    compute $J^k(\beta),$ where $J^k(\beta) = \frac{1}{2}|Y-X\beta^k|_2^2 + \lambda|\beta^k|_1$</p>
-<p>​    $k := k+1$</p>
+<p>Initialize $\beta, \alpha$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, \alpha=0.1$ ), set $t=1$ </p>
+<p><strong>while</strong> $\left|J^{t}-J^{t-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
+<p>​    <strong>for</strong> $i = 1:n$ <strong>do</strong></p>
+<p>​        $\beta_i^t = \beta_i^{t-1} - \alpha \frac{\partial}{\partial \beta_i} J(\beta^{t-1})$</p>
+<p>​    <strong>end for</strong></p>
+<p>​    compute $J^t(\beta) = J(\beta^t),$ where $\beta^t = [\beta_1^t, \cdots, \beta_n^t]^T$</p>
+<p>​    $t:=t+1$</p>
 <p><strong>end while</strong></p>
-<p> Output result given by $\hat \beta = \beta^{k-1}$</p>
+<p>Output result given by $\hat \beta = \beta^{t-1}$</p>
 </blockquote>
-<p>更一般的，我们给出近端梯度下降(PGD)的算法框架如下：</p>
+<p>这个算法的思路非常简单直观，我们可以用一个简单的凸函数 $y = x^2$ 为构想。我们的目标是找到这个函数的最小值，也就是函数图像上的最低点；把这个过程类比为，我们向这样一个下凸的山坡上扔一个小球，希望这个小球能够顺利的滚到最低点。为了模拟这个过程，我们首先给定一个初始值，也就是小球在 $t = 0$ 时在山坡上的位置；之后，我们使小球沿着当前位置下降速度最快的方向——也就是该点的梯度方向——也就是山坡最陡的方向前进一小步，前进的步长就是由我们的超参数 $\alpha$ 所控制。</p>
+<p>就线性回归问题而言，我们对应的成本函数为上面给出的 $(4)$ 式，我们可以很轻松的求出该函数对各分量的偏导数。</p>
+<script type="math/tex; mode=display">
+J(\beta) = J(\beta_0, \beta_1, \cdots, \beta_n) = \frac{1}{m}\sum_{i=1}^m(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)})^2</script><script type="math/tex; mode=display">
+\begin{aligned}
+\therefore \ & \frac{\partial}{\partial \beta_0}J(\beta) = -\frac{2}{m}\sum_{i=1}^m(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)}) \\ 
+& \frac{\partial}{\partial \beta_k}J(\beta) = -\frac{2}{m}\sum_{i=1}^mx_i^{(k)}(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)}),k=1,\cdots,n
+\end{aligned}
+\tag{8}</script><p>上式看起来也许有些冗长，我们同样可以用矩阵的形式给出我们的结果。</p>
+<script type="math/tex; mode=display">
+J(\beta) = \frac{1}{m}||Y-X\beta||_2^2 = \frac{1}{m}(Y-X\beta)^T(Y-X\beta)</script><script type="math/tex; mode=display">
+\therefore \frac{\partial J(\beta)}{\partial \beta} = X^T(X\beta - Y)
+\tag{9}</script><p>因此我们的迭代公式为</p>
+<script type="math/tex; mode=display">
+\beta^t = \beta^{t-1} - \alpha X^T(X\beta^{t-1} - Y)
+\tag{10}</script><h2 id="随机梯度下降（Stochastic-Gradient-Descent）"><a href="#随机梯度下降（Stochastic-Gradient-Descent）" class="headerlink" title="随机梯度下降（Stochastic Gradient Descent）"></a>随机梯度下降（Stochastic Gradient Descent）</h2><p>对于上面的批梯度下降，我们可以直观的感受到，在每次迭代更新系数的过程中，我们均使用了所有的数据。这对于数据量较大的情况而言，是非常不利的。随机梯度下降即从这方面入手考虑，每次迭代中，我们仅使用一个数据用于更新系数，这样会使得算法运算大大加快。虽然不能保证每次迭代均是向着最优方向进行的，但总体而言，最终的系数会收敛于最优解。</p>
+<p>我们结合线性回归，给出以下SGD的算法流程：</p>
 <blockquote>
-<p>$\mathbf{Algorithm \ 2. \ \ \ \ PGD}$ </p>
-<p>input: a small number $\epsilon$ or maxiterations.</p>
+<p>$\mathbf{Algorithm \ 2. \ \ \ \ SGD}$ </p>
+<p>input: dataset $\{x\}_{i=1}^m$</p>
 <p>output: $ \hat \beta $</p>
-<p>Initialize $\beta, t, \lambda$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, t=0.1, \lambda = 0.1$), set $k=1$ </p>
-<p><strong>while</strong> $\left|J^{k}-J^{k-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
-<p>​    update $\beta^k$ using $(14)$ , i.e., $\beta^k = \text{prox}_{t, h(\cdot)}(\beta^{k-1} - t \nabla g(\beta^{k-1}))$</p>
-<p>​    compute $J^k(\beta),$ where $J^k(\beta) = g(\beta^k) + \lambda h(\beta^k)$</p>
-<p>​    $k := k+1$</p>
+<p>Initialize $\beta, \alpha$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, \alpha=0.1$ ), set $t=1$ </p>
+<p><strong>while</strong> $\left|J^{t}-J^{t-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
+<p>​    randomly generate $k$ , where $k \in \{1, \cdots, n\}$</p>
+<p>​    $\beta_0^t = \beta_0^{t-1} - \alpha \frac{2}{m}(\beta_0^{t-1} + \beta_1^{t-1}x_k^{(1)} + \cdots+\beta_n^{t-1}x_k^{(n)} - y_k)$</p>
+<p>​    <strong>for</strong> $i = 1:n$ <strong>do</strong></p>
+<p>​        $\beta_i^t = \beta_0^{t-1} - \alpha \frac{2}{m} x_k^{(i)}(\beta_0^{t-1} + \beta_1^{t-1}x_k^{(1)} + \cdots+\beta_n^{t-1}x_k^{(n)} - y_k)$</p>
+<p>​    <strong>end for</strong></p>
+<p>​    compute $J^t(\beta) = J(\beta^t),$ where $\beta^t = [\beta_1^t, \cdots, \beta_n^t]^T$</p>
+<p>​    $t:=t+1$</p>
 <p><strong>end while</strong></p>
-<p>Output result given by $\hat \beta = \beta^{k-1}$</p>
+<p>Output result given by $\hat \beta = \beta^{t-1}$</p>
 </blockquote>
-<h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>有时间再补。</p>
+<p>可以看到，每次更新中我们仅使用了一个随机挑选出的数据，这就是SGD与BGD最大的区别所在。</p>
+<h2 id="小批次梯度下降-Mini-Batch-Gradient-Descent"><a href="#小批次梯度下降-Mini-Batch-Gradient-Descent" class="headerlink" title="小批次梯度下降(Mini-Batch Gradient Descent)"></a>小批次梯度下降(Mini-Batch Gradient Descent)</h2><p>小批次梯度下降是对BGD与SGD的一个折中：既不使用全部的数据做更新迭代，也不仅使用一个数据。所以，我们每次从全集中选出一小部分的数据作为一个批次，用于更新迭代中。具体算法流程此处省略。</p>
+<h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>编程实现有时间再补。</p>
 <h2 id="总结与反思"><a href="#总结与反思" class="headerlink" title="总结与反思"></a>总结与反思</h2><p>下面我们提出几点思考。</p>
 <ul>
-<li>步长参数 $t$ 如何选取？</li>
-<li>算法的时间复杂度如何？</li>
+<li>步长参数 $\alpha$ 如何选取？如果太大，则有可能导致算法不收敛，或收敛至一个较大的数值；如果太小，则算法的收敛速度可能过慢。</li>
+<li>如果目标函数是连续凸函数，但不可导，此时上面的算法就已不再适用，因为我们不能求出一阶导。能否在BGD算法的基础上做出改进？</li>
 </ul>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a href="http://stat.cmu.edu/~ryantibs/convexopt/lectures/prox-grad.pdf" target="_blank" rel="noopener">http://stat.cmu.edu/~ryantibs/convexopt/lectures/prox-grad.pdf</a></p>
-</li>
-<li><p><a href="https://angms.science/doc/CVX/ISTA0.pdf" target="_blank" rel="noopener">https://angms.science/doc/CVX/ISTA0.pdf</a></p>
-</li>
-<li><p><a href="https://www.math.ucla.edu/~wotaoyin/summer2016/4_proximal.pdf" target="_blank" rel="noopener">https://www.math.ucla.edu/~wotaoyin/summer2016/4_proximal.pdf</a></p>
-<p>（各种 $h(\cdot)$ 对应近端算子闭式解）</p>
-</li>
-</ol>
 ]]></content>
       <categories>
         <category>算法与模型</category>

@@ -28,7 +28,7 @@
 <meta property="og:description" content="近端梯度下降与软阈值迭代：PGD and ISTA简介对于包含不可微部分的优化目标如lasso回归的求解，梯度下降等算法已不再适用。近端梯度下降(Proximal Gradient Descent)即被用来解决包含不可导项的优化问题。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-05-08T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-05-10T08:27:38.697Z">
+<meta property="article:modified_time" content="2020-05-10T09:00:57.497Z">
 <meta property="article:author" content="Xiaotian13">
 <meta property="article:tag" content="优化算法">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-05-10 16:27:38" itemprop="dateModified" datetime="2020-05-10T16:27:38+08:00">2020-05-10</time>
+                <time title="修改时间：2020-05-10 17:00:57" itemprop="dateModified" datetime="2020-05-10T17:00:57+08:00">2020-05-10</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -285,12 +285,11 @@ f(\mathbf{x})
 \mathbf{x}^+ = \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \}
 \tag{5}</script><p>上面这个目标函数是关于自变量 $\mathbf x$ 的“二次函数”，能够轻松的得到其最小值。我们再做一定化简：</p>
 <script type="math/tex; mode=display">
-\begin{aligned} 
-\mathbf{x}^+ &= \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \} \\
-& = \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} (\mathbf{x} - \mathbf{x}_0)^T(\mathbf{x} - \mathbf{x}_0) \} \\ 
-& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}[\mathbf{x} - (\mathbf{x}_0 - 2t\nabla f(\mathbf{x}_0)]^T(\mathbf{x} - \mathbf{x}_0) \} \\ 
-\end{aligned}
-\tag{6}</script><p>化简后，可以明显看出该“二次函数”的两个零点。因此，自变量取两个零点的中点时，函数值最小，即有</p>
+\begin{align} 
+\mathbf{x}^+ &= \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} \} \nonumber\\
+& = \mathop{\arg\min}_\mathbf{x} \{\nabla f(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} (\mathbf{x} - \mathbf{x}_0)^T(\mathbf{x} - \mathbf{x}_0) \} \nonumber\\ 
+& = \mathop{\arg\min}_\mathbf{x} \{\frac{1}{2t}[\mathbf{x} - (\mathbf{x}_0 - 2t\nabla f(\mathbf{x}_0)]^T(\mathbf{x} - \mathbf{x}_0) \} \tag{6} \\ 
+\end{align}</script><p>化简后，可以明显看出该“二次函数”的两个零点。因此，自变量取两个零点的中点时，函数值最小，即有</p>
 <script type="math/tex; mode=display">
 \begin{aligned} 
 \mathbf{x}^+ &= \frac{1}{2}[\mathbf{x}_0 - 2t\nabla f(\mathbf{x}_0) + \mathbf{x}_0] \\
@@ -321,21 +320,19 @@ f(\mathbf{x})
 \end{array}
 \tag{10}</script><p>可以看到，由于 $l_1$-norm 的存在，该目标函数不可导。类似地，我们研究这样一种目标函数，即其可拆分为两部分：</p>
 <script type="math/tex; mode=display">
-\begin{equation}
-f(\mathbf x) = g(\mathbf x) + h(\mathbf x) \\ 
-\min_{\mathbf x} f(\mathbf x) \Leftrightarrow \min_{\mathbf x} g(\mathbf x) + h(\mathbf x)
-\end{equation}</script><p>其中 $g(\mathbf x)$ 是连续可导的凸函数；$h(\mathbf x)$ 是连续的凸函数，可以是不光滑的（不可导）(not necessarily differentiable)。</p>
+f(\mathbf x) = g(\mathbf x) + h(\mathbf x)</script><script type="math/tex; mode=display">
+\min_{\mathbf x} f(\mathbf x) \Leftrightarrow \min_{\mathbf x} g(\mathbf x) + h(\mathbf x)</script><p>其中 $g(\mathbf x)$ 是连续可导的凸函数；$h(\mathbf x)$ 是连续的凸函数，可以是不光滑的（不可导）(not necessarily differentiable)。</p>
 <p>对应上面的lasso回归 $(10)$，我们即对应</p>
 <script type="math/tex; mode=display">
-\begin{align}
+\begin{aligned}
 & f(\beta) = g(\beta) + h(\beta) \\
 & g(\beta) = \frac{1}{2}\|Y - X\beta\|_2^2 \\
 & h(\beta) = \lambda|\beta|_1
-\end{align}</script><p>这样，我们将目标函数不可导的部分与可导的部分拆分开来。对于可导的部分 $g(\mathbf x)$ ，我们可以做类似上面的 $(3) \sim (8)$ 式的处理，有</p>
+\end{aligned}</script><p>这样，我们将目标函数不可导的部分与可导的部分拆分开来。对于可导的部分 $g(\mathbf x)$ ，我们可以做类似上面的 $(3) \sim (8)$ 式的处理，有</p>
 <script type="math/tex; mode=display">
 \begin{align} 
 \mathbf{x}^+ 
-& = \mathop{\arg\min}_\mathbf{x} \{g(\mathbf{x}_0) + \nabla g(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} +h(\mathbf x) \} \\ 
+& = \mathop{\arg\min}_\mathbf{x} \{g(\mathbf{x}_0) + \nabla g(\mathbf{x}_0)^{T}(\mathbf{x} - \mathbf{x}_0) + \frac{1}{2t} \|\mathbf{x} - \mathbf{x}_0 \|_{2}^{2} +h(\mathbf x) \} \nonumber\\ 
 & = \mathop{\arg\min}_\mathbf{x} \{ \frac{1}{2t}\|\mathbf{x} - (\mathbf{x}_0 - t\nabla g(\mathbf{x}_0)\|_2^2 + h(\mathbf x) \} \tag{12} \\
 \end{align}</script><p>这次我们不能直接给出 $\mathbf x^+$ 的显式解了，因为有着不可导项 $h(\mathbf x)$ 项的存在。下面给出<strong>临近点算子/近端算子(proximal operator)</strong>的定义：</p>
 <script type="math/tex; mode=display">
@@ -366,18 +363,14 @@ f(\mathbf x) = g(\mathbf x) + h(\mathbf x) \\
 <td style="text-align:center">Obviously</td>
 </tr>
 <tr>
-<td style="text-align:center">$\</td>
-<td style="text-align:center">\cdot\</td>
-<td style="text-align:center">_0$</td>
-<td>$z_i = \left\{\begin{array}{ll}z_i &amp; \vert z_i\vert \geq t \\0 &amp; \text { otherwise }\end{array}\right.$</td>
-<td>Elementwise hard-thresholding</td>
+<td style="text-align:center">$\vert\vert \cdot\vert\vert_0$</td>
+<td style="text-align:center">$z_i = \left\{\begin{array}{ll}z_i &amp; \vert z_i\vert \geq t \\0 &amp; \text { otherwise }\end{array}\right.$</td>
+<td style="text-align:center">Elementwise hard-thresholding</td>
 </tr>
 <tr>
-<td style="text-align:center">$\</td>
-<td style="text-align:center">\cdot\</td>
-<td style="text-align:center">_1$</td>
-<td>$z_i = \text{sign}(z_i)\max(\vert z_i\vert -t, 0)$</td>
-<td>Elementwise soft-thresholding</td>
+<td style="text-align:center">$\vert\vert\cdot\vert\vert_1$</td>
+<td style="text-align:center">$z_i = \text{sign}(z_i)\max(\vert z_i\vert -t, 0)$</td>
+<td style="text-align:center">Elementwise soft-thresholding</td>
 </tr>
 </tbody>
 </table>
@@ -410,20 +403,20 @@ z + \lambda t & z < -\lambda t
 <script type="math/tex; mode=display">
 \begin{align} 
 S_{\lambda t}(z_i)
-& = \text{sign}(z_i)\max(|z_i|-t, 0) \\ 
-& = \text{sign}(z_i)|z_i|\max(\frac{|z_i|-t}{|z_i|}, 0)\\
-& = z_i\max(\frac{|z_i|-t}{|z_i|}, 0) \\
-& = z_i\max(1 - \frac{t}{|z_i|}, 0)\\
+& = \text{sign}(z_i)\max(|z_i|-t, 0) \nonumber\\ 
+& = \text{sign}(z_i)|z_i|\max(\frac{|z_i|-t}{|z_i|}, 0) \nonumber\\
+& = z_i\max(\frac{|z_i|-t}{|z_i|}, 0) \nonumber\\
+& = z_i\max(1 - \frac{t}{|z_i|}, 0) \nonumber\\
 \end{align} \\</script><script type="math/tex; mode=display">
 \therefore S_{\lambda t}(\mathbf z) = \mathbf z \circ [1 - \frac{t}{|\mathbf z|}]_+ 
 \tag{17}</script><p>其中 $|\mathbf z|$ 为对向量 $\mathbf z$ 的每个分量取绝对值后组成的向量；$[\cdot]_+$ 表示取正，即 $\max(\cdot, 0)$ ；$A\circ B$ 代表 $A_{m\times n}$ 与 $B_{m\times n}$ 的Hadamard乘积，即对应元素相乘，满足 $(A\circ B)_{ij} = a_{ij} \times b_{ij}$ 。通常也可用符号 $\odot$ 表示。</p>
 <blockquote>
 <p>我们简单推导一下为什么一范数对应的临近点算子的显式解是这个形式，下面的推导不是严格推导。</p>
 <script type="math/tex; mode=display">
-\begin{align}
+\begin{aligned}
 \text{prox}_{t,\|\cdot\|_1}(\mathbf z)
 & =  \mathop{\arg\min}_\mathbf{x} \{ \frac{1}{2t}\|\mathbf{x} - \mathbf z\|_2^2 + \|\mathbf x\|_1 \} \\ & = \mathop{\arg\min}_\mathbf{x}  \sum_{i=1}^n [\frac{1}{2t}(x_i - z_i)^2 + |x_i|\ ]  
-\end{align}</script><script type="math/tex; mode=display">
+\end{aligned}</script><script type="math/tex; mode=display">
 \therefore [\text{prox}_{t,\|\cdot\|_1}(\mathbf z)]_i = \mathop{\arg\min}_{x_i} \{ \frac{1}{2t}(x_i - z_i)^2 + |x_i|\ \}= \mathop{\arg\min}_{x_i} f(x_i)</script><p>对函数 $f(x_i)$ “求导”并令其等于0，</p>
 <script type="math/tex; mode=display">
 \frac{df}{d x{_i}} = \frac{1}{t} (x_i - z_i) + \text{sign}(x_i)  = 0</script><p>化简，即有</p>
@@ -441,9 +434,9 @@ x_i = z_i - t \cdot \text{sign}(x_i)</script><p>当 $x_i &gt; 0$ ，上式即为
 \tag{18}</script><h2 id="近端梯度下降与软阈值迭代算法"><a href="#近端梯度下降与软阈值迭代算法" class="headerlink" title="近端梯度下降与软阈值迭代算法"></a>近端梯度下降与软阈值迭代算法</h2><p>通常我们将 $l_1$ 范数对应的临近点算子称为软阈值，将 $l_0$ 范数对应的临近点算子称为硬阈值。<strong>软阈值迭代算法(ISTA, iterative soft-thresholding algorithm)</strong>，即为用软阈值作为包含 $l_1$ 范数的目标函数的“梯度”，使用“梯度下降”来得到最优值的算法。回顾lasso回归的优化问题 $(10)$ 与迭代式 $(14)$ ，我们可以计算得到</p>
 <script type="math/tex; mode=display">
 \begin{align}
-\nabla g(\beta) & = \nabla \frac{1}{2}\|Y - X\beta\|_2^2 = X^T(X\beta - Y), \\
+\nabla g(\beta) & = \nabla \frac{1}{2}\|Y - X\beta\|_2^2 = X^T(X\beta - Y), \nonumber\\
 \therefore \beta^{k}
-& =  \text{prox}_{t, \lambda \|\cdot\|_1}(\beta^{k-1} - t \nabla g(\beta^{k-1})) \\ 
+& =  \text{prox}_{t, \lambda \|\cdot\|_1}(\beta^{k-1} - t \nabla g(\beta^{k-1})) \nonumber\\ 
 & = S_{\lambda t}(\beta^{k-1} - t X^T(X\beta^{k-1} - Y)) \tag{19} \\
 & = \beta^{k-1} \circ [1 - \frac{\lambda t}{|\beta^{k-1}|}]_+ \tag{20}
 \end{align}</script><p>下面我们给出完整的ISTA步骤。</p>

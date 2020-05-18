@@ -1,126 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>梯度下降：BGD、SGD、Mini-Batch GD</title>
-    <url>/2020/04/19/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%9ABGD%E3%80%81SGD%E3%80%81Mini-Batch%20GD/</url>
-    <content><![CDATA[<h1 id="梯度下降：BGD、SGD、Mini-Batch-GD"><a href="#梯度下降：BGD、SGD、Mini-Batch-GD" class="headerlink" title="梯度下降：BGD、SGD、Mini-Batch GD"></a>梯度下降：BGD、SGD、Mini-Batch GD</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>梯度下降(Gradient Descent)是常见的优化算法，它是一系列优化算法的基石，是一个良好的思路。</p>
-<a id="more"></a>
-<h2 id="Preliminaries-and-Notation：优化模型"><a href="#Preliminaries-and-Notation：优化模型" class="headerlink" title="Preliminaries and Notation：优化模型"></a>Preliminaries and Notation：优化模型</h2><p>给定一个无约束优化问题形如</p>
-<script type="math/tex; mode=display">
-\min_\mathbf{x} f(\mathbf{x})
-\tag{1}</script><p>其中 $\mathbf{x} \in \mathbb R^n, f:\mathbb R^{n} \rightarrow \mathbb R$ ；函数 $f(\mathbf{x})$ 连续可微，且关于 $\mathbf x$ 是（下）凸函数。凸函数可以保证我们得到的最优解是全局最优，即 $\forall \mathbf{x}_1, \mathbf{x}_2 \in \mathbb C, \ \mathbf{x}_1 \neq \mathbf{x}_2$ ，其中 $\mathbb C$ 为函数的定义域且是凸集，有</p>
-<script type="math/tex; mode=display">
-f(\mathbf{x}_2) \geq f(\mathbf{x}_1) + \nabla f(\mathbf{x}_1)^T(\mathbf{x}_2 - \mathbf{x}_1)
-\tag{2}</script><p>举个简单的例子，函数 $y = x^2$ 是凸的；函数 $f(x, y) = x^2 - y^2$（马鞍面）是非凸的。对于凸函数，我们可以通过求导的方式来计算得到函数极小值，并且该极小值就是函数的最小值，这是一个非常好的性质。</p>
-<p>回顾线性回归模型，我们假设自变量与因变量呈线性，即</p>
-<script type="math/tex; mode=display">
-y = x\beta = \left [
-\begin{matrix}
-1 & x_1 &\cdots x_n
-\end{matrix}
-\right ]
-\left [
-\begin{matrix}
-\beta_0 \\
-\beta_1 \\
-\vdots \\
-\beta_n \\
-\end{matrix}
-\right ] = \beta_0 + \beta_1x_1 + \cdots +\beta_nx_n
-\tag{3}</script><p>对线性回归模型中的系数求解，即是一个优化问题。通常，我们有着成本函数形如</p>
-<script type="math/tex; mode=display">
-J(\beta) = \frac{1}{m}\sum_{i=1}^m(y_i - \hat y_i)^2 = \frac{1}{m}\sum_{i=1}^m(y_i - \ x_i \beta)^2 = \frac{1}{m}||Y-X\beta||_2^2
-\tag{4}</script><p>对应最优的系数估计 $\beta$ 即为</p>
-<script type="math/tex; mode=display">
-\hat \beta = \mathop{\arg\min}_{\beta} J(\beta) = \mathop{\arg\min}_{\beta} \frac{1}{m}||Y-X\beta||_2^2
-\tag{5}</script><h2 id="批梯度下降（Batch-Gradient-Descent）"><a href="#批梯度下降（Batch-Gradient-Descent）" class="headerlink" title="批梯度下降（Batch Gradient Descent）"></a>批梯度下降（Batch Gradient Descent）</h2><p>首先给出我们的问题形式。</p>
-<p>已知成本函数 $J(\beta)$ ，其中 $\beta \in \mathbb R^{n}$ ，我们的问题即为：</p>
-<script type="math/tex; mode=display">
-\begin{array}{ll}
-\min_\limits\beta J(\beta) \\
-\text { s.t. } \ \beta\in \mathbb R^n
-\end{array}\tag{6}</script><p>对应的最优解为：</p>
-<script type="math/tex; mode=display">
-\hat \beta = \mathop{\arg\min}_\beta J(\beta) \tag{7}</script><p>在成本函数满足连续可微且是凸函数的条件下，BGD算法的流程即为：</p>
-<blockquote>
-<p>$\mathbf{Algorithm \ 1. \ \ \ \ BGD}$ </p>
-<p>input: a small number $\epsilon$ or maxiterations.</p>
-<p>output: $ \hat \beta $</p>
-<p>Initialize $\beta, \alpha$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, \alpha=0.1$ ), set $t=1$ </p>
-<p><strong>while</strong> $\left|J^{t}-J^{t-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
-<p>​    <strong>for</strong> $i = 1:n$ <strong>do</strong></p>
-<p>​        $\beta_i^t = \beta_i^{t-1} - \alpha \frac{\partial}{\partial \beta_i} J(\beta^{t-1})$</p>
-<p>​    <strong>end for</strong></p>
-<p>​    compute $J^t(\beta) = J(\beta^t),$ where $\beta^t = [\beta_1^t, \cdots, \beta_n^t]^T$</p>
-<p>​    $t:=t+1$</p>
-<p><strong>end while</strong></p>
-<p>Output result given by $\hat \beta = \beta^{t-1}$</p>
-</blockquote>
-<p>这个算法的思路非常简单直观，我们可以用一个简单的凸函数 $y = x^2$ 为构想。我们的目标是找到这个函数的最小值，也就是函数图像上的最低点；把这个过程类比为，我们向这样一个下凸的山坡上扔一个小球，希望这个小球能够顺利的滚到最低点。为了模拟这个过程，我们首先给定一个初始值，也就是小球在 $t = 0$ 时在山坡上的位置；之后，我们使小球沿着当前位置下降速度最快的方向——也就是该点的梯度方向——也就是山坡最陡的方向前进一小步，前进的步长就是由我们的超参数 $\alpha$ 所控制。</p>
-<p>就线性回归问题而言，我们对应的成本函数为上面给出的 $(4)$ 式，我们可以很轻松的求出该函数对各分量的偏导数。</p>
-<script type="math/tex; mode=display">
-J(\beta) = J(\beta_0, \beta_1, \cdots, \beta_n) = \frac{1}{m}\sum_{i=1}^m(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)})^2</script><script type="math/tex; mode=display">
-\begin{aligned}
-\therefore \ & \frac{\partial}{\partial \beta_0}J(\beta) = -\frac{2}{m}\sum_{i=1}^m(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)}) \\ 
-& \frac{\partial}{\partial \beta_k}J(\beta) = -\frac{2}{m}\sum_{i=1}^mx_i^{(k)}(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)}),k=1,\cdots,n
-\end{aligned}
-\tag{8}</script><p>上式看起来也许有些冗长，我们同样可以用矩阵求导法则来计算出矩阵形式的结果；或者将 $(8)$ 直接改为矩阵形式，是同理的。</p>
-<script type="math/tex; mode=display">
-J(\beta) = \frac{1}{m}||Y-X\beta||_2^2 = \frac{1}{m}(Y-X\beta)^T(Y-X\beta)</script><script type="math/tex; mode=display">
-\therefore \frac{\partial J(\beta)}{\partial \beta} = \frac{2}{m}X^T(X\beta - Y)
-\tag{9}</script><p>因此我们的迭代公式为</p>
-<script type="math/tex; mode=display">
-\beta^t = \beta^{t-1} - \alpha \frac{2}{m}X^T(X\beta^{t-1} - Y)
-\tag{10}</script><h2 id="随机梯度下降（Stochastic-Gradient-Descent）"><a href="#随机梯度下降（Stochastic-Gradient-Descent）" class="headerlink" title="随机梯度下降（Stochastic Gradient Descent）"></a>随机梯度下降（Stochastic Gradient Descent）</h2><p>对于上面的批梯度下降，我们可以直观的感受到，在每次迭代更新系数的过程中，我们均使用了所有的数据。这对于数据量较大的情况而言，是非常不利的。随机梯度下降即从这方面入手考虑，每次迭代中，我们仅使用一个数据用于更新系数，这样会使得算法运算大大加快。虽然不能保证每次迭代均是向着最优方向进行的，但总体而言，最终的系数会收敛于最优解。</p>
-<p>我们结合线性回归，给出以下SGD的算法流程：</p>
-<blockquote>
-<p>$\mathbf{Algorithm \ 2. \ \ \ \ SGD}$ </p>
-<p>input: dataset $\{x\}_{i=1}^m$</p>
-<p>output: $ \hat \beta $</p>
-<p>Initialize $\beta, \alpha$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, \alpha=0.1$ ), set $t=1$ </p>
-<p><strong>while</strong> $\left|J^{t}-J^{t-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
-<p>​    randomly generate $k$ , where $k \in \{1, \cdots, n\}$</p>
-<p>​    $\beta_0^t = \beta_0^{t-1} - \alpha \frac{2}{m}(\beta_0^{t-1} + \beta_1^{t-1}x_k^{(1)} + \cdots+\beta_n^{t-1}x_k^{(n)} - y_k)$</p>
-<p>​    <strong>for</strong> $i = 1:n$ <strong>do</strong></p>
-<p>​        $\beta_i^t = \beta_0^{t-1} - \alpha \frac{2}{m} x_k^{(i)}(\beta_0^{t-1} + \beta_1^{t-1}x_k^{(1)} + \cdots+\beta_n^{t-1}x_k^{(n)} - y_k)$</p>
-<p>​    <strong>end for</strong></p>
-<p>​    compute $J^t(\beta) = J(\beta^t),$ where $\beta^t = [\beta_1^t, \cdots, \beta_n^t]^T$</p>
-<p>​    $t:=t+1$</p>
-<p><strong>end while</strong></p>
-<p>Output result given by $\hat \beta = \beta^{t-1}$</p>
-</blockquote>
-<p>可以看到，每次更新中我们仅使用了一个随机挑选出的数据，这就是SGD与BGD最大的区别所在。</p>
-<h2 id="小批次梯度下降-Mini-Batch-Gradient-Descent"><a href="#小批次梯度下降-Mini-Batch-Gradient-Descent" class="headerlink" title="小批次梯度下降(Mini-Batch Gradient Descent)"></a>小批次梯度下降(Mini-Batch Gradient Descent)</h2><p>小批次梯度下降是对BGD与SGD的一个折中：既不使用全部的数据做更新迭代，也不仅使用一个数据。所以，我们每次从全集中选出一小部分的数据作为一个批次，用于更新迭代中。具体算法流程此处省略。</p>
-<h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>编程实现有时间再补。</p>
-<h2 id="总结与反思"><a href="#总结与反思" class="headerlink" title="总结与反思"></a>总结与反思</h2><p>下面我们提出几点思考。</p>
-<ul>
-<li>步长参数 $\alpha$ 如何选取？如果太大，则有可能导致算法不收敛，或收敛至一个较大的数值；如果太小，则算法的收敛速度可能过慢。</li>
-<li>如果目标函数是连续凸函数，但不可导，此时上面的算法就已不再适用，因为我们不能求出一阶导。能否在BGD算法的基础上做出改进？</li>
-</ul>
-]]></content>
-      <categories>
-        <category>算法与模型</category>
-      </categories>
-      <tags>
-        <tag>优化算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2020/04/10/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<a id="more"></a>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
     <title>lasso回归与岭回归</title>
     <url>/2020/04/16/lasso%E5%9B%9E%E5%BD%92%E4%B8%8E%E5%B2%AD%E5%9B%9E%E5%BD%92/</url>
     <content><![CDATA[<h1 id="lasso回归与岭回归"><a href="#lasso回归与岭回归" class="headerlink" title="lasso回归与岭回归"></a>lasso回归与岭回归</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>lasso回归（Least Absolute Shrinkage and Selection Operator Regression）与岭回归（Ridge Regression）以线性回归为基础，在其之上做出了一定的改进。</p>
@@ -276,6 +156,21 @@ X^TX x = -\lambda x \tag{18}</script><p>根据特征向量的定义，可知 $x$
         <tag>线性回归</tag>
         <tag>python</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2020/04/10/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<a id="more"></a>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+]]></content>
   </entry>
   <entry>
     <title>线性回归与最小二乘</title>
@@ -444,139 +339,108 @@ X^{T} X \Theta = X^{T} Y \tag{17}</script><p>如果 $X^{T} X$ 可逆，则有</p
       </tags>
   </entry>
   <entry>
-    <title>聚类效果评价指标：MI, NMI, AMI</title>
-    <url>/2020/05/18/%E8%81%9A%E7%B1%BB%E6%95%88%E6%9E%9C%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%EF%BC%9AMI,%20NMI,%20AMI/</url>
-    <content><![CDATA[<h1 id="聚类效果评价指标：MI-NMI-AMI"><a href="#聚类效果评价指标：MI-NMI-AMI" class="headerlink" title="聚类效果评价指标：MI, NMI, AMI"></a>聚类效果评价指标：MI, NMI, AMI</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在无监督学习中，常见的两种任务为聚类与降维。这里给出三个聚类效果评价指标：互信息，标准化互信息，调整互信息(MI, NMI, AMI)，分别给出它们的计算方法与代码。需要指出的是，这三个指标均需要已知数据点的真实标签。</p>
+    <title>梯度下降：BGD、SGD、Mini-Batch GD</title>
+    <url>/2020/04/19/%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%9ABGD%E3%80%81SGD%E3%80%81Mini-Batch%20GD/</url>
+    <content><![CDATA[<h1 id="梯度下降：BGD、SGD、Mini-Batch-GD"><a href="#梯度下降：BGD、SGD、Mini-Batch-GD" class="headerlink" title="梯度下降：BGD、SGD、Mini-Batch GD"></a>梯度下降：BGD、SGD、Mini-Batch GD</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>梯度下降(Gradient Descent)是常见的优化算法，它是一系列优化算法的基石，是一个良好的思路。</p>
 <a id="more"></a>
-<h2 id="Preliminaries-and-Notation"><a href="#Preliminaries-and-Notation" class="headerlink" title="Preliminaries and Notation"></a>Preliminaries and Notation</h2><p>已知 $N$ 个 $D$ 维的数据，构成数据矩阵 $\mathbf{X} = [x_1, x_2, \cdots, x_N] \in \mathbb{R}^{D\times N}$ ；</p>
-<p>对每个数据 $x_i \in \mathbb{R}^{D\times 1}$ ，其对应标签(label)为 $u_i \in \mathbb{R}$ ；</p>
-<p>标签中共有 $R$ 个不同的取值，或者说数据共有 $R$ 类，其对应的标签组成向量 $U = [u_1, u_2, \cdots, u_N] \in \mathbb{R}^N $ ；</p>
-<p>我们取自然数 $1$ 至 $N$ 来为这 $N$ 个数据点依次编号，并取 $S = \left\{1, 2, \cdots, N\right\}$ ，则有</p>
+<h2 id="Preliminaries-and-Notation：优化模型"><a href="#Preliminaries-and-Notation：优化模型" class="headerlink" title="Preliminaries and Notation：优化模型"></a>Preliminaries and Notation：优化模型</h2><p>给定一个无约束优化问题形如</p>
 <script type="math/tex; mode=display">
-S = \mathop{\cup}_{i=1}^R U_i = \left\{U_1, U_2, \cdots, U_R\right\}</script><p> 其中 $U_i$ 代表归属于第 $i$ 类的数据集合；如对向量 $U = [1, 1, 2, 2, 3, 3, 3]$ ，则有</p>
+\min_\mathbf{x} f(\mathbf{x})
+\tag{1}</script><p>其中 $\mathbf{x} \in \mathbb R^n, f:\mathbb R^{n} \rightarrow \mathbb R$ ；函数 $f(\mathbf{x})$ 连续可微，且关于 $\mathbf x$ 是（下）凸函数。凸函数可以保证我们得到的最优解是全局最优，即 $\forall \mathbf{x}_1, \mathbf{x}_2 \in \mathbb C, \ \mathbf{x}_1 \neq \mathbf{x}_2$ ，其中 $\mathbb C$ 为函数的定义域且是凸集，有</p>
 <script type="math/tex; mode=display">
-N = 7, R = 3, U_1 = \left\{1, 2\right\}, U_2 = \left\{3, 4\right\}, U_3 = \left\{5, 6, 7 \right\}</script><blockquote>
-<p>这里需要指出的是，如果整个数据集共有5类，则我们默认用自然数1至5来代表这5类；</p>
-<p>对于 $U$ 而言，其包含 $R$ 类，则用自然数 $1$ 至 $R$ 来代表这 $R$ 个类别。</p>
-</blockquote>
-<p>所谓聚类问题，即为对原始数据集 $\mathbf{X}$ 进行一种划分；通过某种聚类算法（如DBSCAN、谱聚类等），我们可以得到一个对 $\mathbf{X}$ 的划分，即 $V = [v_1, v_2, \cdots, v_N] \in \mathbb{R}^N$ ；</p>
-<p>类似地，我们有</p>
+f(\mathbf{x}_2) \geq f(\mathbf{x}_1) + \nabla f(\mathbf{x}_1)^T(\mathbf{x}_2 - \mathbf{x}_1)
+\tag{2}</script><p>举个简单的例子，函数 $y = x^2$ 是凸的；函数 $f(x, y) = x^2 - y^2$（马鞍面）是非凸的。对于凸函数，我们可以通过求导的方式来计算得到函数极小值，并且该极小值就是函数的最小值，这是一个非常好的性质。</p>
+<p>回顾线性回归模型，我们假设自变量与因变量呈线性，即</p>
 <script type="math/tex; mode=display">
-S = \mathop{\cup}_{i=1}^C V_i = \left\{V_1, V_2, \cdots, V_C \right\}</script><p>其中 $V_i$ 代表聚类结果中归属于第 $i$ 类的数据集合。</p>
-<h2 id="信息熵与列联表-contingency-table"><a href="#信息熵与列联表-contingency-table" class="headerlink" title="信息熵与列联表(contingency table)"></a>信息熵与列联表(contingency table)</h2><p>在介绍互信息之前，首先介绍一下香农熵（信息熵）和列联表(contingency table)。</p>
-<p>对上述标签向量 $U \in \mathbb{R}^N$ ，其香农熵（信息熵）可以被计算为：</p>
+y = x\beta = \left [
+\begin{matrix}
+1 & x_1 &\cdots x_n
+\end{matrix}
+\right ]
+\left [
+\begin{matrix}
+\beta_0 \\
+\beta_1 \\
+\vdots \\
+\beta_n \\
+\end{matrix}
+\right ] = \beta_0 + \beta_1x_1 + \cdots +\beta_nx_n
+\tag{3}</script><p>对线性回归模型中的系数求解，即是一个优化问题。通常，我们有着成本函数形如</p>
 <script type="math/tex; mode=display">
-\text{H}(U) = -\sum_{i=1}^R p_i \log p_i \tag{1}</script><p>其中对数函数的底常取 $2$ 或自然对数 $e$；</p>
-<p> $p_i$ 为归属于第 $i$ 类的数据个数占数据总量的比例，即</p>
+J(\beta) = \frac{1}{m}\sum_{i=1}^m(y_i - \hat y_i)^2 = \frac{1}{m}\sum_{i=1}^m(y_i - \ x_i \beta)^2 = \frac{1}{m}||Y-X\beta||_2^2
+\tag{4}</script><p>对应最优的系数估计 $\beta$ 即为</p>
 <script type="math/tex; mode=display">
-p_i = \frac{\left| U_i \right|}{N} \tag{2}</script><p>如对向量 $U = [1, 1, 1]$ ，则有 $p_1 = 1$ ，$\text{H} (U) = - 1 \cdot \log(1) = 0$ ；</p>
-<p>对向量 $U = [1, 2, 3]$ ，则有 $p_1 = p_2 = p_3 = \frac{1}{3}$ ，$\text{H} (U) = - 3 \cdot \frac{1}{3} \cdot \log(\frac{1}{3}) = \log 3$ ；</p>
-<p>对向量 $U = [1, 2, 2]$ ，则有 $p_1 = \frac{1}{3}, p_2 = \frac{2}{3}$ ，$\text{H} (U) = - \frac{1}{3} \cdot \log(\frac{1}{3}) - \frac{2}{3} \cdot \log(\frac{2}{3}) = \log 3 - \frac{2}{3} \cdot \log2$ ；</p>
-<p>不难发现，信息熵是非负的，因为 $0 &lt; p_i \leq 1$ 。</p>
-<p>我们取矩阵 $M \in \mathbb{R}^{R\times C} $ 为真实标签向量 $U$ 与预测标签向量 $V$ 的列联表(contingency table)，满足</p>
+\hat \beta = \mathop{\arg\min}_{\beta} J(\beta) = \mathop{\arg\min}_{\beta} \frac{1}{m}||Y-X\beta||_2^2
+\tag{5}</script><h2 id="批梯度下降（Batch-Gradient-Descent）"><a href="#批梯度下降（Batch-Gradient-Descent）" class="headerlink" title="批梯度下降（Batch Gradient Descent）"></a>批梯度下降（Batch Gradient Descent）</h2><p>首先给出我们的问题形式。</p>
+<p>已知成本函数 $J(\beta)$ ，其中 $\beta \in \mathbb R^{n}$ ，我们的问题即为：</p>
 <script type="math/tex; mode=display">
-m_{ij} = \left|U_i \cap V_j\right| \tag{3}</script><p>其中 $i = 1, 2, \cdots, R$ ，$j = 1, 2, \cdots, C$ 。</p>
-<p>如对向量 $U = [1, 1, 2, 2], V = [1, 1, 1, 2]$ ，有</p>
+\begin{array}{ll}
+\min_\limits\beta J(\beta) \\
+\text { s.t. } \ \beta\in \mathbb R^n
+\end{array}\tag{6}</script><p>对应的最优解为：</p>
 <script type="math/tex; mode=display">
-\begin{aligned}U_1 &= \left\{1, 2\right\} & U_2 &= \left\{3, 4\right\} \\V_1 &= \left\{1, 2, 3\right\} & V_2 &= \left\{4\right\}\end{aligned}</script><p>因此，</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-m_{1 1} & = \left|U_1 \cap V_1\right| = \left|\left\{1, 2\right\}\right| = 2 \\
-m_{1 2} & = \left|U_1 \cap V_2\right| = \left|\varnothing\right| = 0 \\
-m_{2 1} & = \left|U_2 \cap V_1\right| = \left|\left\{3 \right\}\right| = 1 \\
-m_{2 2} & = \left|U_2 \cap V_2\right| = \left|\left\{4 \right\}\right| = 1 \\
-\end{aligned}</script><p>列联表为</p>
-<script type="math/tex; mode=display">
-M = 
-\left[
-\begin{array}{}
-2 & 0 \\
-1 & 1
-\end{array}
-\right]</script><h2 id="互信息-Mutual-information"><a href="#互信息-Mutual-information" class="headerlink" title="互信息(Mutual information)"></a>互信息(Mutual information)</h2><p>互信息的计算公式如下：</p>
-<script type="math/tex; mode=display">
-\text{MI}(U, V) = \sum_{i = 1}^R\sum_{i=1}^C p_{i,j} \log\left(\frac{p_{i, j}}{p_i \times p_j}\right) \tag{4}</script><p>其中</p>
-<script type="math/tex; mode=display">
-p_{i,j} = \frac{\left|U_i \cap V_j \right|}{N} = \frac{m_{ij}}{N} \tag{5}</script><script type="math/tex; mode=display">
-p_i = \frac{\left| U_i \right|}{N}, 
-p_j = \frac{\left| V_j \right|}{N}</script><p>如对向量 $U = [1, 1, 2, 2], V = [1, 1, 1, 2]$ ，有</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-p_{1, 1} & = m_{11} / N = 0.5 \\
-p_{1, 2} & = m_{12} / N = 0 \\
-p_{2, 1} & = m_{21} / N = 0.25 \\
-p_{2, 2} & = m_{22} / N = 0.25 \\
-\end{aligned}</script><h2 id="标准化互信息-NMI-Normalized-Mutual-Information"><a href="#标准化互信息-NMI-Normalized-Mutual-Information" class="headerlink" title="标准化互信息(NMI, Normalized Mutual Information)"></a>标准化互信息(NMI, Normalized Mutual Information)</h2><p>通常采用NMI和AMI来作为衡量聚类效果的指标。</p>
-<p>标准化互信息的计算方法如下：</p>
-<script type="math/tex; mode=display">
-\text{NMI}(U, V) = \frac{\text{MI}(U, V)}{F\left(\text{H}\left(U\right), \text{H}\left(V\right)\right)} \tag{6}</script><p>其中 $F(x_1, x_2)$ 可以为 $\min$/$\max$ 函数；可以为几何平均，即 $F(x_1, x_2) = \sqrt{x_1x_2}$ ；可以为算术平均，即 $F(x_1, x_2) = \frac{x_1 + x_2}{2}$ 。</p>
-<p>通常我们选取算术平均，则标准化互信息即可被计算为</p>
-<script type="math/tex; mode=display">
-\text{NMI}(U, V) = 2 \frac{\text{MI}(U, V)}{\text{H}\left(U\right) + \text{H}\left(V\right)} \tag{7}</script><h2 id="调整互信息-AMI-Adjusted-Mutual-Information"><a href="#调整互信息-AMI-Adjusted-Mutual-Information" class="headerlink" title="调整互信息(AMI, Adjusted Mutual Information)"></a>调整互信息(AMI, Adjusted Mutual Information)</h2><p>调整互信息的计算要复杂一些，其计算方法如下：</p>
-<script type="math/tex; mode=display">
-\text{AMI}(U, V) = \frac{\text{MI}(U, V) - E\left\{ \text{MI}(U, V) \right\}}{F\left(\text{H}\left(U\right), \text{H}\left(V\right)\right) - E\left\{ \text{MI}(U, V) \right\}} \tag{8}</script><p>其中，$E\left\{ \text{MI}(U, V) \right\}$ 为互信息 $\text{MI}(U, V)$ 的期望，计算方法为</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-E\left\{ \text{MI}(U, V) \right\} &= \\
-\sum_{i=1}^R \sum_{j=1}^C &\sum_{k = \left(a_i + b_j - N \right)^+}^{\min \left(a_i, b_j\right)} \frac{k}{N} \log\left(\frac{N \times k}{a_i \times b_j}\right)\frac{a_i!b_j!\left(N - a_i\right)!\left(N - b_j\right)!}{N!k!\left(a_i - k\right)!\left(b_j - k\right)!\left(N - a_i - b_j + k\right)!} 
-\end{aligned}
-\tag{9}</script><p>其中 $\left(a_i + b_j - N \right)^+$ 为 $\max \left(1, a_i + b_j - N \right)$ ；</p>
-<p>$a_i, b_j$ 分别为列联表 $M$ 的第 $i$ 行和与第 $j$ 列和，具体为</p>
-<script type="math/tex; mode=display">
-\begin{aligned}
-a_i = \sum_{j=1}^C m_{ij} \\
-b_j = \sum_{i=1}^R m_{ij}
-\end{aligned}
-\tag{10}</script><p>如果我们选取函数 $F(x_1, x_2)$ 为 $\max$ 函数，则调整互信息可被计算为</p>
-<script type="math/tex; mode=display">
-\text{AMI}(U, V) = \frac{\text{MI}(U, V) - E\left\{ \text{MI}(U, V) \right\}}{\max\left(\text{H}\left(U\right), \text{H}\left(V\right)\right) - E\left\{ \text{MI}(U, V) \right\}} \tag{11}</script><p>如果我们选取函数 $F(x_1, x_2)$ 为几何平均，则调整互信息可被计算为</p>
-<script type="math/tex; mode=display">
-\text{AMI}(U, V) = \frac{\text{MI}(U, V) - E\left\{ \text{MI}(U, V) \right\}}{\sqrt{\text{H}\left(U\right) \cdot \text{H}\left(V\right)} - E\left\{ \text{MI}(U, V) \right\}} \tag{12}</script><p>如果我们选取函数 $F(x_1, x_2)$ 为算术平均，则调整互信息可被计算为</p>
-<script type="math/tex; mode=display">
-\text{AMI}(U, V) = \frac{\text{MI}(U, V) - E\left\{ \text{MI}(U, V) \right\}}{\frac{1}{2}\left(\text{H}\left(U\right) + \text{H}\left(V\right)\right) - E\left\{ \text{MI}(U, V) \right\}} \tag{13}</script><h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>Python中的 <code>sklearn</code> 库里有这三个指标的类，可以直接调用；</p>
-<p>matlab中似乎没有找到现成的包，因此自己编写。</p>
-<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><p>这里NMI和AMI的计算均采用算术平均；$\log$ 函数的底为自然对数 $e$ 。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics.cluster <span class="keyword">import</span> entropy, mutual_info_score, normalized_mutual_info_score, adjusted_mutual_info_score</span><br><span class="line"></span><br><span class="line">MI = <span class="keyword">lambda</span> x, y: mutual_info_score(x, y)</span><br><span class="line">NMI = <span class="keyword">lambda</span> x, y: normalized_mutual_info_score(x, y, average_method=<span class="string">'arithmetic'</span>)</span><br><span class="line">AMI = <span class="keyword">lambda</span> x, y: adjusted_mutual_info_score(x, y, average_method=<span class="string">'arithmetic'</span>)</span><br><span class="line"></span><br><span class="line">A = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">B = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line"><span class="comment">#print(entropy(A))</span></span><br><span class="line"><span class="comment">#print(MI(A, B))</span></span><br><span class="line">print(NMI(A, B))</span><br><span class="line">print(AMI(A, B))</span><br><span class="line"></span><br><span class="line">C = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">D = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line">print(NMI(C, D))</span><br><span class="line">print(AMI(C, D))</span><br></pre></td></tr></table></figure>
-<h3 id="matlab"><a href="#matlab" class="headerlink" title="matlab"></a>matlab</h3><p>这里的NMI与AMI的代码实现均采用的算术平均， $\log$ 函数的底采用自然对数 $e$ 。</p>
-<p>函数文件：</p>
-<p><code>NMI_AMI.m</code> </p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[NMI, AMI]</span> = <span class="title">NMI_AMI</span><span class="params">(X, Y)</span></span></span><br><span class="line"><span class="comment">%NMI_AMI return NMI, AMI</span></span><br><span class="line"><span class="comment">% MI: mutual information</span></span><br><span class="line"><span class="comment">% H; entropy</span></span><br><span class="line"><span class="comment">% NMI: normalized mutual infomation</span></span><br><span class="line"><span class="comment">% AMI: adjusted mutual infomation</span></span><br><span class="line"><span class="comment">% NMI(X, Y) = MI(X, Y) / F(H(X), H(Y))</span></span><br><span class="line"><span class="comment">% AMI(X, Y) = (MI(X, Y) - EMI(X, Y)) / (F(H(X) + H(Y)) - EMI(X, Y))</span></span><br><span class="line"><span class="comment">% F(x, y) is a function, can be "mean", "max", "geometric", "arithmetic"</span></span><br><span class="line"><span class="comment">% here we both use arithmetric</span></span><br><span class="line"></span><br><span class="line">NMI = <span class="number">2</span> * MI(X, Y) / (H(X) + H(Y));</span><br><span class="line"></span><br><span class="line">AMI = (MI(X, Y) - EMI(X, Y)) / (<span class="number">1</span>/<span class="number">2</span> * (H(X) + H(Y)) - EMI(X, Y));</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[res]</span> = <span class="title">MI</span><span class="params">(X, Y)</span></span></span><br><span class="line"><span class="comment">%MI mutual infomation</span></span><br><span class="line"></span><br><span class="line">n = <span class="built_in">length</span>(X);</span><br><span class="line">X_list = unique(X);</span><br><span class="line">Y_list = unique(Y);</span><br><span class="line">res = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> x = X_list</span><br><span class="line">    <span class="keyword">for</span> y = Y_list</span><br><span class="line">        loc_x = <span class="built_in">find</span>(X == x);</span><br><span class="line">        loc_y = <span class="built_in">find</span>(Y == y);</span><br><span class="line">        loc_xy = <span class="built_in">intersect</span>(loc_x, loc_y);</span><br><span class="line">        res = res + <span class="built_in">length</span>(loc_xy) / n * <span class="built_in">log</span>(<span class="built_in">length</span>(loc_xy) / n / ((<span class="built_in">length</span>(loc_x) / n) * (<span class="built_in">length</span>(loc_y) / n)) + <span class="built_in">eps</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[res]</span> = <span class="title">H</span><span class="params">(X)</span></span></span><br><span class="line"><span class="comment">%H information entropy</span></span><br><span class="line"></span><br><span class="line">n = <span class="built_in">length</span>(X);</span><br><span class="line">X_list = unique(X);</span><br><span class="line">res = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x = X_list</span><br><span class="line">    loc = <span class="built_in">find</span>(X == x);</span><br><span class="line">    px = <span class="built_in">length</span>(loc) / n;</span><br><span class="line">    res = res - px * <span class="built_in">log</span>(px);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[res]</span> = <span class="title">f</span><span class="params">(a, b)</span></span></span><br><span class="line"><span class="comment">% F calculate a! / b!</span></span><br><span class="line"><span class="comment">% sometimes a and b can be very large, hence, directly calculate a! or b! is not</span></span><br><span class="line"><span class="comment">% suitable; but maybe a-b is small; </span></span><br><span class="line"><span class="comment">% a,b should both be positive integers</span></span><br><span class="line"></span><br><span class="line">res = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span> a &gt; b</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = b+<span class="number">1</span>:a</span><br><span class="line">        res = res * <span class="built_in">i</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">elseif</span> a &lt; b</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = a+<span class="number">1</span>:b</span><br><span class="line">        res = res / <span class="built_in">i</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    res = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[res]</span> = <span class="title">EMI</span><span class="params">(U, V)</span></span></span><br><span class="line"><span class="comment">% EMI expected mutual information, E[MI(X, Y)]</span></span><br><span class="line"></span><br><span class="line">N = <span class="built_in">length</span>(U);</span><br><span class="line"></span><br><span class="line">U_list = unique(U);</span><br><span class="line">V_list = unique(V);</span><br><span class="line">R = <span class="built_in">length</span>(U_list);</span><br><span class="line">C = <span class="built_in">length</span>(V_list);</span><br><span class="line"></span><br><span class="line">M = <span class="built_in">zeros</span>(R, C);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:R</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:C</span><br><span class="line">        U_loc = <span class="built_in">find</span>(U == U_list(<span class="built_in">i</span>));</span><br><span class="line">        V_loc = <span class="built_in">find</span>(V == V_list(<span class="built_in">j</span>));</span><br><span class="line">        M(<span class="built_in">i</span>, <span class="built_in">j</span>) = <span class="built_in">length</span>(<span class="built_in">intersect</span>(U_loc, V_loc));</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">a = sum(M, <span class="number">2</span>);</span><br><span class="line">b = sum(M, <span class="number">1</span>);</span><br><span class="line">res = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:R</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:C</span><br><span class="line">        <span class="keyword">for</span> nij = <span class="built_in">max</span>(a(<span class="built_in">i</span>) + b(<span class="built_in">j</span>) - N, <span class="number">1</span>):<span class="built_in">min</span>(a(<span class="built_in">i</span>), b(<span class="built_in">j</span>))</span><br><span class="line">            res = res + nij / N * <span class="built_in">log</span>(N * nij / (a(<span class="built_in">i</span>) * b(<span class="built_in">j</span>)) + <span class="built_in">eps</span>) * f(a(<span class="built_in">i</span>), a(<span class="built_in">i</span>) - nij) * f(b(<span class="built_in">j</span>), b(<span class="built_in">j</span>) - nij) * f(N - a(<span class="built_in">i</span>), N) * f(N - b(<span class="built_in">j</span>), N - a(<span class="built_in">i</span>) - b(<span class="built_in">j</span>) + nij) / <span class="built_in">factorial</span>(nij);</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<p>主文件（或脚本）：</p>
-<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">clc;</span><br><span class="line">format long</span><br><span class="line"></span><br><span class="line">A = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>];</span><br><span class="line">B = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>];</span><br><span class="line">[NMI, AMI] = res_assess(A, B)</span><br><span class="line"></span><br><span class="line">C = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>];</span><br><span class="line">D = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>];</span><br><span class="line">[NMI, AMI] = res_assess(C, D)</span><br></pre></td></tr></table></figure>
-<h3 id="结果对比"><a href="#结果对比" class="headerlink" title="结果对比"></a>结果对比</h3><p>python代码的运行结果为：</p>
+\hat \beta = \mathop{\arg\min}_\beta J(\beta) \tag{7}</script><p>在成本函数满足连续可微且是凸函数的条件下，BGD算法的流程即为：</p>
 <blockquote>
-<p>0.36456177185718985</p>
-<p>0.26018122538925054</p>
-<p>0.28483386264113447</p>
-<p>0.056748831755324296</p>
+<p>$\mathbf{Algorithm \ 1. \ \ \ \ BGD}$ </p>
+<p>input: a small number $\epsilon$ or maxiterations.</p>
+<p>output: $ \hat \beta $</p>
+<p>Initialize $\beta, \alpha$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, \alpha=0.1$ ), set $t=1$ </p>
+<p><strong>while</strong> $\left|J^{t}-J^{t-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
+<p>​    <strong>for</strong> $i = 1:n$ <strong>do</strong></p>
+<p>​        $\beta_i^t = \beta_i^{t-1} - \alpha \frac{\partial}{\partial \beta_i} J(\beta^{t-1})$</p>
+<p>​    <strong>end for</strong></p>
+<p>​    compute $J^t(\beta) = J(\beta^t),$ where $\beta^t = [\beta_1^t, \cdots, \beta_n^t]^T$</p>
+<p>​    $t:=t+1$</p>
+<p><strong>end while</strong></p>
+<p>Output result given by $\hat \beta = \beta^{t-1}$</p>
 </blockquote>
-<p>matlab代码的运行结果为：</p>
+<p>这个算法的思路非常简单直观，我们可以用一个简单的凸函数 $y = x^2$ 为构想。我们的目标是找到这个函数的最小值，也就是函数图像上的最低点；把这个过程类比为，我们向这样一个下凸的山坡上扔一个小球，希望这个小球能够顺利的滚到最低点。为了模拟这个过程，我们首先给定一个初始值，也就是小球在 $t = 0$ 时在山坡上的位置；之后，我们使小球沿着当前位置下降速度最快的方向——也就是该点的梯度方向——也就是山坡最陡的方向前进一小步，前进的步长就是由我们的超参数 $\alpha$ 所控制。</p>
+<p>就线性回归问题而言，我们对应的成本函数为上面给出的 $(4)$ 式，我们可以很轻松的求出该函数对各分量的偏导数。</p>
+<script type="math/tex; mode=display">
+J(\beta) = J(\beta_0, \beta_1, \cdots, \beta_n) = \frac{1}{m}\sum_{i=1}^m(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)})^2</script><script type="math/tex; mode=display">
+\begin{aligned}
+\therefore \ & \frac{\partial}{\partial \beta_0}J(\beta) = -\frac{2}{m}\sum_{i=1}^m(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)}) \\ 
+& \frac{\partial}{\partial \beta_k}J(\beta) = -\frac{2}{m}\sum_{i=1}^mx_i^{(k)}(y_i - \beta_0 - \beta_1x_i^{(1)}-\cdots-\beta_nx_i^{(n)}),k=1,\cdots,n
+\end{aligned}
+\tag{8}</script><p>上式看起来也许有些冗长，我们同样可以用矩阵求导法则来计算出矩阵形式的结果；或者将 $(8)$ 直接改为矩阵形式，是同理的。</p>
+<script type="math/tex; mode=display">
+J(\beta) = \frac{1}{m}||Y-X\beta||_2^2 = \frac{1}{m}(Y-X\beta)^T(Y-X\beta)</script><script type="math/tex; mode=display">
+\therefore \frac{\partial J(\beta)}{\partial \beta} = \frac{2}{m}X^T(X\beta - Y)
+\tag{9}</script><p>因此我们的迭代公式为</p>
+<script type="math/tex; mode=display">
+\beta^t = \beta^{t-1} - \alpha \frac{2}{m}X^T(X\beta^{t-1} - Y)
+\tag{10}</script><h2 id="随机梯度下降（Stochastic-Gradient-Descent）"><a href="#随机梯度下降（Stochastic-Gradient-Descent）" class="headerlink" title="随机梯度下降（Stochastic Gradient Descent）"></a>随机梯度下降（Stochastic Gradient Descent）</h2><p>对于上面的批梯度下降，我们可以直观的感受到，在每次迭代更新系数的过程中，我们均使用了所有的数据。这对于数据量较大的情况而言，是非常不利的。随机梯度下降即从这方面入手考虑，每次迭代中，我们仅使用一个数据用于更新系数，这样会使得算法运算大大加快。虽然不能保证每次迭代均是向着最优方向进行的，但总体而言，最终的系数会收敛于最优解。</p>
+<p>我们结合线性回归，给出以下SGD的算法流程：</p>
 <blockquote>
-<p>NMI =</p>
-<p>   0.364561771857190</p>
-<p>AMI =</p>
-<p>   0.260181225389251</p>
-<p>NMI =</p>
-<p>   0.284833862641135</p>
-<p>AMI =</p>
-<p>   0.056748831755324</p>
+<p>$\mathbf{Algorithm \ 2. \ \ \ \ SGD}$ </p>
+<p>input: dataset $\{x\}_{i=1}^m$</p>
+<p>output: $ \hat \beta $</p>
+<p>Initialize $\beta, \alpha$ (e.g., set $\beta^0 = \vec{1}_{n\times1}, \alpha=0.1$ ), set $t=1$ </p>
+<p><strong>while</strong> $\left|J^{t}-J^{t-1}\right|&lt;\varepsilon$ or $t&lt;$ maxiterations <strong>do</strong></p>
+<p>​    randomly generate $k$ , where $k \in \{1, \cdots, n\}$</p>
+<p>​    $\beta_0^t = \beta_0^{t-1} - \alpha \frac{2}{m}(\beta_0^{t-1} + \beta_1^{t-1}x_k^{(1)} + \cdots+\beta_n^{t-1}x_k^{(n)} - y_k)$</p>
+<p>​    <strong>for</strong> $i = 1:n$ <strong>do</strong></p>
+<p>​        $\beta_i^t = \beta_0^{t-1} - \alpha \frac{2}{m} x_k^{(i)}(\beta_0^{t-1} + \beta_1^{t-1}x_k^{(1)} + \cdots+\beta_n^{t-1}x_k^{(n)} - y_k)$</p>
+<p>​    <strong>end for</strong></p>
+<p>​    compute $J^t(\beta) = J(\beta^t),$ where $\beta^t = [\beta_1^t, \cdots, \beta_n^t]^T$</p>
+<p>​    $t:=t+1$</p>
+<p><strong>end while</strong></p>
+<p>Output result given by $\hat \beta = \beta^{t-1}$</p>
 </blockquote>
-<h2 id="总结与反思"><a href="#总结与反思" class="headerlink" title="总结与反思"></a>总结与反思</h2><p>这里仅给出了三个指标的计算方法，方便直接使用；对于各个指标的优缺点、构造思想等，并没有研究。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a href="https://en.wikipedia.org/wiki/Adjusted_mutual_information" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Adjusted_mutual_information</a> （科学上网）</p>
-</li>
-<li><p>Vinh, Nguyen Xuan; Epps, Julien; Bailey, James (2010), “Information Theoretic Measures for Clusterings Comparison: Variants, Properties, Normalization and Correction for Chance” (PDF), The Journal of Machine Learning Research, 11 (oct): 2837–54</p>
-<p>论文链接：<a href="http://jmlr.csail.mit.edu/papers/volume11/vinh10a/vinh10a.pdf" target="_blank" rel="noopener">http://jmlr.csail.mit.edu/papers/volume11/vinh10a/vinh10a.pdf</a></p>
-</li>
-</ol>
+<p>可以看到，每次更新中我们仅使用了一个随机挑选出的数据，这就是SGD与BGD最大的区别所在。</p>
+<h2 id="小批次梯度下降-Mini-Batch-Gradient-Descent"><a href="#小批次梯度下降-Mini-Batch-Gradient-Descent" class="headerlink" title="小批次梯度下降(Mini-Batch Gradient Descent)"></a>小批次梯度下降(Mini-Batch Gradient Descent)</h2><p>小批次梯度下降是对BGD与SGD的一个折中：既不使用全部的数据做更新迭代，也不仅使用一个数据。所以，我们每次从全集中选出一小部分的数据作为一个批次，用于更新迭代中。具体算法流程此处省略。</p>
+<h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>编程实现有时间再补。</p>
+<h2 id="总结与反思"><a href="#总结与反思" class="headerlink" title="总结与反思"></a>总结与反思</h2><p>下面我们提出几点思考。</p>
+<ul>
+<li>步长参数 $\alpha$ 如何选取？如果太大，则有可能导致算法不收敛，或收敛至一个较大的数值；如果太小，则算法的收敛速度可能过慢。</li>
+<li>如果目标函数是连续凸函数，但不可导，此时上面的算法就已不再适用，因为我们不能求出一阶导。能否在BGD算法的基础上做出改进？</li>
+</ul>
 ]]></content>
       <categories>
         <category>算法与模型</category>
       </categories>
       <tags>
-        <tag>python</tag>
-        <tag>聚类</tag>
-        <tag>matlab</tag>
+        <tag>优化算法</tag>
       </tags>
   </entry>
   <entry>
@@ -825,6 +689,142 @@ x_i = z_i - t \cdot \text{sign}(x_i)</script><p>当 $x_i &gt; 0$ ，上式即为
       </categories>
       <tags>
         <tag>优化算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>聚类效果评价指标：MI, NMI, AMI</title>
+    <url>/2020/05/18/%E8%81%9A%E7%B1%BB%E6%95%88%E6%9E%9C%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%EF%BC%9AMI,%20NMI,%20AMI/</url>
+    <content><![CDATA[<h1 id="聚类效果评价指标：MI-NMI-AMI"><a href="#聚类效果评价指标：MI-NMI-AMI" class="headerlink" title="聚类效果评价指标：MI, NMI, AMI"></a>聚类效果评价指标：MI, NMI, AMI</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>在无监督学习中，常见的两种任务为聚类与降维。这里给出三个聚类效果评价指标：互信息，标准化互信息，调整互信息(MI, NMI, AMI)，分别给出它们的计算方法与代码。需要指出的是，这三个指标均需要已知数据点的真实标签。</p>
+<a id="more"></a>
+<h2 id="Preliminaries-and-Notation"><a href="#Preliminaries-and-Notation" class="headerlink" title="Preliminaries and Notation"></a>Preliminaries and Notation</h2><p>已知 $N$ 个 $D$ 维的数据，构成数据矩阵 $\mathbf{X} = [x_1, x_2, \cdots, x_N] \in \mathbb{R}^{D\times N}$ ；</p>
+<p>对每个数据 $x_i \in \mathbb{R}^{D\times 1}$ ，其对应标签(label)为 $u_i \in \mathbb{R}$ ；</p>
+<p>标签中共有 $R$ 个不同的取值，或者说数据共有 $R$ 类，其对应的标签组成向量 $U = [u_1, u_2, \cdots, u_N] \in \mathbb{R}^N $ ；</p>
+<p>我们取自然数 $1$ 至 $N$ 来为这 $N$ 个数据点依次编号，并取 $S = \left\{1, 2, \cdots, N\right\}$ ，则有</p>
+<script type="math/tex; mode=display">
+S = \mathop{\cup}_{i=1}^R U_i = \left\{U_1, U_2, \cdots, U_R\right\}</script><p> 其中 $U_i$ 代表归属于第 $i$ 类的数据集合；如对向量 $U = [1, 1, 2, 2, 3, 3, 3]$ ，则有</p>
+<script type="math/tex; mode=display">
+N = 7, R = 3, U_1 = \left\{1, 2\right\}, U_2 = \left\{3, 4\right\}, U_3 = \left\{5, 6, 7 \right\}</script><blockquote>
+<p>这里需要指出的是，如果整个数据集共有5类，则我们默认用自然数1至5来代表这5类；</p>
+<p>对于 $U$ 而言，其包含 $R$ 类，则用自然数 $1$ 至 $R$ 来代表这 $R$ 个类别。</p>
+</blockquote>
+<p>所谓聚类问题，即为对原始数据集 $\mathbf{X}$ 进行一种划分；通过某种聚类算法（如DBSCAN、谱聚类等），我们可以得到一个对 $\mathbf{X}$ 的划分，即 $V = [v_1, v_2, \cdots, v_N] \in \mathbb{R}^N$ ；</p>
+<p>类似地，我们有</p>
+<script type="math/tex; mode=display">
+S = \mathop{\cup}_{i=1}^C V_i = \left\{V_1, V_2, \cdots, V_C \right\}</script><p>其中 $V_i$ 代表聚类结果中归属于第 $i$ 类的数据集合。</p>
+<h2 id="信息熵与列联表-contingency-table"><a href="#信息熵与列联表-contingency-table" class="headerlink" title="信息熵与列联表(contingency table)"></a>信息熵与列联表(contingency table)</h2><p>在介绍互信息之前，首先介绍一下香农熵（信息熵）和列联表(contingency table)。</p>
+<p>对上述标签向量 $U \in \mathbb{R}^N$ ，其香农熵（信息熵）可以被计算为：</p>
+<script type="math/tex; mode=display">
+\text{H}(U) = -\sum_{i=1}^R p_i \log p_i \tag{1}</script><p>其中对数函数的底常取 $2$ 或自然对数 $e$；</p>
+<p> $p_i$ 为归属于第 $i$ 类的数据个数占数据总量的比例，即</p>
+<script type="math/tex; mode=display">
+p_i = \frac{\left| U_i \right|}{N} \tag{2}</script><p>如对向量 $U = [1, 1, 1]$ ，则有 $p_1 = 1$ ，$\text{H} (U) = - 1 \cdot \log(1) = 0$ ；</p>
+<p>对向量 $U = [1, 2, 3]$ ，则有 $p_1 = p_2 = p_3 = \frac{1}{3}$ ，$\text{H} (U) = - 3 \cdot \frac{1}{3} \cdot \log(\frac{1}{3}) = \log 3$ ；</p>
+<p>对向量 $U = [1, 2, 2]$ ，则有 $p_1 = \frac{1}{3}, p_2 = \frac{2}{3}$ ，$\text{H} (U) = - \frac{1}{3} \cdot \log(\frac{1}{3}) - \frac{2}{3} \cdot \log(\frac{2}{3}) = \log 3 - \frac{2}{3} \cdot \log2$ ；</p>
+<p>不难发现，信息熵是非负的，因为 $0 &lt; p_i \leq 1$ 。</p>
+<p>我们取矩阵 $M \in \mathbb{R}^{R\times C} $ 为真实标签向量 $U$ 与预测标签向量 $V$ 的列联表(contingency table)，满足</p>
+<script type="math/tex; mode=display">
+m_{ij} = \left|U_i \cap V_j\right| \tag{3}</script><p>其中 $i = 1, 2, \cdots, R$ ，$j = 1, 2, \cdots, C$ 。</p>
+<p>如对向量 $U = [1, 1, 2, 2], V = [1, 1, 1, 2]$ ，有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}U_1 &= \left\{1, 2\right\} & U_2 &= \left\{3, 4\right\} \\V_1 &= \left\{1, 2, 3\right\} & V_2 &= \left\{4\right\}\end{aligned}</script><p>因此，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+m_{1 1} & = \left|U_1 \cap V_1\right| = \left|\left\{1, 2\right\}\right| = 2 \\
+m_{1 2} & = \left|U_1 \cap V_2\right| = \left|\varnothing\right| = 0 \\
+m_{2 1} & = \left|U_2 \cap V_1\right| = \left|\left\{3 \right\}\right| = 1 \\
+m_{2 2} & = \left|U_2 \cap V_2\right| = \left|\left\{4 \right\}\right| = 1 \\
+\end{aligned}</script><p>列联表为</p>
+<script type="math/tex; mode=display">
+M = 
+\left[
+\begin{array}{}
+2 & 0 \\
+1 & 1
+\end{array}
+\right]</script><h2 id="互信息-Mutual-information"><a href="#互信息-Mutual-information" class="headerlink" title="互信息(Mutual information)"></a>互信息(Mutual information)</h2><p>互信息的计算公式如下：</p>
+<script type="math/tex; mode=display">
+\text{MI}(U, V) = \sum_{i = 1}^R\sum_{i=1}^C p_{i,j} \log\left(\frac{p_{i, j}}{p_i \times p_j}\right) \tag{4}</script><p>其中</p>
+<script type="math/tex; mode=display">
+p_{i,j} = \frac{\left|U_i \cap V_j \right|}{N} = \frac{m_{ij}}{N} \tag{5}</script><script type="math/tex; mode=display">
+p_i = \frac{\left| U_i \right|}{N}, 
+p_j = \frac{\left| V_j \right|}{N}</script><p>如对向量 $U = [1, 1, 2, 2], V = [1, 1, 1, 2]$ ，有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_{1, 1} & = m_{11} / N = 0.5 \\
+p_{1, 2} & = m_{12} / N = 0 \\
+p_{2, 1} & = m_{21} / N = 0.25 \\
+p_{2, 2} & = m_{22} / N = 0.25 \\
+\end{aligned}</script><h2 id="标准化互信息-NMI-Normalized-Mutual-Information"><a href="#标准化互信息-NMI-Normalized-Mutual-Information" class="headerlink" title="标准化互信息(NMI, Normalized Mutual Information)"></a>标准化互信息(NMI, Normalized Mutual Information)</h2><p>通常采用NMI和AMI来作为衡量聚类效果的指标。</p>
+<p>标准化互信息的计算方法如下：</p>
+<script type="math/tex; mode=display">
+\text{NMI}(U, V) = \frac{\text{MI}(U, V)}{F\left(\text{H}\left(U\right), \text{H}\left(V\right)\right)} \tag{6}</script><p>其中 $F(x_1, x_2)$ 可以为 $\min$/$\max$ 函数；可以为几何平均，即 $F(x_1, x_2) = \sqrt{x_1x_2}$ ；可以为算术平均，即 $F(x_1, x_2) = \frac{x_1 + x_2}{2}$ 。</p>
+<p>通常我们选取算术平均，则标准化互信息即可被计算为</p>
+<script type="math/tex; mode=display">
+\text{NMI}(U, V) = 2 \frac{\text{MI}(U, V)}{\text{H}\left(U\right) + \text{H}\left(V\right)} \tag{7}</script><h2 id="调整互信息-AMI-Adjusted-Mutual-Information"><a href="#调整互信息-AMI-Adjusted-Mutual-Information" class="headerlink" title="调整互信息(AMI, Adjusted Mutual Information)"></a>调整互信息(AMI, Adjusted Mutual Information)</h2><p>调整互信息的计算要复杂一些，其计算方法如下：</p>
+<script type="math/tex; mode=display">
+\text{AMI}(U, V) = \frac{\text{MI}(U, V) - E\left\{ \text{MI}(U, V) \right\}}{F\left(\text{H}\left(U\right), \text{H}\left(V\right)\right) - E\left\{ \text{MI}(U, V) \right\}} \tag{8}</script><p>其中，$E\left\{ \text{MI}(U, V) \right\}$ 为互信息 $\text{MI}(U, V)$ 的期望，计算方法为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E\left\{ \text{MI}(U, V) \right\} &= \\
+\sum_{i=1}^R \sum_{j=1}^C &\sum_{k = \left(a_i + b_j - N \right)^+}^{\min \left(a_i, b_j\right)} \frac{k}{N} \log\left(\frac{N \times k}{a_i \times b_j}\right)\frac{a_i!b_j!\left(N - a_i\right)!\left(N - b_j\right)!}{N!k!\left(a_i - k\right)!\left(b_j - k\right)!\left(N - a_i - b_j + k\right)!} 
+\end{aligned}
+\tag{9}</script><p>其中 $\left(a_i + b_j - N \right)^+$ 为 $\max \left(1, a_i + b_j - N \right)$ ；</p>
+<p>$a_i, b_j$ 分别为列联表 $M$ 的第 $i$ 行和与第 $j$ 列和，具体为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+a_i = \sum_{j=1}^C m_{ij} \\
+b_j = \sum_{i=1}^R m_{ij}
+\end{aligned}
+\tag{10}</script><p>如果我们选取函数 $F(x_1, x_2)$ 为 $\max$ 函数，则调整互信息可被计算为</p>
+<script type="math/tex; mode=display">
+\text{AMI}(U, V) = \frac{\text{MI}(U, V) - E\left\{ \text{MI}(U, V) \right\}}{\max\left(\text{H}\left(U\right), \text{H}\left(V\right)\right) - E\left\{ \text{MI}(U, V) \right\}} \tag{11}</script><p>如果我们选取函数 $F(x_1, x_2)$ 为几何平均，则调整互信息可被计算为</p>
+<script type="math/tex; mode=display">
+\text{AMI}(U, V) = \frac{\text{MI}(U, V) - E\left\{ \text{MI}(U, V) \right\}}{\sqrt{\text{H}\left(U\right) \cdot \text{H}\left(V\right)} - E\left\{ \text{MI}(U, V) \right\}} \tag{12}</script><p>如果我们选取函数 $F(x_1, x_2)$ 为算术平均，则调整互信息可被计算为</p>
+<script type="math/tex; mode=display">
+\text{AMI}(U, V) = \frac{\text{MI}(U, V) - E\left\{ \text{MI}(U, V) \right\}}{\frac{1}{2}\left(\text{H}\left(U\right) + \text{H}\left(V\right)\right) - E\left\{ \text{MI}(U, V) \right\}} \tag{13}</script><h2 id="编程实现"><a href="#编程实现" class="headerlink" title="编程实现"></a>编程实现</h2><p>Python中的 <code>sklearn</code> 库里有这三个指标的类，可以直接调用；</p>
+<p>matlab中似乎没有找到现成的包，因此自己编写。</p>
+<h3 id="python"><a href="#python" class="headerlink" title="python"></a>python</h3><p>这里NMI和AMI的计算均采用算术平均；$\log$ 函数的底为自然对数 $e$ 。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.metrics.cluster <span class="keyword">import</span> entropy, mutual_info_score, normalized_mutual_info_score, adjusted_mutual_info_score</span><br><span class="line"></span><br><span class="line">MI = <span class="keyword">lambda</span> x, y: mutual_info_score(x, y)</span><br><span class="line">NMI = <span class="keyword">lambda</span> x, y: normalized_mutual_info_score(x, y, average_method=<span class="string">'arithmetic'</span>)</span><br><span class="line">AMI = <span class="keyword">lambda</span> x, y: adjusted_mutual_info_score(x, y, average_method=<span class="string">'arithmetic'</span>)</span><br><span class="line"></span><br><span class="line">A = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">B = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line"><span class="comment">#print(entropy(A))</span></span><br><span class="line"><span class="comment">#print(MI(A, B))</span></span><br><span class="line">print(NMI(A, B))</span><br><span class="line">print(AMI(A, B))</span><br><span class="line"></span><br><span class="line">C = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>]</span><br><span class="line">D = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>]</span><br><span class="line">print(NMI(C, D))</span><br><span class="line">print(AMI(C, D))</span><br></pre></td></tr></table></figure>
+<h3 id="matlab"><a href="#matlab" class="headerlink" title="matlab"></a>matlab</h3><p>这里的NMI与AMI的代码实现均采用的算术平均， $\log$ 函数的底采用自然对数 $e$ 。</p>
+<p>函数文件：</p>
+<p><code>NMI_AMI.m</code> </p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[NMI, AMI]</span> = <span class="title">NMI_AMI</span><span class="params">(X, Y)</span></span></span><br><span class="line"><span class="comment">%NMI_AMI return NMI, AMI</span></span><br><span class="line"><span class="comment">% MI: mutual information</span></span><br><span class="line"><span class="comment">% H; entropy</span></span><br><span class="line"><span class="comment">% NMI: normalized mutual infomation</span></span><br><span class="line"><span class="comment">% AMI: adjusted mutual infomation</span></span><br><span class="line"><span class="comment">% NMI(X, Y) = MI(X, Y) / F(H(X), H(Y))</span></span><br><span class="line"><span class="comment">% AMI(X, Y) = (MI(X, Y) - EMI(X, Y)) / (F(H(X) + H(Y)) - EMI(X, Y))</span></span><br><span class="line"><span class="comment">% F(x, y) is a function, can be "mean", "max", "geometric", "arithmetic"</span></span><br><span class="line"><span class="comment">% here we both use arithmetric</span></span><br><span class="line"></span><br><span class="line">NMI = <span class="number">2</span> * MI(X, Y) / (H(X) + H(Y));</span><br><span class="line"></span><br><span class="line">AMI = (MI(X, Y) - EMI(X, Y)) / (<span class="number">1</span>/<span class="number">2</span> * (H(X) + H(Y)) - EMI(X, Y));</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[res]</span> = <span class="title">MI</span><span class="params">(X, Y)</span></span></span><br><span class="line"><span class="comment">%MI mutual infomation</span></span><br><span class="line"></span><br><span class="line">n = <span class="built_in">length</span>(X);</span><br><span class="line">X_list = unique(X);</span><br><span class="line">Y_list = unique(Y);</span><br><span class="line">res = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> x = X_list</span><br><span class="line">    <span class="keyword">for</span> y = Y_list</span><br><span class="line">        loc_x = <span class="built_in">find</span>(X == x);</span><br><span class="line">        loc_y = <span class="built_in">find</span>(Y == y);</span><br><span class="line">        loc_xy = <span class="built_in">intersect</span>(loc_x, loc_y);</span><br><span class="line">        res = res + <span class="built_in">length</span>(loc_xy) / n * <span class="built_in">log</span>(<span class="built_in">length</span>(loc_xy) / n / ((<span class="built_in">length</span>(loc_x) / n) * (<span class="built_in">length</span>(loc_y) / n)) + <span class="built_in">eps</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[res]</span> = <span class="title">H</span><span class="params">(X)</span></span></span><br><span class="line"><span class="comment">%H information entropy</span></span><br><span class="line"></span><br><span class="line">n = <span class="built_in">length</span>(X);</span><br><span class="line">X_list = unique(X);</span><br><span class="line">res = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x = X_list</span><br><span class="line">    loc = <span class="built_in">find</span>(X == x);</span><br><span class="line">    px = <span class="built_in">length</span>(loc) / n;</span><br><span class="line">    res = res - px * <span class="built_in">log</span>(px);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[res]</span> = <span class="title">f</span><span class="params">(a, b)</span></span></span><br><span class="line"><span class="comment">% F calculate a! / b!</span></span><br><span class="line"><span class="comment">% sometimes a and b can be very large, hence, directly calculate a! or b! is not</span></span><br><span class="line"><span class="comment">% suitable; but maybe a-b is small; </span></span><br><span class="line"><span class="comment">% a,b should both be positive integers</span></span><br><span class="line"></span><br><span class="line">res = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span> a &gt; b</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = b+<span class="number">1</span>:a</span><br><span class="line">        res = res * <span class="built_in">i</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">elseif</span> a &lt; b</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span> = a+<span class="number">1</span>:b</span><br><span class="line">        res = res / <span class="built_in">i</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    res = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[res]</span> = <span class="title">EMI</span><span class="params">(U, V)</span></span></span><br><span class="line"><span class="comment">% EMI expected mutual information, E[MI(X, Y)]</span></span><br><span class="line"></span><br><span class="line">N = <span class="built_in">length</span>(U);</span><br><span class="line"></span><br><span class="line">U_list = unique(U);</span><br><span class="line">V_list = unique(V);</span><br><span class="line">R = <span class="built_in">length</span>(U_list);</span><br><span class="line">C = <span class="built_in">length</span>(V_list);</span><br><span class="line"></span><br><span class="line">M = <span class="built_in">zeros</span>(R, C);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:R</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:C</span><br><span class="line">        U_loc = <span class="built_in">find</span>(U == U_list(<span class="built_in">i</span>));</span><br><span class="line">        V_loc = <span class="built_in">find</span>(V == V_list(<span class="built_in">j</span>));</span><br><span class="line">        M(<span class="built_in">i</span>, <span class="built_in">j</span>) = <span class="built_in">length</span>(<span class="built_in">intersect</span>(U_loc, V_loc));</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">a = sum(M, <span class="number">2</span>);</span><br><span class="line">b = sum(M, <span class="number">1</span>);</span><br><span class="line">res = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:R</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:C</span><br><span class="line">        <span class="keyword">for</span> nij = <span class="built_in">max</span>(a(<span class="built_in">i</span>) + b(<span class="built_in">j</span>) - N, <span class="number">1</span>):<span class="built_in">min</span>(a(<span class="built_in">i</span>), b(<span class="built_in">j</span>))</span><br><span class="line">            res = res + nij / N * <span class="built_in">log</span>(N * nij / (a(<span class="built_in">i</span>) * b(<span class="built_in">j</span>)) + <span class="built_in">eps</span>) * f(a(<span class="built_in">i</span>), a(<span class="built_in">i</span>) - nij) * f(b(<span class="built_in">j</span>), b(<span class="built_in">j</span>) - nij) * f(N - a(<span class="built_in">i</span>), N) * f(N - b(<span class="built_in">j</span>), N - a(<span class="built_in">i</span>) - b(<span class="built_in">j</span>) + nij) / <span class="built_in">factorial</span>(nij);</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>主文件（或脚本）：</p>
+<figure class="highlight matlab"><table><tr><td class="code"><pre><span class="line">clc;</span><br><span class="line">format long</span><br><span class="line"></span><br><span class="line">A = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>];</span><br><span class="line">B = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>];</span><br><span class="line">[NMI, AMI] = res_assess(A, B)</span><br><span class="line"></span><br><span class="line">C = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>];</span><br><span class="line">D = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>];</span><br><span class="line">[NMI, AMI] = res_assess(C, D)</span><br></pre></td></tr></table></figure>
+<h3 id="结果对比"><a href="#结果对比" class="headerlink" title="结果对比"></a>结果对比</h3><p>python代码的运行结果为：</p>
+<blockquote>
+<p>0.36456177185718985</p>
+<p>0.26018122538925054</p>
+<p>0.28483386264113447</p>
+<p>0.056748831755324296</p>
+</blockquote>
+<p>matlab代码的运行结果为：</p>
+<blockquote>
+<p>NMI =</p>
+<p>   0.364561771857190</p>
+<p>AMI =</p>
+<p>   0.260181225389251</p>
+<p>NMI =</p>
+<p>   0.284833862641135</p>
+<p>AMI =</p>
+<p>   0.056748831755324</p>
+</blockquote>
+<h2 id="总结与反思"><a href="#总结与反思" class="headerlink" title="总结与反思"></a>总结与反思</h2><p>这里仅给出了三个指标的计算方法，方便直接使用；对于各个指标的优缺点、构造思想等，并没有研究。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><p><a href="https://en.wikipedia.org/wiki/Adjusted_mutual_information" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Adjusted_mutual_information</a> （科学上网）</p>
+</li>
+<li><p>Vinh, Nguyen Xuan; Epps, Julien; Bailey, James (2010), “Information Theoretic Measures for Clusterings Comparison: Variants, Properties, Normalization and Correction for Chance” (PDF), The Journal of Machine Learning Research, 11 (oct): 2837–54</p>
+<p>论文链接：<a href="http://jmlr.csail.mit.edu/papers/volume11/vinh10a/vinh10a.pdf" target="_blank" rel="noopener">http://jmlr.csail.mit.edu/papers/volume11/vinh10a/vinh10a.pdf</a></p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>算法与模型</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>聚类</tag>
+        <tag>matlab</tag>
       </tags>
   </entry>
 </search>

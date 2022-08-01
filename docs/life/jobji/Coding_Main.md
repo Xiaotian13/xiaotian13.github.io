@@ -107,17 +107,40 @@ float('-inf') #最小值
 
 [merge-two-sorted-lists](https://leetcode.com/problems/merge-two-sorted-lists/)
 
-linked list
-
-
-
-
+考察linked list的基础运用
 
 
 
 [find-first-and-last-position-of-element-in-sorted-array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
+考察对二分查找的应用，$\mathcal{O}(\log n)$
+
+最基础的二分查找，找到目标值就退出：
+```python
+def binary_search(_list, value):
+    left = 0   # 列表的起始索引
+    right = len(_list)   # 列表的结束索引
+    mid = (left + right) // 2 # 采用此方法，通过四舍五入刚好可以定位到列表的中间位置
+    while left < right:
+        if _list[mid] == value:
+            return mid
+        elif _list[mid] < value:
+            left = mid
+        else:
+            right = mid
+        mid = (right + left) // 2
+    else:
+        return -1
+
+print(binary_search([1, 2, 2, 2, 5, 6, 7, 7, 9], 2))
+```
+本题即为找到目标值后继续搜，直到两个指针相遇
+
+
+
 [count-primes](https://leetcode.com/problems/count-primes/)
+
+用Sieve of Eratosthenes，厄拉多塞筛法。如果 $n \leq N$，且 $n$ 是合数，则 $n$ 必能被一个不大于 $\sqrt{N}$ 的素数所整除。因此，从 $2$ 开始向上搜，把所有 $2$ 的倍数全划掉，一直搜到 $\sqrt{N}$。
 
 
 
@@ -169,6 +192,8 @@ print(' '.join(s.split()) == 'asd you') # 用空格去拼接
 
 [roman-to-integer](https://leetcode.com/problems/roman-to-integer/)
 
+如果一个更小的罗马数字出现在了前面，则说明是要减掉的，而不是加上。如，$\text{IV} = 5 - 1, \text{VI} = 5+1$。
+
 
 
 ## 3. Tree and Binary Tree
@@ -176,10 +201,6 @@ print(' '.join(s.split()) == 'asd you') # 用空格去拼接
 Tree即树，它不是线性结构。
 
 ### 3.1 Basic Knowledge
-
-<img src="/life/jobji/fig/image-20220208083152850.png" alt="drawing" width="300"/>
-
-
 
 node root
 
@@ -191,22 +212,38 @@ A leaf is a node with no children
 
 Binary Tree即二叉树，是一种特殊的树结构。它最多只有两个子结点（child node），称为left child 和 right child。
 
-complete tree（完全树）是指从上到下，从左到右依次填满的树。
-
-
-
-<img src=".\fig\image-20220208084144896.png" alt="drawing" width="165"/>
-
 full tree（满树）是指所有结点要么有两个子结点，要么没有子结点。
 
-<img src=".\fig\image-20220208084127581.png" alt="drawing" width="100"/>
+```mermaid
+graph TB
+  A(( ))-->B(( ))
+  A-->C(( ))
+  B-->D(( ))
+  B-->E(( ))
+  C-->F(( ))
+  C-->G(( ))
+```
+
+complete tree（完全树）是指从上到下，从左到右依次填满的树。
+
+```mermaid
+graph TB
+  A(( ))-->B(( ))
+  A-->C(( ))
+  B-->D(( ))
+  B-->E(( ))
+  C-->F(( ))
+  C-->G(( ))
+  D-->H(( ))
+  D-->I(( ))
+```
 
 A **complete binary tree** is a binary tree in which all the levels are completely filled except possibly the lowest one, which is filled from the left.
 
-A complete binary tree is just like a full binary tree, but with two major differences
-
+A complete binary tree is just like a full binary tree, but with two major differences:
 1. All the leaf elements must lean towards the left.
 2. The last leaf element might not have a right sibling i.e. a complete binary tree doesn't have to be a full binary tree.
+
 
 
 

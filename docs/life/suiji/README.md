@@ -5,7 +5,7 @@ publish: false
 
 
 
-Life if hard.
+Life is hard.
 
 人生如路。
 

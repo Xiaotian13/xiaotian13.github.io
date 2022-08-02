@@ -49,5 +49,11 @@
   <script src="//unpkg.com/mermaid/dist/mermaid.js"></script>
   <script src="//unpkg.com/docsify-mermaid@latest/dist/docsify-mermaid.js"></script>
   <script>mermaid.initialize({ startOnLoad: true });</script>
+  <!-- PWA离线模式 -->
+  <script>
+    if (typeof navigator.serviceWorker !== 'undefined') {
+      navigator.serviceWorker.register('sw.js')
+    }
+  </script>
 </body>
 </html>

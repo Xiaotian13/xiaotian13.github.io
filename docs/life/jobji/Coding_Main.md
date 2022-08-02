@@ -73,17 +73,29 @@ Operation efficiency:
 
 
 
+[two-sum-ii-input-array-is-sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
+
+two sum的进阶版
+
+利用数列的有序性，使用two pointer
+
+时间 $\mathcal{O}(n)$，空间 $\mathcal O(1)$
+
+
+
 [3sum](https://leetcode.com/problems/3sum/)
 
-$a+b+c=0$ 等价于 $a+b = -c$，所以先排序，然后遍历负的部分，转换为 $a+b$ 的two sum问题
+有了前面的基础，这道题就是two sum和two sum ii的结合。
 
-排序是 $n \log n$，$n$ 个two sum是 $n^2$，最后应是 $\mathcal O(n^2)$ 
+$a+b+c=0$ 等价于 $a+b = -c$，所以先排序，然后遍历负的部分，转换为 $a+b$ 的two sum问题（同时注意不能加入重复答案、要搜到左右指针重合才停止）
+
+排序是 $\mathcal{O}(n \log n)$，$n$ 个two sum是 $\mathcal{O}(n^2)$，最后应是 $\mathcal O(n^2)$ 
 
 
 
 [best-time-to-buy-and-sell-stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
 
-遍历一遍，记录每一步当前最小值，减下一个看超不超过当前的最优。应是 $\mathcal O(n)$ 
+遍历一遍，记录每一步当前价格最小值，动态记录对当前最低价格而言的最高盈利。应是 $\mathcal O(n)$ 
 
 ```python
 float('-inf') #最小值
@@ -269,11 +281,23 @@ A complete binary tree is just like a full binary tree, but with two major diffe
 
 [balanced-binary-tree](https://leetcode.com/problems/balanced-binary-tree/)
 
-左子树和右子树都要是平衡树，且两者深度相差不超过1
+二叉平衡树：
+Balanced tree: a binary tree in which the left and right subtrees of **every** node differ in height by no more than 1.
+
+用递归，左子树和右子树都要是平衡树，且两者深度相差不超过1
 
 
 
 [validate-binary-search-tree](https://leetcode.com/problems/validate-binary-search-tree/)
+
+二叉搜索树：
+a valid binary search tree (BST) is defined as follows:
+- The left subtree of a node contains only nodes with keys less than the node's key.
+- The right subtree of a node contains only nodes with keys greater than the node's key.
+- Both the left and right subtrees must also be binary search trees.
+
+中等难度，同时查看左子树和右子树是否有效，对左子树而言，根节点的值就是左子树的上界
+
 
 
 
@@ -316,7 +340,7 @@ The mapping between an item and the slot where that item belongs in the hash tab
 
 We now return to the problem of **collisions**. When two items hash to the same slot, we must have a systematic method for placing the second item in the hash table. This process is called collision resolution. As we stated earlier, if the hash function is perfect, collisions will never occur. However, since this is often not possible, collision resolution becomes a very important part of hashing. 
 
-<img src=".\fig\image-20220328113757910.png" alt="drawing" width="600"/>
+<img src="life/jobji/figimage-20220328113757910.png" alt="drawing" width="600"/>
 
 线性试探法：出现冲突就存到下一个
 

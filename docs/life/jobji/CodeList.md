@@ -5,7 +5,7 @@
 
 这里直接放置所有刷过的题列表。
 
-**Arrays & Hashing:**
+[**Arrays & Hashing:**](#Arrays_Hashing)
 - [x] [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/), Easy
 - [ ] [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/), Easy
 - [x] [1. Two Sum](https://leetcode.com/problems/two-sum/), Easy
@@ -30,7 +30,7 @@
 
 这里放置所有刷过题的题解。
 
-### Arrays & Hashing
+### Arrays & Hashing :id=Arrays_Hashing
 
 [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/)
 

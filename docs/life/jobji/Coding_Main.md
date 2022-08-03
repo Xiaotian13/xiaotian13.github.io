@@ -32,66 +32,6 @@ Operation efficiency:
 
 ### 1.2 Questions
 
-[two sum](https://leetcode.com/problems/two-sum/)
-
-1. 暴力循环/蛮力算法（brutal force），是$C_n^2, \mathcal O(n^2)$ 
-
-2. 先排序，然后用two-pointers，最左+最右 如果小于target，就左边指针右移，如果大于target，就右边指针左移
-
-   排序是 $n \log n$，指针移动是 $n$，所以最后是 $\mathcal O(n\log n)$ 
-
-   ```python
-   ls = [2, 6, 4, 7]
-   ls.sort() #直接改变列表；指定参数reverse=True，则排序为降序，默认是升序
-   
-   for i in enumerate(ls):
-       print(i)
-   #(0, 2)
-   #(1, 6)
-   #(2, 4)
-   #(3, 7)
-   ```
-
-   
-
-3. hash table $\mathcal O(n)$：所有的插入和查询操作都是 $\mathcal O(1)$
-
-   遍历元素，如果它的补元素不在字典里，则加进去；如果补元素在字典里，则该补元素的位置和它的位置即为输出
-
-   ```python
-   # nums = [2, 4, 6, 7]
-   # target = 9
-   
-   d = {}
-           
-   for i, num in enumerate(nums):
-       if num not in d:
-           d[target - num] = i
-       else:
-           return [d[num], i]
-   ```
-
-
-
-[two-sum-ii-input-array-is-sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/)
-
-two sum的进阶版
-
-利用数列的有序性，使用two pointer
-
-时间 $\mathcal{O}(n)$，空间 $\mathcal O(1)$
-
-
-
-[3sum](https://leetcode.com/problems/3sum/)
-
-有了前面的基础，这道题就是two sum和two sum ii的结合。
-
-$a+b+c=0$ 等价于 $a+b = -c$，所以先排序，然后遍历负的部分，转换为 $a+b$ 的two sum问题（同时注意不能加入重复答案、要搜到左右指针重合才停止）
-
-排序是 $\mathcal{O}(n \log n)$，$n$ 个two sum是 $\mathcal{O}(n^2)$，最后应是 $\mathcal O(n^2)$ 
-
-
 
 [best-time-to-buy-and-sell-stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
 
@@ -175,15 +115,7 @@ String即字符串。
 
 ### 2.2 Questions
 
-[valid-palindrome](https://leetcode.com/problems/valid-palindrome/)
 
-```python
-s = '1a'
-s.lower()
-s = s.join(['1', 'n'])
-for i in s:
-    print(i.isalpha(), i.isnumeric())
-```
 
 
 
@@ -373,16 +305,10 @@ ls = [word for word, c in count.items() if c == 1] # ['This', 'example']
 ```
 
 字典常用操作：`d.get(key)`， `for key, value in d.items()`
+如果字典中不存在`key`，可以通过类似`d.get(key, 0)`的方式让它返回`0`
 
 
 
-[contains-duplicate](https://leetcode.com/problems/contains-duplicate/)
-
-用`set()`，对比前后两个的长度；
-
-直接用`collections.Counter`；
-
-用哈希表
 
 
 
@@ -403,6 +329,8 @@ for i in itertools.combinations([1, 2, 3, 4], 2):
 #(3, 4)
 ```
 
+或者：计算4个点两两之间6条边，边长不应该有0，且unique的边长只应由2个
+
 
 
 [degree-of-an-array](https://leetcode.com/problems/degree-of-an-array/)
@@ -419,8 +347,9 @@ c[1] += 1 # defaultdict(int)对任意键的初始值设为0
 [subarray-sum-equals-k](https://leetcode.com/problems/subarray-sum-equals-k/)
 
 构建序列 $S_i = a_1 + \cdots+a_i$，问题转化为找出所有的 $(i, j)$ 使得 $S_j - S_i = k$，用two-sum思路解子问题
+注意，这两个过程可以同时进行
 
-这道题有点绕
+对于数组 $[1, 2, 3, 4]$，它的prefix sum（前缀和）数组为 $[1, 3, 6, 10]$。
 
 
 

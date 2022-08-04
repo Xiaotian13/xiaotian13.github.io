@@ -7,10 +7,10 @@
 
 [**Arrays & Hashing:**](#Arrays_Hashing)
 - [x] [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/), Easy
-- [ ] [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/), Easy
+- [x] [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/), Easy
 - [x] [1. Two Sum](https://leetcode.com/problems/two-sum/), Easy
-- [ ] [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/), Medium
-- [ ] [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/), Medium
+- [x] [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/), Medium
+- [x] [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/), Medium
 - [ ] [238. Product of Array Except Self](https://leetcode.com/problems/product-of-array-except-self/), Medium
 - [ ] [36. Valid Sudoku](https://leetcode.com/problems/valid-sudoku/), Medium
 - [ ] [encode-and-decode-strings](https://leetcode.com/problems/encode-and-decode-strings/), Medium, 需要会员
@@ -60,6 +60,11 @@
 
 [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/)
 
+判断两个字符串是否只是排列顺序不同
+
+最直接，使用`Counter`计数比较，时间空间复杂度都是 $\mathcal{O}(s+t)$；
+
+由于两个字符串的本质区别是排列组合的顺序不同，因此，如果我们都对他们进行排序，两个字符串应该是相同的。这样某些排序算法可以把空间复杂度降低到 $\mathcal{O}(1)$，但是时间复杂度上升到 $\mathcal{O}(n \log n)$
 
 <br>
 
@@ -106,10 +111,17 @@
 
 [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/)
 
+直接对每个字符串排序，对该值计数，但如果涉及排序的话，时间复杂度（$\mathcal O(m n \log n)$）会高（但神奇的是leetcode上更快）；
+
+依然使用`Counter`的思路，需要注意的是*Python里的字典不能使用字典和列表作为键，但是可以使用tuple作为键。tuple是不可更改的列表，也是有序的*。因此，我们用一个列表，每个位置分别记录对应字符串中出现各字母的次数；然后将该列表转换为tuple来做为键。时间复杂度为 $\mathcal{O}(mn)$，其中 $m$ 是列表长度，$n$ 是列表中字符串平均长度
 
 <br>
 
 [347. Top K Frequent Elements](https://leetcode.com/problems/top-k-frequent-elements/)
+
+用最大堆不是最优解，复杂度 $\mathcal O(n \log n)$
+
+利用Bucket Sort的思想，把 value-count 反过来，变成 count-value 的映射模式，把count直接按照bucket存进去，然后每个count下挂一个列表，包含对应计数次数的数字，时间空间复杂度都是 $\mathcal O(n)$
 
 <br>
 

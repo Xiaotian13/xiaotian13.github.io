@@ -33,30 +33,6 @@ Operation efficiency:
 ### 1.2 Questions
 
 
-[best-time-to-buy-and-sell-stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
-
-遍历一遍，记录每一步当前价格最小值，动态记录对当前最低价格而言的最高盈利。应是 $\mathcal O(n)$ 
-
-```python
-float('-inf') #最小值
-```
-
-
-
-[maximum-product-of-three-numbers](https://leetcode.com/problems/maximum-product-of-three-numbers/)
-
-1. 先排序，那么乘积最大的就是最大的三个正数，或者最大的正数和最小的两个负数。应是 $\mathcal O(n \log n)$ 
-
-2. 但实际上，我们就是要找最大的三个正数和最小的两个负数，这样一个操作是可以通过一次遍历就得到的。通过一次遍历，找出最大的三个数，和最小的两个数。也就是 $\mathcal O(n)$ 
-
-
-
-[next-permutation](https://leetcode.com/problems/next-permutation/)
-
-这个是真题
-
-
-
 [merge-two-sorted-lists](https://leetcode.com/problems/merge-two-sorted-lists/)
 
 考察linked list的基础运用
@@ -114,10 +90,6 @@ String即字符串。
 
 
 ### 2.2 Questions
-
-
-
-
 
 [reverse-words-in-a-string](https://leetcode.com/problems/reverse-words-in-a-string/)
 
@@ -290,28 +262,6 @@ MD5, SHA
 
 ### 4.2 Questions
 
-[uncommon-words-from-two-sentences](https://leetcode.com/problems/uncommon-words-from-two-sentences/)
-
-两个字符串拼一起，找出来只出现过一次的单词；
-
-可以直接用`collections.Counter`
-
-```python
-from collections import Counter
-
-s = "This is an example an is"
-count = Counter(s.split(' ')) # Counter({'is': 2, 'an': 2, 'This': 1, 'example': 1})
-ls = [word for word, c in count.items() if c == 1] # ['This', 'example']
-```
-
-字典常用操作：`d.get(key)`， `for key, value in d.items()`
-如果字典中不存在`key`，可以通过类似`d.get(key, 0)`的方式让它返回`0`
-
-
-
-
-
-
 [valid-square](https://leetcode.com/problems/valid-square/)
 
 四个点平均算出中心点，中心点到四个顶点距离相同即为rectangle（注意中心点不能等于顶点）；其次，从任一顶点出发求边长，三条边中有一对边长度相同即为square
@@ -330,34 +280,6 @@ for i in itertools.combinations([1, 2, 3, 4], 2):
 ```
 
 或者：计算4个点两两之间6条边，边长不应该有0，且unique的边长只应由2个
-
-
-
-[degree-of-an-array](https://leetcode.com/problems/degree-of-an-array/)
-
-```python
-from collections import defaultdict
-
-c = defaultdict(int)
-c[1] += 1 # defaultdict(int)对任意键的初始值设为0
-```
-
-
-
-[subarray-sum-equals-k](https://leetcode.com/problems/subarray-sum-equals-k/)
-
-构建序列 $S_i = a_1 + \cdots+a_i$，问题转化为找出所有的 $(i, j)$ 使得 $S_j - S_i = k$，用two-sum思路解子问题
-注意，这两个过程可以同时进行
-
-对于数组 $[1, 2, 3, 4]$，它的prefix sum（前缀和）数组为 $[1, 3, 6, 10]$。
-
-
-
-[longest-substring-without-repeating-characters](https://leetcode.com/problems/longest-substring-without-repeating-characters/)
-
-
-
-[group-anagrams](https://leetcode.com/problems/group-anagrams/)
 
 
 
@@ -423,12 +345,6 @@ Operation efficiency:
 
 
 [find-k-pairs-with-smallest-sums](https://leetcode.com/problems/find-k-pairs-with-smallest-sums/)
-
-
-
-[valid-parentheses](https://leetcode.com/problems/valid-parentheses/)
-
-用栈
 
 
 
@@ -612,12 +528,6 @@ A greedy algorithm is any algorithm that follows the problem-solving heuristic o
 
 
 
-[best-time-to-buy-and-sell-stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
-
-前面用hash table做的
-
-
-
 [best-time-to-buy-and-sell-stock-ii](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
 
 
@@ -625,10 +535,6 @@ A greedy algorithm is any algorithm that follows the problem-solving heuristic o
 [jump-game](https://leetcode.com/problems/jump-game/)
 
 
-
-[container-with-most-water](https://leetcode.com/problems/container-with-most-water/)
-
-two pointer
 
 ## 10. Dynamic Programming
 
@@ -717,7 +623,4 @@ $$
 
 
 
-[best-time-to-buy-and-sell-stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
-
-前面有用hash table和贪心做的
 

@@ -75,7 +75,7 @@
   
   关键点在于将所有球分为3组，而不是2组，因为称了的2组可以反映出剩下1组球的信息。
   
-  <img src="/life/jobji/fig/img_asdf213.png" alt="img_asdf213" style="zoom:50%;" />
+  ![](fig/img_asdf213.png ':size=80%')
   
   通常来说，如果知道有一个球时更轻的还是更重的，那么我们可以用不超过 n 步来找出 $3^n$ 个球中的假球，因为每次称重减少问题的 $2/3$ 复杂度。如果不知道假球是更轻还是更重，我们可以用不超过 n 步来找出 $(3^n - 3)/2$ 个球中的假球。
 
@@ -93,7 +93,7 @@
 
   There are 25 horses, each of which runs at a constant speed that is different from the other horses'. Since the track only has 5 lanes, each race can have at most 5 horses. If you need to find the 3 fastest horses, what is the minimum number of races needed to identify them?
   
-  <img src="life/jobji/fig/IMG_7F1D52AD72AB-1.jpeg" alt="IMG_7F1D52AD72AB-1" style="zoom:33%;" />
+  ![](fig/IMG_7F1D52AD72AB-1.jpeg ':size=80%')
   
   首先，我们需要将每匹马都至少比赛一次；这一步之后，我们就可以把每组最后两名的马全部排除。
   
@@ -182,7 +182,7 @@
   
   这一问可以被等价转化为：限定只能扔球 $N$ 次，最多我们可以探索几层楼？
   
-  <img src="/Users/xiaotian13/E/李啸天/实习和工作/quant/offer帮/Quant Interview/fig/IMG_F7410E6F4684-1.jpeg" alt="IMG_F7410E6F4684-1" style="zoom:10%;" />
+  ![](/fig/IMG_F7410E6F4684-1.jpeg ':size=15%')
   
   最差情况，就是 $N$ 层楼，即先从 $N$ 扔一个，碎了，接下来我们从1开始一路试上去；
   

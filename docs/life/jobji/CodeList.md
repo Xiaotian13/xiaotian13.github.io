@@ -280,10 +280,6 @@ two pointers结合贪心，每次向里移动更小高度的指针，$\mathcal O
 
 <br>
 
-[31. Next Permutation](https://leetcode.com/problems/next-permutation/)
-
-<br>
-
 ### Sliding Window :id=Sliding_Window
 
 [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)

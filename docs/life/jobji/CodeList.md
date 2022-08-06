@@ -304,8 +304,6 @@ two pointers结合贪心，每次向里移动更小高度的指针，$\mathcal O
 
 用two pointers，因为每个bar能存储的水量由该点左侧最高值和右侧最高值这两个值中的最小值决定，并且 $\max L, \max R$ 是（不严格）单调增，因此我们每次只滑动当前最大值中较小的那个，可以确保滑动到的bar的“高”就是这个最小值。这样SC降为 $\mathcal O(1)$
 
-
-
 ### Sliding Window :id=Sliding_Window
 
 [121. Best Time to Buy and Sell Stock](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)
@@ -391,81 +389,7 @@ stack.pop()
 
 [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)
 
-<br>
-
-
-
-
-
-### Math & Geometry :id=Math_Geometry
-
-[66. Plus One](https://leetcode.com/problems/plus-one/)
-
-过
 
 <br>
-
-[202. Happy Number](https://leetcode.com/problems/happy-number/)
-
-过
-
-<br>
-
-[48. Rotate Image](https://leetcode.com/problems/rotate-image/), Medium
-
-显示写出旋转矩阵时的坐标变换，过
-
-<br>
-
-[54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/), Medium
-
-螺旋顺序读出矩阵，
-
-<br>
-
-[73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/), Medium
-
-自然想法是用 $\mathcal O(m+n)$ 空间，把需要归零的行列记录下来；
-
-用常数空间，即把这个记录直接合并到矩阵里
-
-<br>
-
-[50. Pow(x, n)](https://leetcode.com/problems/powx-n/), Medium
-
-直接连乘，$\mathcal O(n)$
-
-divide and conquer + recursion，$\mathcal O(\log n)$
-
-<br>
-
-[43. Multiply Strings](https://leetcode.com/problems/multiply-strings/), Medium
-
-<br>
-
-[2013. Detect Squares](https://leetcode.com/problems/detect-squares/), Medium
-
-<br>
-
-[593. Valid Square](https://leetcode.com/problems/valid-square/)
-
-四个点平均算出中心点，中心点到四个顶点距离相同即为rectangle（注意中心点不能等于顶点）；其次，从任一顶点出发求边长，三条边中有一对边长度相同即为square
-
-```python
-import itertools
-
-for i in itertools.combinations([1, 2, 3, 4], 2):
-    print(i)
-#(1, 2)
-#(1, 3)
-#(1, 4)
-#(2, 3)
-#(2, 4)
-#(3, 4)
-```
-
-或者：计算4个点两两之间6条边，边长不应该有0，且unique的边长只应由2个
-
-
 
 [返回开头](#0-刷题表纯享)

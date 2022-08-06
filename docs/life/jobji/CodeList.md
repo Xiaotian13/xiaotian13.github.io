@@ -394,20 +394,57 @@ stack.pop()
 
 ### Math & Geometry
 
+[66. Plus One](https://leetcode.com/problems/plus-one/)
 
-[66. Plus One](https://leetcode.com/problems/plus-one/), Easy
+过
 
-[202. Happy Number](https://leetcode.com/problems/happy-number/), Easy
+<br>
 
-[48. Rotate Image](https://leetcode.com/problems/rotate-image/), Medium
+[202. Happy Number](https://leetcode.com/problems/happy-number/)
 
-[54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/), Medium
+过
 
-[73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/), Medium
-- [x] [50. Pow(x, n)](https://leetcode.com/problems/powx-n/), Medium
-- [ ] [43. Multiply Strings](https://leetcode.com/problems/multiply-strings/), Medium
-- [ ] [2013. Detect Squares](https://leetcode.com/problems/detect-squares/), Medium
-- [x] [593. Valid Square](https://leetcode.com/problems/valid-square/), Medium
+<br>
+
+[48. Rotate Image](https://leetcode.com/problems/rotate-image/)
+
+显示写出旋转图片的坐标变换，过
+
+<br>
+
+[54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)
+
+
+
+<br>
+
+[73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/)
+
+自然的做法是，把有零的行和列记录下来，SC $\mathcal O(m+n)$；
+
+或者，直接把记录合并到矩阵第一行和第一列，SC缩小到 $\mathcal O(1)$
+
+<br>
+
+[50. Pow(x, n)](https://leetcode.com/problems/powx-n/)
+
+devide and conquer + recursion, $\mathcal O(\log n)$
+
+<br>
+
+[43. Multiply Strings](https://leetcode.com/problems/multiply-strings/)
+
+
+
+<br>
+
+[2013. Detect Squares](https://leetcode.com/problems/detect-squares/)
+
+
+
+<br>
+
+- [x] [593. Valid Square](https://leetcode.com/problems/valid-square/)
 
 计算4个点两两之间6条边，边长不应该有0，且unique的边长只应由2个
 ```python
@@ -423,5 +460,6 @@ for i in itertools.combinations([1, 2, 3, 4], 2):
 #(3, 4)
 ```
 
+<br>
 
 [返回开头](#0-刷题表纯享)

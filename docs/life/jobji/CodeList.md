@@ -392,4 +392,36 @@ stack.pop()
 
 <br>
 
+### Math & Geometry
+
+
+[66. Plus One](https://leetcode.com/problems/plus-one/), Easy
+
+[202. Happy Number](https://leetcode.com/problems/happy-number/), Easy
+
+[48. Rotate Image](https://leetcode.com/problems/rotate-image/), Medium
+
+[54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/), Medium
+
+[73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/), Medium
+- [x] [50. Pow(x, n)](https://leetcode.com/problems/powx-n/), Medium
+- [ ] [43. Multiply Strings](https://leetcode.com/problems/multiply-strings/), Medium
+- [ ] [2013. Detect Squares](https://leetcode.com/problems/detect-squares/), Medium
+- [x] [593. Valid Square](https://leetcode.com/problems/valid-square/), Medium
+
+计算4个点两两之间6条边，边长不应该有0，且unique的边长只应由2个
+```python
+import itertools
+
+for i in itertools.combinations([1, 2, 3, 4], 2):
+    print(i)
+#(1, 2)
+#(1, 3)
+#(1, 4)
+#(2, 3)
+#(2, 4)
+#(3, 4)
+```
+
+
 [返回开头](#0-刷题表纯享)

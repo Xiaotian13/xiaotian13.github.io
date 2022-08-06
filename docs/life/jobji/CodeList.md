@@ -6,6 +6,7 @@
 这里直接放置所有刷过的题列表。
 
 [**Arrays & Hashing:**](#Arrays_Hashing)
+
 - [x] [217. Contains Duplicate](https://leetcode.com/problems/contains-duplicate/), Easy
 - [x] [242. Valid Anagram](https://leetcode.com/problems/valid-anagram/), Easy
 - [x] [1. Two Sum](https://leetcode.com/problems/two-sum/), Easy
@@ -28,7 +29,7 @@
 - [x] [167. Two Sum II - Input Array Is Sorted](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/), Medium
 - [x] [15. 3Sum](https://leetcode.com/problems/3sum/), Medium
 - [x] [11. Container With Most Water](https://leetcode.com/problems/container-with-most-water/), Medium
-- [ ] [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/), Hard
+- [x] [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/), Hard
 
 <br>
 
@@ -43,8 +44,9 @@
 <br>
 
 [**Stack:**](#Stack)
+
 - [x] [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/), Easy
-- [ ] [155. Min Stack](https://leetcode.com/problems/min-stack/), Medium
+- [x] [155. Min Stack](https://leetcode.com/problems/min-stack/), Medium
 - [ ] [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/), Medium
 - [ ] [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/), Medium
 - [ ] [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/), Medium
@@ -55,10 +57,29 @@
 
 
 
+<br>
+
+[**Math & Geometry:**](#Math_Geometry)
+
+- [x] [66. Plus One](https://leetcode.com/problems/plus-one/), Easy
+
+- [x] [202. Happy Number](https://leetcode.com/problems/happy-number/), Easy
+- [x] [48. Rotate Image](https://leetcode.com/problems/rotate-image/), Medium
+- [ ] [54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/), Medium
+- [x] [73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/), Medium
+- [x] [50. Pow(x, n)](https://leetcode.com/problems/powx-n/), Medium
+- [ ] [43. Multiply Strings](https://leetcode.com/problems/multiply-strings/), Medium
+- [ ] [2013. Detect Squares](https://leetcode.com/problems/detect-squares/), Medium
+- [x] [593. Valid Square](https://leetcode.com/problems/valid-square/), Medium
+
+
+
 
 ## 1. 题解
 
 这里放置所有刷过题的题解。
+
+[这里](https://github.com/kobe24o/LeetCode/blob/master/LeetCode%E8%A7%A3%E9%A2%98%E6%B1%87%E6%80%BB%E7%9B%AE%E5%BD%95.md)提供了LeetCode上许多题目的中文题解。
 
 ### Arrays & Hashing :id=Arrays_Hashing
 
@@ -278,11 +299,12 @@ two pointers结合贪心，每次向里移动更小高度的指针，$\mathcal O
 
 [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/)
 
-<br>
+给定箱体，则很容易计算出箱体内能放多少水，难点在如何确定箱体
+左向右滑动得到 $\max L$，右向左滑动得到 $\max R$，计算 $\min(\max L, \max R)$，这样TC和SC均为 $\mathcal O(n)$
 
-[31. Next Permutation](https://leetcode.com/problems/next-permutation/)
+用two pointers，因为每个bar能存储的水量由该点左侧最高值和右侧最高值这两个值中的最小值决定，并且 $\max L, \max R$ 是（不严格）单调增，因此我们每次只滑动当前最大值中较小的那个，可以确保滑动到的bar的“高”就是这个最小值。这样SC降为 $\mathcal O(1)$
 
-<br>
+
 
 ### Sliding Window :id=Sliding_Window
 
@@ -334,13 +356,24 @@ chr()
 
 [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/)
 
+栈的基础运用
+
+```python
+stack = [1, 2, 3]
+stack.pop()
+```
+
 <br>
 
 [155. Min Stack](https://leetcode.com/problems/min-stack/)
 
+另建一个列表，记录每加一个新元素进去的时候当前最小是多少
+
 <br>
 
 [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/)
+
+
 
 <br>
 
@@ -358,7 +391,81 @@ chr()
 
 [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)
 
+<br>
+
+
+
+
+
+### Math & Geometry :id=Math_Geometry
+
+[66. Plus One](https://leetcode.com/problems/plus-one/)
+
+过
 
 <br>
+
+[202. Happy Number](https://leetcode.com/problems/happy-number/)
+
+过
+
+<br>
+
+[48. Rotate Image](https://leetcode.com/problems/rotate-image/), Medium
+
+显示写出旋转矩阵时的坐标变换，过
+
+<br>
+
+[54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/), Medium
+
+螺旋顺序读出矩阵，
+
+<br>
+
+[73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/), Medium
+
+自然想法是用 $\mathcal O(m+n)$ 空间，把需要归零的行列记录下来；
+
+用常数空间，即把这个记录直接合并到矩阵里
+
+<br>
+
+[50. Pow(x, n)](https://leetcode.com/problems/powx-n/), Medium
+
+直接连乘，$\mathcal O(n)$
+
+divide and conquer + recursion，$\mathcal O(\log n)$
+
+<br>
+
+[43. Multiply Strings](https://leetcode.com/problems/multiply-strings/), Medium
+
+<br>
+
+[2013. Detect Squares](https://leetcode.com/problems/detect-squares/), Medium
+
+<br>
+
+[593. Valid Square](https://leetcode.com/problems/valid-square/)
+
+四个点平均算出中心点，中心点到四个顶点距离相同即为rectangle（注意中心点不能等于顶点）；其次，从任一顶点出发求边长，三条边中有一对边长度相同即为square
+
+```python
+import itertools
+
+for i in itertools.combinations([1, 2, 3, 4], 2):
+    print(i)
+#(1, 2)
+#(1, 3)
+#(1, 4)
+#(2, 3)
+#(2, 4)
+#(3, 4)
+```
+
+或者：计算4个点两两之间6条边，边长不应该有0，且unique的边长只应由2个
+
+
 
 [返回开头](#0-刷题表纯享)

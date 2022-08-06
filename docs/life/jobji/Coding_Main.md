@@ -260,29 +260,6 @@ MD5, SHA
 
 
 
-### 4.2 Questions
-
-[valid-square](https://leetcode.com/problems/valid-square/)
-
-四个点平均算出中心点，中心点到四个顶点距离相同即为rectangle（注意中心点不能等于顶点）；其次，从任一顶点出发求边长，三条边中有一对边长度相同即为square
-
-```python
-import itertools
-
-for i in itertools.combinations([1, 2, 3, 4], 2):
-    print(i)
-#(1, 2)
-#(1, 3)
-#(1, 4)
-#(2, 3)
-#(2, 4)
-#(3, 4)
-```
-
-或者：计算4个点两两之间6条边，边长不应该有0，且unique的边长只应由2个
-
-
-
 ## 5. Heap and Stack
 
 Heap即堆，Stack即栈
@@ -620,7 +597,6 @@ $$
 
 
 [longest-palindromic-substring](https://leetcode.com/problems/longest-palindromic-substring/)
-
 
 
 

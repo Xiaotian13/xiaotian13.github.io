@@ -55,14 +55,66 @@
 
 <br>
 
+[**Binary Search:**](#Binary_Search)
 
+- [ ] [704. Binary Search](https://leetcode.com/problems/binary-search/), Easy
+- [ ] [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/), Medium
+- [ ] [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/), Medium
+- [ ] [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/), Medium
+- [ ] [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/), Medium
+- [ ] [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/), Medium
+- [ ] [4. Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/), Hard
+
+<br>
+
+[**Linked List:**](#Linked_List)
+
+- [ ] [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/), Easy
+- [x] [21. Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/), Easy
+- [ ] [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/), Easy
+- [ ] [143. Reorder List](https://leetcode.com/problems/reorder-list/), Medium
+- [ ] [19. Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/), Medium
+- [ ] [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/), Medium
+- [ ] [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/), Medium
+- [ ] [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/), Medium
+- [ ] [146. LRU Cache](https://leetcode.com/problems/lru-cache/), Medium
+- [ ] [23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/), Hard
+- [ ] [25. Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/), Hard
+
+<br>
+
+[**Trees:**](#Trees)
+
+- [ ] [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/), Easy
+- [x] [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/), Easy
+- [x] [111. Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/), Easy
+- [ ] [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/), Easy
+- [x] [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/), Easy
+- [ ] [100. Same Tree](https://leetcode.com/problems/same-tree/), Easy
+- [ ] [572. Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/), Easy
+- [ ] [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/), Easy
+- [ ] [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/), Medium
+- [ ] [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/), Medium
+- [ ] [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/), Medium
+- [ ] [98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/), Medium
+- [ ] [230. Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/), Medium
+- [ ] [105. Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/), Medium
+- [ ] [124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/), Hard
+- [ ] [297. Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/), Hard
+
+<br>
+
+[**Tries:**](#Tries)
+
+- [ ] [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/), Medium
+- [ ] [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/), Medium
+- [ ] [212. Word Search II](https://leetcode.com/problems/word-search-ii/), Hard
 
 <br>
 
 [**Math & Geometry:**](#Math_Geometry)
 
 - [x] [66. Plus One](https://leetcode.com/problems/plus-one/), Easy
-
 - [x] [202. Happy Number](https://leetcode.com/problems/happy-number/), Easy
 - [x] [48. Rotate Image](https://leetcode.com/problems/rotate-image/), Medium
 - [ ] [54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/), Medium
@@ -71,6 +123,7 @@
 - [ ] [43. Multiply Strings](https://leetcode.com/problems/multiply-strings/), Medium
 - [ ] [2013. Detect Squares](https://leetcode.com/problems/detect-squares/), Medium
 - [x] [593. Valid Square](https://leetcode.com/problems/valid-square/), Medium
+- [x] [204. Count Primes](https://leetcode.com/problems/count-primes/), Medium
 
 
 
@@ -344,6 +397,8 @@ chr()
 
 [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/)
 
+
+
 <br>
 
 [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
@@ -389,10 +444,200 @@ stack.pop()
 
 [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)
 
+<br>
+
+### Binary Search :id=Binary_Search
+
+[704. Binary Search](https://leetcode.com/problems/binary-search/)
 
 <br>
 
-### Math & Geometry
+[74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/)
+
+<br>
+
+[875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)
+
+<br>
+
+[33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+
+<br>
+
+[153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
+
+<br>
+
+[981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/)
+
+<br>
+
+[4. Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)
+
+<br>
+
+### Linked List :id=Linked_List
+
+[206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)
+
+<br>
+
+[21. Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)
+
+考察linked list的基础运用
+
+<br>
+
+[141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)
+
+<br>
+
+[143. Reorder List](https://leetcode.com/problems/reorder-list/)
+
+<br>
+
+[19. Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)
+
+<br>
+
+[138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/)
+
+<br>
+
+[2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/)
+
+<br>
+
+[287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)
+
+<br>
+
+[146. LRU Cache](https://leetcode.com/problems/lru-cache/)
+
+<br>
+
+[23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/)
+
+<br>
+
+[25. Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/)
+
+
+
+### Trees :id=Trees
+
+[226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/)
+
+<br>
+
+[104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
+
+recursion
+
+<br>
+
+[111. Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
+
+recursion
+
+<br>
+
+[543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/)
+
+<br>
+
+[110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/)
+
+二叉平衡树：
+Balanced tree: a binary tree in which the left and right subtrees of **every** node differ in height by no more than 1.
+
+用递归，左子树和右子树都要是平衡树，且两者深度相差不超过1
+
+<br>
+
+[100. Same Tree](https://leetcode.com/problems/same-tree/)
+
+<br>
+
+[572. Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/)
+
+<br>
+
+[235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+
+<br>
+
+[102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/)
+
+<br>
+
+[199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/)
+
+<br>
+
+[1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/)
+
+<br>
+
+[98. Validate Binary Search Tree](https://leetcode.com/problems/validate-binary-search-tree/)
+
+二叉搜索树：
+a valid binary search tree (BST) is defined as follows:
+
+- The left subtree of a node contains only nodes with keys less than the node's key.
+- The right subtree of a node contains only nodes with keys greater than the node's key.
+- Both the left and right subtrees must also be binary search trees.
+
+同时查看左子树和右子树是否有效，对左子树而言，根节点的值就是左子树的上界
+
+<br>
+
+[230. Kth Smallest Element in a BST](https://leetcode.com/problems/kth-smallest-element-in-a-bst/)
+
+<br>
+
+[105. Construct Binary Tree from Preorder and Inorder Traversal](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/)
+
+<br>
+
+[124. Binary Tree Maximum Path Sum](https://leetcode.com/problems/binary-tree-maximum-path-sum/)
+
+<br>
+
+[297. Serialize and Deserialize Binary Tree](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)
+
+
+
+### Tries :id=Tries
+
+[208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/)
+
+<br>
+
+[211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/)
+
+<br>
+
+[212. Word Search II](https://leetcode.com/problems/word-search-ii/)
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+### Math & Geometry :id=Math_Geometry
 
 [66. Plus One](https://leetcode.com/problems/plus-one/)
 
@@ -444,9 +689,9 @@ devide and conquer + recursion, $\mathcal O(\log n)$
 
 <br>
 
-- [x] [593. Valid Square](https://leetcode.com/problems/valid-square/)
+[593. Valid Square](https://leetcode.com/problems/valid-square/)
 
-计算4个点两两之间6条边，边长不应该有0，且unique的边长只应由2个
+计算4个点两两之间6条边，边长不应该有0，且unique的边长只应有2个
 ```python
 import itertools
 
@@ -461,5 +706,13 @@ for i in itertools.combinations([1, 2, 3, 4], 2):
 ```
 
 <br>
+
+[204. Count Primes](https://leetcode.com/problems/count-primes/)
+
+用Sieve of Eratosthenes，厄拉多塞筛法。如果 $n \leq N$，且 $n$ 是合数，则 $n$ 必能被一个不大于 $\sqrt{N}$ 的素数所整除。因此，从 $2$ 开始向上搜，把所有 $2$ 的倍数全划掉，一直搜到 $\sqrt{N}$。
+
+
+
+
 
 [返回开头](#0-刷题表纯享)

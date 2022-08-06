@@ -33,11 +33,6 @@ Operation efficiency:
 ### 1.2 Questions
 
 
-[merge-two-sorted-lists](https://leetcode.com/problems/merge-two-sorted-lists/)
-
-考察linked list的基础运用
-
-
 
 [find-first-and-last-position-of-element-in-sorted-array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 
@@ -66,9 +61,7 @@ print(binary_search([1, 2, 2, 2, 5, 6, 7, 7, 9], 2))
 
 
 
-[count-primes](https://leetcode.com/problems/count-primes/)
 
-用Sieve of Eratosthenes，厄拉多塞筛法。如果 $n \leq N$，且 $n$ 是合数，则 $n$ 必能被一个不大于 $\sqrt{N}$ 的素数所整除。因此，从 $2$ 开始向上搜，把所有 $2$ 的倍数全划掉，一直搜到 $\sqrt{N}$。
 
 
 
@@ -91,19 +84,6 @@ String即字符串。
 
 ### 2.2 Questions
 
-[reverse-words-in-a-string](https://leetcode.com/problems/reverse-words-in-a-string/)
-
-```python
-s = ' asd asd '
-
-# 注意区分
-ls = s.split(' ') # ['', 'asd', '', 'asd', '']
-s.split() # [' ', 'asd', ' ', 'asd', ' ']
-
-s = ' asd you '
-print(' '.join(s.split()) == 'asd you') # 用空格去拼接
-```
-
 
 
 [roman-to-integer](https://leetcode.com/problems/roman-to-integer/)
@@ -115,8 +95,6 @@ print(' '.join(s.split()) == 'asd you') # 用空格去拼接
 ## 3. Tree and Binary Tree
 
 Tree即树，它不是线性结构。
-
-### 3.1 Basic Knowledge
 
 node root
 
@@ -169,47 +147,10 @@ A complete binary tree is just like a full binary tree, but with two major diffe
 
 
 
-### 3.2 Questions
-
-[minimum-depth-of-binary-tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/)
-
-用递归
-
-
-
-[maximum-depth-of-binary-tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
-
-用递归
-
-
-
-[balanced-binary-tree](https://leetcode.com/problems/balanced-binary-tree/)
-
-二叉平衡树：
-Balanced tree: a binary tree in which the left and right subtrees of **every** node differ in height by no more than 1.
-
-用递归，左子树和右子树都要是平衡树，且两者深度相差不超过1
-
-
-
-[validate-binary-search-tree](https://leetcode.com/problems/validate-binary-search-tree/)
-
-二叉搜索树：
-a valid binary search tree (BST) is defined as follows:
-- The left subtree of a node contains only nodes with keys less than the node's key.
-- The right subtree of a node contains only nodes with keys greater than the node's key.
-- Both the left and right subtrees must also be binary search trees.
-
-中等难度，同时查看左子树和右子树是否有效，对左子树而言，根节点的值就是左子树的上界
-
-
-
 
 ## 4. Hash Table (Dictionary)
 
 Hash Table即哈希表。
-
-### 4.1 Basic Knowledge
 
 Hash Map is a Key-Value pair.
 

@@ -66,3 +66,10 @@
 
 
 
+**第6天，2022-08-06：**
+
+- 上午刷leetcode
+- 下午刷leetcode
+- 晚上刷leetcode
+- NeetCode记录：35/150
+- 加油！！

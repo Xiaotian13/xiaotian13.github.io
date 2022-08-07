@@ -972,7 +972,7 @@ $$
      \sigma_X^2 = \sigma_Y^2 = \sigma_Z^2, \quad Corr(X,Y) = \rho.
      $$
 
-  2. How do you generate random numbers with distribution other than uniform distribution from uniform distributed random numbers?
+  2. How do you generate random variables that follows $N(\mu, \sigma^2)$? If your computer can only generate random variables that follow continuous uniform distribution between 0 and 1?
 
      可以使用两种方法。
 

@@ -47,9 +47,9 @@
 
 - [x] [20. Valid Parentheses](https://leetcode.com/problems/valid-parentheses/), Easy
 - [x] [155. Min Stack](https://leetcode.com/problems/min-stack/), Medium
-- [ ] [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/), Medium
-- [ ] [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/), Medium
-- [ ] [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/), Medium
+- [x] [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/), Medium
+- [x] [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/), Medium
+- [x] [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/), Medium
 - [ ] [853. Car Fleet](https://leetcode.com/problems/car-fleet/), Medium
 - [ ] [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/), Hard
 
@@ -57,7 +57,7 @@
 
 [**Binary Search:**](#Binary_Search)
 
-- [ ] [704. Binary Search](https://leetcode.com/problems/binary-search/), Easy
+- [x] [704. Binary Search](https://leetcode.com/problems/binary-search/), Easy
 - [ ] [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/), Medium
 - [ ] [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/), Medium
 - [ ] [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/), Medium
@@ -69,7 +69,7 @@
 
 [**Linked List:**](#Linked_List)
 
-- [ ] [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/), Easy
+- [x] [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/), Easy
 - [x] [21. Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/), Easy
 - [ ] [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/), Easy
 - [ ] [143. Reorder List](https://leetcode.com/problems/reorder-list/), Medium
@@ -426,15 +426,30 @@ stack.pop()
 
 [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/)
 
+对栈的基础运用
 
+```python
+int(6 / -132) # 向0取整
+```
 
 <br>
 
 [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/)
 
+用dp，首先是 $() + dp[n-1]$，然后是 $(dp[1]) + dp[n-2]$，一直到 $(dp[n-1])$ ；
+
+我们只能加入 $n$ 个 '(' 以及 $n$ 个 ')'，因此，我们从零开始构造答案时，每一步我们都可以选择加入一个 '(' 或者一个 ')'，这样就能构造一个二叉树，二叉树最下面的一层就是我们想要的结果。这样我们可以用backtrack去做，
+也可以用DFS（+ stack）去做
+
+三种解法，DFS最快
+
 <br>
 
 [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/)
+
+最直接的想法是用同向two pointers，TC最差 $\mathcal O(n^2)$，不可取；
+
+用Monotonic (decreasing) Stack，（非严格）单调（递减）栈。即，设计一个单调递减的栈，每次存元素时，保持栈里元素的单调递减；一直pop到栈为空或者有一个元素大于当前元素为止，那么那些被弹出元素对应的原始位置，结果就是原始位置和当前元素位置的差。TC和SC都是 $\mathcal O(n)$ 
 
 <br>
 
@@ -449,6 +464,25 @@ stack.pop()
 ### Binary Search :id=Binary_Search
 
 [704. Binary Search](https://leetcode.com/problems/binary-search/)
+
+最基础的二分查找，TC $\mathcal O(\log n)$，找到目标值就退出：
+
+```python
+def search(nums, target):
+    l, r = 0, len(nums) - 1
+    while l <= r:
+        m = (l + r) // 2
+        # to avoid overflow:
+        # m = l + (r - l) // 2
+        if nums[m] == target:
+            return m
+        elif nums[m] < target:
+            l = m + 1
+        else:
+            r = m - 1
+    else:
+    	return -1
+```
 
 <br>
 
@@ -479,6 +513,10 @@ stack.pop()
 ### Linked List :id=Linked_List
 
 [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)
+
+通过设置prev curr指针，可以做到两个 $\mathcal O(n)$；
+
+用recursion，将空间复杂度降到 $\mathcal O(1)$
 
 <br>
 

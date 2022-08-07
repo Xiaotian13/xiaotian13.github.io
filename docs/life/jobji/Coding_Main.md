@@ -61,10 +61,6 @@ print(binary_search([1, 2, 2, 2, 5, 6, 7, 7, 9], 2))
 
 
 
-
-
-
-
 ## 2. String
 
 String即字符串。

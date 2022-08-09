@@ -39,7 +39,7 @@
 - [x] [424. Longest Repeating Character Replacement](https://leetcode.com/problems/longest-repeating-character-replacement/), Medium
 - [x] [567. Permutation in String](https://leetcode.com/problems/permutation-in-string/), Medium
 - [ ] [76. Minimum Window Substring](https://leetcode.com/problems/minimum-window-substring/), Hard
-- [ ] [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/), Hard
+- [x] [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/), Hard
 
 <br>
 
@@ -50,7 +50,7 @@
 - [x] [150. Evaluate Reverse Polish Notation](https://leetcode.com/problems/evaluate-reverse-polish-notation/), Medium
 - [x] [22. Generate Parentheses](https://leetcode.com/problems/generate-parentheses/), Medium
 - [x] [739. Daily Temperatures](https://leetcode.com/problems/daily-temperatures/), Medium
-- [ ] [853. Car Fleet](https://leetcode.com/problems/car-fleet/), Medium
+- [x] [853. Car Fleet](https://leetcode.com/problems/car-fleet/), Medium
 - [ ] [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/), Hard
 
 <br>
@@ -58,10 +58,10 @@
 [**Binary Search:**](#Binary_Search)
 
 - [x] [704. Binary Search](https://leetcode.com/problems/binary-search/), Easy
-- [ ] [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/), Medium
-- [ ] [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/), Medium
-- [ ] [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/), Medium
-- [ ] [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/), Medium
+- [x] [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/), Medium
+- [x] [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/), Medium
+- [x] [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/), Medium
+- [x] [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/), Medium
 - [ ] [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/), Medium
 - [ ] [4. Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/), Hard
 
@@ -403,7 +403,19 @@ chr()
 
 [239. Sliding Window Maximum](https://leetcode.com/problems/sliding-window-maximum/)
 
+![img](https://bloggg-1254259681.cos.na-siliconvalley.myqcloud.com/dq7aw.jpg)
 
+Monotonically Decreasing Queue 单调递减队列，是 Deque 双端队列的一种；
+```python
+from collections import deque
+
+q = deque()
+q.append(1)
+q.append(2)
+q.pop()
+q.popleft()
+```
+deque的`popleft()`与`pop()`都是 $\mathcal O(1)$ 的操作，因此这道题是使用deque的经典题，用后只需要扫一遍就能得出答案，TC和SC为 $\mathcal O(n)$
 
 <br>
 
@@ -457,6 +469,17 @@ int(6 / -132) # 向0取整
 
 [853. Car Fleet](https://leetcode.com/problems/car-fleet/)
 
+Python排序并获取对应下标：
+```python
+x = [5, 6, 3, 8]
+b = sorted(enumerate(x), key=lambda x: x[1]) 
+print(b) # [(2, 3), (0, 5), (1, 6), (3, 8)]
+```
+
+比如 target = 10，position = [0, 2, 4]，speed = [2, 3, 1]，这里的position已经排过序，首先计算他们各自到终点需要的时间：T = [5, 2.6, 6]；然后从右往左看，2.6 < 6，说明car2车能赶上car3，这个2.6就被6”吸收“掉了，因为car2赶上car3后会以car3的速度走；再看，5 < 6，说明car1也能赶上car3，因此fleet = 3 - 1 - 1 = 1。TC $\mathcal O(n \log n)$，空间稍微用多点
+
+上面描述的方法，后面操作部分可以动态用stack做。这样空间消耗少很多
+
 <br>
 
 [84. Largest Rectangle in Histogram](https://leetcode.com/problems/largest-rectangle-in-histogram/)
@@ -490,17 +513,32 @@ def search(nums, target):
 
 [74. Search a 2D Matrix](https://leetcode.com/problems/search-a-2d-matrix/)
 
+二维的二分查找，先确定行数，再确定列数，TC $\mathcal O(\log m + \log n)$，$m$ 行 $n$ 列
+
 <br>
 
 [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/)
+
+$k$ 最小可能是1，最大可能是数列中最大的数，因此对这个范围做二分搜索
 
 <br>
 
 [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
 
+直观思路是先找出pivot，再分开做二分查找，这种做法应该可行，实际因为找pivot的方法错误，报错过多；
+
+直接用二分。如果中间值大于等于左指针，说明我们在左半部分。此时如果目标值大于中间值，或者目标值小于左指针，说明目标值应该在右侧，应移动左指针；否则移动右指针。
+如果中间值小于右指针，说明我们在右半部分。如果目标值小于中间值，或者目标值大于右指针，说明目标值应该在左侧，应移动右指针；否则移动左指针。
+
 <br>
 
 [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/)
+
+这题直接就是找出pivot，那就整
+首先排除edge case：只有一个数的情况，只有两个数的情况；数列超过三个数字时，第一个数字最小和最后一个数字最小的情况
+这样，我们就保证最小值/pivot一定在中间部分，此时直接做二分搜索。如果中间值满足小于前后两个值，则该中间值就是最小值；如果该中间值大于整个数列的第一个数字，说明我们在数列的左半部分，则右指针左移；否则左指针右移
+
+也可以直接二分。首先判断，如果右指针大于左指针，说明此时的数列已经是单调增了，那么当前最小就是左指针；如果中间值大于等于左指针，说明在左半部分，右指针左移；最后一种情况，左指针右移。每次要对比当前中间值与上次相比是否是最小的，因此这种方法没有上面那种快
 
 <br>
 

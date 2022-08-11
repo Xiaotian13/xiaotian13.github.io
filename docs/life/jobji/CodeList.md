@@ -62,7 +62,7 @@
 - [x] [875. Koko Eating Bananas](https://leetcode.com/problems/koko-eating-bananas/), Medium
 - [x] [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/), Medium
 - [x] [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/), Medium
-- [ ] [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/), Medium
+- [x] [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/), Medium
 - [ ] [4. Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/), Hard
 
 <br>
@@ -71,7 +71,7 @@
 
 - [x] [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/), Easy
 - [x] [21. Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/), Easy
-- [ ] [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/), Easy
+- [x] [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/), Easy
 - [ ] [143. Reorder List](https://leetcode.com/problems/reorder-list/), Medium
 - [ ] [19. Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/), Medium
 - [ ] [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/), Medium
@@ -544,6 +544,14 @@ $k$ 最小可能是1，最大可能是数列中最大的数，因此对这个范
 
 [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/)
 
+如果在存储的时候能保持有序，则在查询的时候就可以用二分：
+```python
+ls = []
+ls.insert(0, 'asd') # 在第0处插入'asd'
+```
+
+然而，这道题在存的时候就已经自动保持有序了（最好和面试官check一下），因此查询的时候可以直接二分
+
 <br>
 
 [4. Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)
@@ -567,6 +575,10 @@ $k$ 最小可能是1，最大可能是数列中最大的数，因此对这个范
 <br>
 
 [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/)
+
+Python里的class也是可以hash的，因此直接做法就是把所有访问过的节点全都放到`set()`里；
+
+Floyd's Tortoise and Hare算法：设置一个slow pointer和一个fast pointer，如果有loop，那么fast pointer会和slow pointer相遇。假设它俩之间的gap是 $m$，那么只需要 $m$ 步两者就能相遇，因此这个算法的TC依然是 $\mathcal O(n)$，SC降为 $\mathcal O(1)$
 
 <br>
 

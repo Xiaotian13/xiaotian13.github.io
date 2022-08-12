@@ -4,10 +4,6 @@
 
 array即向量。这里指的是（有序）列表。
 
-
-
-### 1.1 Basic Knowledge
-
 还有linked list
 
 Operation efficiency:
@@ -29,35 +25,6 @@ Operation efficiency:
 - 使用其他结构如hash table
 
 
-
-### 1.2 Questions
-
-
-
-[find-first-and-last-position-of-element-in-sorted-array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
-
-考察对二分查找的应用，$\mathcal{O}(\log n)$
-
-最基础的二分查找，找到目标值就退出：
-```python
-def binary_search(_list, value):
-    left = 0   # 列表的起始索引
-    right = len(_list)   # 列表的结束索引
-    mid = (left + right) // 2 # 采用此方法，通过四舍五入刚好可以定位到列表的中间位置
-    while left < right:
-        if _list[mid] == value:
-            return mid
-        elif _list[mid] < value:
-            left = mid
-        else:
-            right = mid
-        mid = (right + left) // 2
-    else:
-        return -1
-
-print(binary_search([1, 2, 2, 2, 5, 6, 7, 7, 9], 2))
-```
-本题即为找到目标值后继续搜，直到两个指针相遇
 
 
 
@@ -248,12 +215,6 @@ Operation efficiency:
 
 ### 5.2 Questions
 
-[kth-largest-element-in-an-array](https://leetcode.com/problems/kth-largest-element-in-an-array/)
-
-用heap
-
-
-
 [top-k-frequent-elements](https://leetcode.com/problems/top-k-frequent-elements/)
 
 
@@ -393,6 +354,12 @@ Backtrack:
 
 
 ## 8. SQL
+
+
+
+Top 25 SQL Interview Questions and Answers
+
+
 
 [combine-two-tables](https://leetcode.com/problems/combine-two-tables/)
 

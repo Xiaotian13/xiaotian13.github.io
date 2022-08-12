@@ -63,6 +63,7 @@
 - [x] [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/), Medium
 - [x] [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/), Medium
 - [x] [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/), Medium
+- [x] [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
 - [ ] [4. Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/), Hard
 
 <br>
@@ -72,11 +73,11 @@
 - [x] [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/), Easy
 - [x] [21. Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/), Easy
 - [x] [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/), Easy
-- [ ] [143. Reorder List](https://leetcode.com/problems/reorder-list/), Medium
-- [ ] [19. Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/), Medium
+- [x] [143. Reorder List](https://leetcode.com/problems/reorder-list/), Medium
+- [x] [19. Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/), Medium
 - [ ] [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/), Medium
-- [ ] [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/), Medium
-- [ ] [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/), Medium
+- [x] [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/), Medium
+- [x] [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/), Medium
 - [ ] [146. LRU Cache](https://leetcode.com/problems/lru-cache/), Medium
 - [ ] [23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/), Hard
 - [ ] [25. Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/), Hard
@@ -109,6 +110,18 @@
 - [ ] [208. Implement Trie (Prefix Tree)](https://leetcode.com/problems/implement-trie-prefix-tree/), Medium
 - [ ] [211. Design Add and Search Words Data Structure](https://leetcode.com/problems/design-add-and-search-words-data-structure/), Medium
 - [ ] [212. Word Search II](https://leetcode.com/problems/word-search-ii/), Hard
+
+<br>
+
+[**Heap / Priority Queue:**](#HeapOrPriorityQueue)
+
+- [ ] [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/)
+- [ ] [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/)
+- [ ] [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)
+- [ ] [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+- [ ] [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/)
+- [ ] [355. Design Twitter](https://leetcode.com/problems/design-twitter/)
+- [ ] [295. Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)
 
 <br>
 
@@ -554,6 +567,13 @@ ls.insert(0, 'asd') # 在第0处插入'asd'
 
 <br>
 
+[34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+
+本题即为找到目标值后继续搜，直到两个指针相遇；
+左边界二分搜索和右边界二分搜索
+
+<br>
+
 [4. Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/)
 
 <br>
@@ -562,15 +582,15 @@ ls.insert(0, 'asd') # 在第0处插入'asd'
 
 [206. Reverse Linked List](https://leetcode.com/problems/reverse-linked-list/)
 
-通过设置prev curr指针，可以做到两个 $\mathcal O(n)$；
+通过设置prev curr指针，可以做到TC $\mathcal O(n)$，SC $\mathcal O(1)$；
 
-用recursion，将空间复杂度降到 $\mathcal O(1)$
+用recursion，将空间复杂度升到 $\mathcal O(n)$
 
 <br>
 
 [21. Merge Two Sorted Lists](https://leetcode.com/problems/merge-two-sorted-lists/)
 
-考察linked list的基础运用
+考察linked list的基础运用，在最左侧加dummy node
 
 <br>
 
@@ -584,9 +604,17 @@ Floyd's Tortoise and Hare算法：设置一个slow pointer和一个fast pointer�
 
 [143. Reorder List](https://leetcode.com/problems/reorder-list/)
 
+直接做法，把每个节点都存起来，这样是 $\mathcal O(n)$ 的额外空间；
+
+或者，将整个链（通过slow fast pointer）分为两部分，将后半段链顺序反向，再将两端链merge起来，这样额外空间 $\mathcal O(1)$
+
 <br>
 
 [19. Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/)
+
+直接把每个节点都存起来，可做；
+
+还是类似用slow fast pointer的思想，设置两个指针，这两个指针之间的距离即为 $n$，直到右指针移到空（需要在最左加dummy），不需要额外空间
 
 <br>
 
@@ -596,9 +624,14 @@ Floyd's Tortoise and Hare算法：设置一个slow pointer和一个fast pointer�
 
 [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/)
 
+注意edge case，感觉这题没什么意思，一定程度提高一点对链表操作的熟练度
+
 <br>
 
 [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/)
+
+注意题目的约束条件：列表内的每个数字取值范围 $[1, n]$，列表长度为 $n+1$，且列表内有且仅有一个重复数字，即说明列表一定类似 $[1, 2, 3, 1]$ 这种形式。
+这是一个链表问题。构建一个从0开始的链表，0指向位置0处存储的1，再指向位置1处存储的2，再指向位置2处存储的3，再指向位置3处存储的1，这里注意到我们的链表已经出现了一个环。用Floyd算法，设置一个slow pointer和一个fast pointer，记录他们第一次相遇的地方，假设进入环前的距离为 $p$，相遇的地方离环的入口距离为 $x$，环的长度为 $c$，则根据慢指针走过的所有距离应是快指针的一半这一关系，能够得到 $2(p + c - x) = p + (c-x) + c$，化简得到 $p = x$。上面的情况是简单情况，总之，再从起点放置一个慢指针，与相遇位置指针同速运动，再相遇时对应数字即为结果。
 
 <br>
 
@@ -710,22 +743,62 @@ a valid binary search tree (BST) is defined as follows:
 
 [212. Word Search II](https://leetcode.com/problems/word-search-ii/)
 
+
+
+### Heap / Priority Queue :id=HeapOrPriorityQueue
+
+[703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/)
+
+如果维护一个有序数组，排序是 $\mathcal O(n \log n)$，每次插入都是 $\mathcal O(n)$，成本较高；
+
+使用Python的`heapq`模块：
+```python
+import heapq
+# 默认是最小堆，通过加负值转化为最大堆
+heapq.heappush(heap, item)
+
+heapq.heapify(list) # TC: O(n)；这个函数不会返回，用法类似ls.sort()
+
+heapq.heappop(heap) 
+
+heapq.nlargest(n,heap) 
+
+heapq.nsmallest(n,heap) 
+```
+用min heap with size $k$，这样最小堆的顶部就是倒数第 $k$ 大的，因为我们只会加数字进去而不会删，因此不在堆里的数字（更小的数字）永远不会再被用到。同时`heapify`转化堆是 $\mathcal O(n)$，堆的增删都是 $\mathcal O(\log n)$ 
+
 <br>
 
-
-
-
-
-
-
-
-
-
-
+[1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/)
 
 
 
 <br>
+
+[973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)
+
+<br>
+
+[215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)
+
+直接用`heapq`能过；
+
+
+
+<br>
+
+[621. Task Scheduler](https://leetcode.com/problems/task-scheduler/)
+
+<br>
+
+[355. Design Twitter](https://leetcode.com/problems/design-twitter/)
+
+<br>
+
+[295. Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)
+
+
+
 
 ### Math & Geometry :id=Math_Geometry
 

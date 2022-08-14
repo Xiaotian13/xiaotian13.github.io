@@ -34,24 +34,12 @@ String即字符串。
 
 
 
-### 2.1 Basic Knowledge
-
 典型解题思路：
 
 - Brute Force 暴力求解
 - Simulation 按题目指示去按步操作（更多考察coding实现能力
 - Detail implementation
 - Dynamic programming / Recursion 
-
-
-
-### 2.2 Questions
-
-
-
-[roman-to-integer](https://leetcode.com/problems/roman-to-integer/)
-
-如果一个更小的罗马数字出现在了前面，则说明是要减掉的，而不是加上。如，$\text{IV} = 5 - 1, \text{VI} = 5+1$。
 
 
 
@@ -227,12 +215,6 @@ Operation efficiency:
 
 
 
-[binary-tree-inorder-traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)
-
-二叉树的中序遍历
-
-
-
 ## 6. DFS, Backtrack, and Recursion
 
 DFS, Depth First Search, 深度优先搜索
@@ -285,31 +267,7 @@ Backtrack:
 
 
 
-[letter-combinations-of-a-phone-number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
-
-
-
-[palindrome-partitioning](https://leetcode.com/problems/palindrome-partitioning/)
-
-
-
-[permutations](https://leetcode.com/problems/permutations/)
-
-
-
-[generate-parentheses](https://leetcode.com/problems/generate-parentheses/)
-
-
-
-[word-search](https://leetcode.com/problems/word-search/)
-
-
-
 [jump-game-iii](https://leetcode.com/problems/jump-game-iii/)
-
-
-
-[combination-sum](https://leetcode.com/problems/combination-sum/)
 
 
 
@@ -337,17 +295,7 @@ Backtrack:
 
 
 
-[kth-largest-element-in-an-array](https://leetcode.com/problems/kth-largest-element-in-an-array/)
-
-上面有用heap的解法
-
-
-
 [longest-substring-with-at-least-k-repeating-characters](https://leetcode.com/problems/longest-substring-with-at-least-k-repeating-characters/)
-
-
-
-[search-in-rotated-sorted-array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
 
 
 
@@ -421,10 +369,6 @@ A greedy algorithm is any algorithm that follows the problem-solving heuristic o
 
 动态规划
 
-### 10.1 Basic Knowledge
-
-
-
 1. Dynamic programming is one of the most popular questions in OA and interviews.
 2. The most common question is asking for the minimum/maximum value.
 3. The core is to find the optimal sub-structure (最优子结构) of the problem.
@@ -469,38 +413,3 @@ A greedy algorithm is any algorithm that follows the problem-solving heuristic o
   ```
 
   
-
-### 10. 2 Questions
-
-[climbing-stairs](https://leetcode.com/problems/climbing-stairs/)
-
-Fibonacci Number
-
-
-
-[triangle](https://leetcode.com/problems/triangle/)
-
-从下往上，可以直接利用给定数组覆盖，能节省空间
-
-
-
-[unique-paths](https://leetcode.com/problems/unique-paths/)
-
-打表
-
-
-
-[house-robber](https://leetcode.com/problems/house-robber/)
-$$
-f(k) = \max\left( f(k-1), f(k-2)+\text{nums}(k) \right)
-$$
-
-
-[maximum-subarray](https://leetcode.com/problems/maximum-subarray/)
-
-
-
-[longest-palindromic-substring](https://leetcode.com/problems/longest-palindromic-substring/)
-
-
-

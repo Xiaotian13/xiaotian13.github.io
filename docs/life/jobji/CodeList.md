@@ -75,7 +75,7 @@
 - [x] [141. Linked List Cycle](https://leetcode.com/problems/linked-list-cycle/), Easy
 - [x] [143. Reorder List](https://leetcode.com/problems/reorder-list/), Medium
 - [x] [19. Remove Nth Node From End of List](https://leetcode.com/problems/remove-nth-node-from-end-of-list/), Medium
-- [ ] [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/), Medium
+- [x] [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/), Medium
 - [x] [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/), Medium
 - [x] [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/), Medium
 - [ ] [146. LRU Cache](https://leetcode.com/problems/lru-cache/), Medium
@@ -94,6 +94,7 @@
 - [ ] [100. Same Tree](https://leetcode.com/problems/same-tree/), Easy
 - [ ] [572. Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/), Easy
 - [ ] [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/), Easy
+- [ ] [94. Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/), Easy
 - [ ] [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/), Medium
 - [ ] [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/), Medium
 - [ ] [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/), Medium
@@ -115,13 +116,87 @@
 
 [**Heap / Priority Queue:**](#HeapOrPriorityQueue)
 
-- [ ] [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/)
-- [ ] [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/)
-- [ ] [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)
-- [ ] [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/)
-- [ ] [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/)
-- [ ] [355. Design Twitter](https://leetcode.com/problems/design-twitter/)
-- [ ] [295. Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)
+- [x] [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/), Easy
+- [x] [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/), Easy
+- [ ] [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/), Medium
+- [ ] [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/), Medium
+- [ ] [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/), Medium
+- [ ] [355. Design Twitter](https://leetcode.com/problems/design-twitter/), Medium
+- [ ] [295. Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/), Hard
+
+<br>
+
+[**Backtracking:**](#Backtracking)
+
+- [ ] [78. Subsets](https://leetcode.com/problems/subsets/), Medium
+- [ ] [39. Combination Sum](https://leetcode.com/problems/combination-sum/), Medium
+- [ ] [46. Permutations](https://leetcode.com/problems/permutations/), Medium
+- [ ] [90. Subsets II](https://leetcode.com/problems/subsets-ii/), Medium
+- [ ] [40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/), Medium
+- [ ] [79. Word Search](https://leetcode.com/problems/word-search/), Medium
+- [ ] [131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/), Medium
+- [ ] [17. Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/), Medium
+- [ ] [51. N-Queens](https://leetcode.com/problems/n-queens/), Hard
+
+<br>
+
+[**1-D Dynamic Programming:**](#1D_Dynamic_Programming)
+
+- [x] [70. Climbing Stairs](https://leetcode.com/problems/climbing-stairs/), Easy
+- [ ] [746. Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/), Easy
+- [x] [198. House Robber](https://leetcode.com/problems/house-robber/), Medium
+- [ ] [213. House Robber II](https://leetcode.com/problems/house-robber-ii/), Medium
+- [ ] [5. Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/), Medium
+- [ ] [647. Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/), Medium
+- [ ] [91. Decode Ways](https://leetcode.com/problems/decode-ways/), Medium
+- [ ] [322. Coin Change](https://leetcode.com/problems/coin-change/), Medium
+- [ ] [152. Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/), Medium
+- [ ] [139. Word Break](https://leetcode.com/problems/word-break/), Medium
+- [ ] [300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/), Medium
+- [ ] [416. Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/), Medium
+- [x] [120. Triangle](https://leetcode.com/problems/triangle/), Medium
+
+<br>
+
+[**2-D Dynamic Programming:**](#2D_Dynamic_Programming)
+
+- [x] [62. Unique Paths](https://leetcode.com/problems/unique-paths/), Medium
+- [ ] [1143. Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/), Medium
+- [ ] [309. Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/), Medium
+- [ ] [518. Coin Change 2](https://leetcode.com/problems/coin-change-2/), Medium
+- [ ] [494. Target Sum](https://leetcode.com/problems/target-sum/), Medium
+- [ ] [97. Interleaving String](https://leetcode.com/problems/interleaving-string/), Medium
+- [ ] [329. Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/), Hard
+- [ ] [115. Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/), Hard
+- [ ] [72. Edit Distance](https://leetcode.com/problems/edit-distance/), Hard
+- [ ] [312. Burst Balloons](https://leetcode.com/problems/burst-balloons/), Hard
+- [ ] [10. Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/), Hard
+
+<br>
+
+[**Greedy:**](#Greedy)
+
+- [ ] [455. Assign Cookies](https://leetcode.com/problems/assign-cookies/), Easy
+
+- [ ] [53. Maximum Subarray](https://leetcode.com/problems/maximum-subarray/), Medium
+- [ ] [55. Jump Game](https://leetcode.com/problems/jump-game/), Medium
+- [ ] [45. Jump Game II](https://leetcode.com/problems/jump-game-ii/), Medium
+- [ ] [134. Gas Station](https://leetcode.com/problems/gas-station/), Medium
+- [ ] [846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/), Medium
+- [ ] [1899. Merge Triplets to Form Target Triplet](https://leetcode.com/problems/merge-triplets-to-form-target-triplet/), Medium
+- [ ] [763. Partition Labels](https://leetcode.com/problems/partition-labels/), Medium
+- [ ] [678. Valid Parenthesis String](https://leetcode.com/problems/valid-parenthesis-string/), Medium
+
+<br>
+
+[**Intervals:**](#Intervals)
+
+- [ ] [57. Insert Interval](https://leetcode.com/problems/insert-interval/), Medium
+- [ ] [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/), Medium
+- [ ] [435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/), Medium
+- [ ] [Meeting Rooms](https://leetcode.com/problems/meeting-rooms/), Easy, 需要会员
+- [ ] [Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/), Medium, 需要会员
+- [ ] [1851. Minimum Interval to Include Each Query](https://leetcode.com/problems/minimum-interval-to-include-each-query/), Hard
 
 <br>
 
@@ -129,6 +204,7 @@
 
 - [x] [66. Plus One](https://leetcode.com/problems/plus-one/), Easy
 - [x] [202. Happy Number](https://leetcode.com/problems/happy-number/), Easy
+- [x] [13. Roman to Integer](https://leetcode.com/problems/roman-to-integer/), Easy
 - [x] [48. Rotate Image](https://leetcode.com/problems/rotate-image/), Medium
 - [ ] [54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/), Medium
 - [x] [73. Set Matrix Zeroes](https://leetcode.com/problems/set-matrix-zeroes/), Medium
@@ -620,6 +696,13 @@ Floyd's Tortoise and Hare算法：设置一个slow pointer和一个fast pointer�
 
 [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/)
 
+直接做法：two passes，先第一遍建立出所有新节点，并用哈希表将原节点与新节点一一对应起来，这样TC $\mathcal O(n)$，额外空间 $\mathcal O(n)$；
+
+额外空间可以降为常数，具体参考下图：
+
+<img src="https://raw.githubusercontent.com/hot13399/leetcode-graphic-answer/master/138.%20Copy%20List%20with%20Random%20Pointer.jpg" alt="alt text" style="zoom:75%;" />
+类似DNA复制，先把所有节点都复制一个节点并紧贴原节点加入原链，再连接，再分离，这样空间复杂度 $\mathcal O(1)$
+
 <br>
 
 [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/)
@@ -636,6 +719,8 @@ Floyd's Tortoise and Hare算法：设置一个slow pointer和一个fast pointer�
 <br>
 
 [146. LRU Cache](https://leetcode.com/problems/lru-cache/)
+
+the least recently used key: 在所有存储的键值对中，如果有最近被调用`get()`的，就代表“有用”；对于最先存进去的键，或者最没有被调用过的键，即为容量满时要去除的键。
 
 <br>
 
@@ -687,6 +772,10 @@ Balanced tree: a binary tree in which the left and right subtrees of **every** n
 <br>
 
 [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+
+<br>
+
+[94. Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)
 
 <br>
 
@@ -771,7 +860,7 @@ heapq.nsmallest(n,heap)
 
 [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/)
 
-
+直接用最大堆模拟
 
 <br>
 
@@ -799,6 +888,215 @@ heapq.nsmallest(n,heap)
 
 
 
+### Backtracking :id=Backtracking
+
+[78. Subsets](https://leetcode.com/problems/subsets/)
+
+<br>
+
+[39. Combination Sum](https://leetcode.com/problems/combination-sum/)
+
+<br>
+
+[46. Permutations](https://leetcode.com/problems/permutations/)
+
+<br>
+
+[90. Subsets II](https://leetcode.com/problems/subsets-ii/)
+
+<br>
+
+[40. Combination Sum II](https://leetcode.com/problems/combination-sum-ii/)
+
+<br>
+
+[79. Word Search](https://leetcode.com/problems/word-search/)
+
+<br>
+
+[131. Palindrome Partitioning](https://leetcode.com/problems/palindrome-partitioning/)
+
+<br>
+
+[17. Letter Combinations of a Phone Number](https://leetcode.com/problems/letter-combinations-of-a-phone-number/)
+
+<br>
+
+[51. N-Queens](https://leetcode.com/problems/n-queens/)
+
+
+
+### 1-D Dynamic Programming :id=1D_Dynamic_Programming
+
+[70. Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)
+
+Fibonacci Number
+
+<br>
+
+[746. Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/)
+
+<br>
+
+[198. House Robber](https://leetcode.com/problems/house-robber/)
+$$
+f(k) = \max\left( f(k-1), f(k-2)+\text{nums}(k) \right)
+$$
+<br>
+
+[213. House Robber II](https://leetcode.com/problems/house-robber-ii/)
+
+<br>
+
+[5. Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/)
+
+<br>
+
+[647. Palindromic Substrings](https://leetcode.com/problems/palindromic-substrings/)
+
+<br>
+
+[91. Decode Ways](https://leetcode.com/problems/decode-ways/)
+
+<br>
+
+[322. Coin Change](https://leetcode.com/problems/coin-change/)
+
+<br>
+
+[152. Maximum Product Subarray](https://leetcode.com/problems/maximum-product-subarray/)
+
+<br>
+
+[139. Word Break](https://leetcode.com/problems/word-break/)
+
+<br>
+
+[300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
+
+<br>
+
+[416. Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/)
+
+<br>
+
+[120. Triangle](https://leetcode.com/problems/triangle/)
+
+从下往上，可以直接利用给定数组覆盖，能节省空间
+
+
+
+### 2-D Dynamic Programming :id=2D_Dynamic_Programming
+
+[62. Unique Paths](https://leetcode.com/problems/unique-paths/)
+
+dp打表
+
+<br>
+
+[1143. Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/)
+
+<br>
+
+[309. Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/)
+
+<br>
+
+[518. Coin Change 2](https://leetcode.com/problems/coin-change-2/)
+
+<br>
+
+[494. Target Sum](https://leetcode.com/problems/target-sum/)
+
+<br>
+
+[97. Interleaving String](https://leetcode.com/problems/interleaving-string/)
+
+<br>
+
+[329. Longest Increasing Path in a Matrix](https://leetcode.com/problems/longest-increasing-path-in-a-matrix/)
+
+<br>
+
+[115. Distinct Subsequences](https://leetcode.com/problems/distinct-subsequences/)
+
+<br>
+
+[72. Edit Distance](https://leetcode.com/problems/edit-distance/)
+
+<br>
+
+[312. Burst Balloons](https://leetcode.com/problems/burst-balloons/)
+
+<br>
+
+[10. Regular Expression Matching](https://leetcode.com/problems/regular-expression-matching/)
+
+
+
+### Greedy :id=Greedy
+
+[455. Assign Cookies](https://leetcode.com/problems/assign-cookies/)
+
+<br>
+
+[53. Maximum Subarray](https://leetcode.com/problems/maximum-subarray/)
+
+<br>
+
+[55. Jump Game](https://leetcode.com/problems/jump-game/)
+
+<br>
+
+[45. Jump Game II](https://leetcode.com/problems/jump-game-ii/)
+
+<br>
+
+[134. Gas Station](https://leetcode.com/problems/gas-station/)
+
+<br>
+
+[846. Hand of Straights](https://leetcode.com/problems/hand-of-straights/)
+
+<br>
+
+[1899. Merge Triplets to Form Target Triplet](https://leetcode.com/problems/merge-triplets-to-form-target-triplet/)
+
+<br>
+
+[763. Partition Labels](https://leetcode.com/problems/partition-labels/)
+
+<br>
+
+[678. Valid Parenthesis String](https://leetcode.com/problems/valid-parenthesis-string/)
+
+
+
+### Intervals :id=Intervals
+
+[57. Insert Interval](https://leetcode.com/problems/insert-interval/)
+
+
+
+[56. Merge Intervals](https://leetcode.com/problems/merge-intervals/)
+
+
+
+[435. Non-overlapping Intervals](https://leetcode.com/problems/non-overlapping-intervals/)
+
+
+
+[Meeting Rooms](https://leetcode.com/problems/meeting-rooms/)
+
+
+
+[Meeting Rooms II](https://leetcode.com/problems/meeting-rooms-ii/)
+
+
+
+[1851. Minimum Interval to Include Each Query](https://leetcode.com/problems/minimum-interval-to-include-each-query/)
+
+
 
 ### Math & Geometry :id=Math_Geometry
 
@@ -814,6 +1112,12 @@ heapq.nsmallest(n,heap)
 
 <br>
 
+[13. Roman to Integer](https://leetcode.com/problems/roman-to-integer/)
+
+如果一个更小的罗马数字出现在了前面，则说明是要减掉的，而不是加上。如，$\text{IV} = 5 - 1, \text{VI} = 5+1$。
+
+<br>
+
 [48. Rotate Image](https://leetcode.com/problems/rotate-image/)
 
 显示写出旋转图片的坐标变换，过
@@ -821,8 +1125,6 @@ heapq.nsmallest(n,heap)
 <br>
 
 [54. Spiral Matrix](https://leetcode.com/problems/spiral-matrix/)
-
-
 
 <br>
 
@@ -842,13 +1144,9 @@ devide and conquer + recursion, $\mathcal O(\log n)$
 
 [43. Multiply Strings](https://leetcode.com/problems/multiply-strings/)
 
-
-
 <br>
 
 [2013. Detect Squares](https://leetcode.com/problems/detect-squares/)
-
-
 
 <br>
 

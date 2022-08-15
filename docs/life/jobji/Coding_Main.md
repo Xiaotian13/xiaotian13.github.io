@@ -96,6 +96,8 @@ A complete binary tree is just like a full binary tree, but with two major diffe
 
 - recursion 递归
 
+  先把base case写出来，然后通过层层调用自身来做
+
 
 
 
@@ -353,15 +355,9 @@ A greedy algorithm is any algorithm that follows the problem-solving heuristic o
 
 ### 9.2 Questions
 
-[assign-cookies](https://leetcode.com/problems/assign-cookies/)
-
 
 
 [best-time-to-buy-and-sell-stock-ii](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)
-
-
-
-[jump-game](https://leetcode.com/problems/jump-game/)
 
 
 

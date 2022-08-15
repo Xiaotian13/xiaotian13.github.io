@@ -169,3 +169,16 @@
 
 ---
 
+
+
+**第14天，2022-08-14：**
+
+- 下午和晚上刷leetcode，今日主刷二叉树
+- 学习了recursion DFS，iterative DFS，BFS的常见写法
+- NeetCode记录：58/150
+- 加油！！！
+
+
+
+---
+

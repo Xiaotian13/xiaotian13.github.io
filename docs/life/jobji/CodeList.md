@@ -78,7 +78,7 @@
 - [x] [138. Copy List with Random Pointer](https://leetcode.com/problems/copy-list-with-random-pointer/), Medium
 - [x] [2. Add Two Numbers](https://leetcode.com/problems/add-two-numbers/), Medium
 - [x] [287. Find the Duplicate Number](https://leetcode.com/problems/find-the-duplicate-number/), Medium
-- [ ] [146. LRU Cache](https://leetcode.com/problems/lru-cache/), Medium
+- [x] [146. LRU Cache](https://leetcode.com/problems/lru-cache/), Medium
 - [ ] [23. Merge k Sorted Lists](https://leetcode.com/problems/merge-k-sorted-lists/), Hard
 - [ ] [25. Reverse Nodes in k-Group](https://leetcode.com/problems/reverse-nodes-in-k-group/), Hard
 
@@ -86,14 +86,14 @@
 
 [**Trees:**](#Trees)
 
-- [ ] [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/), Easy
+- [x] [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/), Easy
 - [x] [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/), Easy
 - [x] [111. Minimum Depth of Binary Tree](https://leetcode.com/problems/minimum-depth-of-binary-tree/), Easy
-- [ ] [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/), Easy
+- [x] [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/), Easy
 - [x] [110. Balanced Binary Tree](https://leetcode.com/problems/balanced-binary-tree/), Easy
-- [ ] [100. Same Tree](https://leetcode.com/problems/same-tree/), Easy
-- [ ] [572. Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/), Easy
-- [ ] [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/), Easy
+- [x] [100. Same Tree](https://leetcode.com/problems/same-tree/), Easy
+- [x] [572. Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/), Easy
+- [x] [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/), Easy
 - [ ] [94. Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/), Easy
 - [ ] [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/), Medium
 - [ ] [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/), Medium
@@ -118,7 +118,7 @@
 
 - [x] [703. Kth Largest Element in a Stream](https://leetcode.com/problems/kth-largest-element-in-a-stream/), Easy
 - [x] [1046. Last Stone Weight](https://leetcode.com/problems/last-stone-weight/), Easy
-- [ ] [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/), Medium
+- [x] [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/), Medium
 - [ ] [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/), Medium
 - [ ] [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/), Medium
 - [ ] [355. Design Twitter](https://leetcode.com/problems/design-twitter/), Medium
@@ -720,7 +720,9 @@ Floyd's Tortoise and Hare算法：设置一个slow pointer和一个fast pointer�
 
 [146. LRU Cache](https://leetcode.com/problems/lru-cache/)
 
-the least recently used key: 在所有存储的键值对中，如果有最近被调用`get()`的，就代表“有用”；对于最先存进去的键，或者最没有被调用过的键，即为容量满时要去除的键。
+the least recently used key: 在所有存储的键值对中，如果有最近被调用`get()`或者用`put()`修改值的，就代表“有用”；对于最先存进去的键，或者最没有被调用过的键，即为容量满时要去除的键。
+这题的关键点在于，维持一个有序的序列，如果用普通的array，它的插删操作都是 $\mathcal O(n)$，达不到要求的 $\mathcal O(1)$；因此，答案是用双链表 double linked list，因为双链表中每个节点记录了前一节点和后一节点。对于查找要求的 $\mathcal O(1)$，我们知道hash map可以做到。
+因此，这道题把这两个数据结构结合，构建一个key-value的哈希表，其中value是对应双链表中的节点。先建两个dummy node，即head和tail。
 
 <br>
 
@@ -736,11 +738,23 @@ the least recently used key: 在所有存储的键值对中，如果有最近被
 
 [226. Invert Binary Tree](https://leetcode.com/problems/invert-binary-tree/)
 
+recursion，左子树为右子树的翻转，右子树为左子树的翻转
+
+BFS + deque
+
+DFS + stack
+DFS可以选择只加入非空的节点，也可以选择把空节点也一起加到栈里
+
 <br>
 
 [104. Maximum Depth of Binary Tree](https://leetcode.com/problems/maximum-depth-of-binary-tree/)
 
 recursion
+
+BFS + deque，每往下一层就深度加一
+
+Iterative DFS + stack，把每个节点对应的深度也存到栈里
+二叉树的遍历：preorder 先序，根左右；inorder 中序，左根右；postorder 后序，左右根
 
 <br>
 
@@ -748,9 +762,16 @@ recursion
 
 recursion
 
+BFS + deque，一层一层看，只要当前层有节点没有左右子节点，即可返回
+
+DFS + stack，同时存储每个节点对应的深度，如果该节点是叶节点（没有左右子节点），则更新输出
+
 <br>
 
 [543. Diameter of Binary Tree](https://leetcode.com/problems/diameter-of-binary-tree/)
+
+这道题并不简单。
+关键点在于看出，如果最大路径要经过根节点的话，那么即为左子树的最大深度加上右子树的最大深度。因此，用recursive DFS，新建一个返回最大深度的函数，同时每次递归求深度的时候都更新最终结果
 
 <br>
 
@@ -759,19 +780,36 @@ recursion
 二叉平衡树：
 Balanced tree: a binary tree in which the left and right subtrees of **every** node differ in height by no more than 1.
 
-用递归，左子树和右子树都要是平衡树，且两者深度相差不超过1
+用recursive DFS，左子树和右子树都要是平衡树，且两者深度相差不超过1
+
+上述方法可以优化，直接从下向上检测，同时直接返回height，即不分开计算height，这样每个节点只访问一次
 
 <br>
 
 [100. Same Tree](https://leetcode.com/problems/same-tree/)
 
+recursion
+
+也可以用BFS或DFS做，即维持一个deque或stack，里面元素为p和q的节点对
+
 <br>
 
 [572. Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/)
 
+接上题，用recursion，判断当前树和给定子树是否相同，然后判断当前树的左右子树是否于给定子树相同，有任意相同结果即返回True，因此逻辑关系要用or
+
+神奇操作，通过preorder traversal，将两颗树都转换为字符串，然后查看是否子树字符串包含在给定树内
+
 <br>
 
 [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/)
+
+Lowest Common Ancestor (LCA) 最低公共祖先
+
+从根节点开始，因为根节点是所有节点的公共祖先。
+首先，二叉搜索树满足，左<根<右
+从上到下，如果出现有一个节点已经作了根节点，那么即代表这个节点就是最低公共祖先；如果出现分叉，即一个节点的数值小于当前根节点，另一个节点的数值大于当前根节点，即代表当前这个节点是最低公共祖先。
+每层只会搜索一个节点，因此TC $\mathcal O(\log n)$，SC $\mathcal O(1)$
 
 <br>
 
@@ -865,6 +903,12 @@ heapq.nsmallest(n,heap)
 <br>
 
 [973. K Closest Points to Origin](https://leetcode.com/problems/k-closest-points-to-origin/)
+
+直接用`sorted()`函数，排序 $\mathcal O(n \log n)$
+
+类似前面的思想，维持一个size为 $k$ 的最大堆，每次都把最大值弹出，这样最终堆里留下的就是 $k$ 个最小距离对应的点，TC $\mathcal O(n \log k)$，SC $\mathcal O(k)$ 
+
+quick select，用来找出前/第 $k$ 大/小的元素，平均只需要 $\mathcal O(n)$ 的时间
 
 <br>
 

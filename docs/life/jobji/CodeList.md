@@ -94,7 +94,7 @@
 - [x] [100. Same Tree](https://leetcode.com/problems/same-tree/), Easy
 - [x] [572. Subtree of Another Tree](https://leetcode.com/problems/subtree-of-another-tree/), Easy
 - [x] [235. Lowest Common Ancestor of a Binary Search Tree](https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-search-tree/), Easy
-- [ ] [94. Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/), Easy
+- [x] [94. Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/), Easy
 - [ ] [102. Binary Tree Level Order Traversal](https://leetcode.com/problems/binary-tree-level-order-traversal/), Medium
 - [ ] [199. Binary Tree Right Side View](https://leetcode.com/problems/binary-tree-right-side-view/), Medium
 - [ ] [1448. Count Good Nodes in Binary Tree](https://leetcode.com/problems/count-good-nodes-in-binary-tree/), Medium
@@ -814,6 +814,8 @@ Lowest Common Ancestor (LCA) 最低公共祖先
 <br>
 
 [94. Binary Tree Inorder Traversal](https://leetcode.com/problems/binary-tree-inorder-traversal/)
+
+![](https://assets.leetcode.com/users/andvary/image_1556551007.png)
 
 <br>
 

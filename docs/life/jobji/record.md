@@ -190,9 +190,54 @@
 - 收到akuna的编程OA，看起来没什么希望
 - 帮室友搞了点优化
 - 老友记第一季
+- 波比跳 $\times 25, \times 25$
 - 加油！！
 - 明天一定开始刷题，怎能如此堕落！
 - （好想买xsx
+
+
+
+---
+
+
+
+**第17天，2022-08-17：**
+
+- 收到Valkyrie Trading的OA邮件
+
+- 领英收到IMC Trading的recruiter信息，投递了申请
+
+- 看了好多帖子，都说OA完拿不到面试，太可怕了
+
+- 波比跳 $\times 25$
+
+- 似乎SIG不太行，太好了
+
+- 加油！！！
+
+- We can be truly successful only at something we're willing to fail at. If we're unwilling to fail, then we're unwilling to succeed.
+
+  Quote by Mark Manson
+
+
+
+---
+
+
+
+**第18天，2022-08-18：**
+
+室友脑出血住院了。医生说没有生命危险，但是不知道为什么丧失语言能力了。
+
+我感到很自责。
+
+也许应该早些发现问题送医。
+
+无论如何，活在当下。
+
+明天做手术，一定情况会越来越好。
+
+不能遭罪的总是善良的人。
 
 
 

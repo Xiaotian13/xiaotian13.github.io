@@ -155,6 +155,7 @@
 - [ ] [300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/), Medium
 - [ ] [416. Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/), Medium
 - [x] [120. Triangle](https://leetcode.com/problems/triangle/), Medium
+- [ ] [64. Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/), Medium
 
 <br>
 

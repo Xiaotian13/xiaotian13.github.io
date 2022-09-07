@@ -9,6 +9,12 @@ life/jobji/64interviewquestions.pdf
 
 
 
+## Current resume
+
+```pdf
+life/jobji/Resume_Xiaotian_Li.pdf
+```
+
 
 
 ## Questions
@@ -206,5 +212,4 @@ cooperate with the team
 I do have some flexibility  with the number，（最少是多少），最多是多少
 
 I can not give you the answer right now, below my number，（最少是多少），最多是多少
-
 

@@ -2415,7 +2415,7 @@ $$
   $$
   by Ito lemma,
   $$
-  dV(t, S_t) = \frac{\partial V}{\partial t} + \frac{\partial V}{\partial S_t}dS_t + \frac{1}{2} \frac{\partial^2 V}{\partial S_t^2}d \langle S\rangle_t,
+  dV(t, S_t) = \frac{\partial V}{\partial t}dt + \frac{\partial V}{\partial S_t}dS_t + \frac{1}{2} \frac{\partial^2 V}{\partial S_t^2}d \langle S\rangle_t,
   $$
   构建投资组合
   $$

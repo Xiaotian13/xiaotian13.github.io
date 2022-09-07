@@ -155,13 +155,13 @@
 - [ ] [300. Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/), Medium
 - [ ] [416. Partition Equal Subset Sum](https://leetcode.com/problems/partition-equal-subset-sum/), Medium
 - [x] [120. Triangle](https://leetcode.com/problems/triangle/), Medium
-- [ ] [64. Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/), Medium
 
 <br>
 
 [**2-D Dynamic Programming:**](#2D_Dynamic_Programming)
 
 - [x] [62. Unique Paths](https://leetcode.com/problems/unique-paths/), Medium
+- [x] [64. Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/), Medium
 - [ ] [1143. Longest Common Subsequence](https://leetcode.com/problems/longest-common-subsequence/), Medium
 - [ ] [309. Best Time to Buy and Sell Stock with Cooldown](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/), Medium
 - [ ] [518. Coin Change 2](https://leetcode.com/problems/coin-change-2/), Medium
@@ -1038,6 +1038,12 @@ $$
 [62. Unique Paths](https://leetcode.com/problems/unique-paths/)
 
 dp打表
+
+<br>
+
+[64. Minimum Path Sum](https://leetcode.com/problems/minimum-path-sum/)
+
+类似上题的dp打表
 
 <br>
 

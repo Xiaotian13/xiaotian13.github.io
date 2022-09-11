@@ -15,7 +15,7 @@ life/jobji/64interviewquestions.pdf
 life/jobji/Resume_Xiaotian_Li.pdf
 ```
 
-asd
+
 
 ## Questions
 
@@ -91,6 +91,8 @@ I am confident I have the necessary skills, qualities and experience to get up a
 
 弱点：
 
+/ What's your biggest weakness
+
 说两句弱点，就要开始however
 
 - Is to say you are not very good at PUBLIC SPEAKING on giving talks or presentations to large groups of people. However, this is an area you want to gain confidence in and if there any opportunities to do this for their company in the role you will occupy , then you would love to give it a try
@@ -107,7 +109,7 @@ I am confident I have the necessary skills, qualities and experience to get up a
 
 ### Why you?
 
-why do you think you are suitable for this job
+/ why do you think you are suitable for this job
 
 要看JD
 1.right combination of the skills needed
@@ -156,11 +158,9 @@ I want to join your company for several reasons. First, I have heard nothing but
 
 ### Describe yourself in 3 words
 
-How would your friend describe you?
+/ How would your friend describe you?
 
 I would describe myself as diligent, energetic, and responsible. I am diligent because I workhard, I follow instructions carefully, and I complete things on time and to the requested standard. I am energetic which means I tend to get more work done than the average person. Finally, I am loyal which mean I'll always be a positive role model for the company, af will stay working here fo the long term and become a part of your ongoing success
-
-
 
 ### Questions to ask at the end of interview
 
@@ -171,8 +171,6 @@ I would describe myself as diligent, energetic, and responsible. I am diligent b
 4. What's the one thing I could do in this role to help you succeed?
 5. What are the plans for the company over the next 5 to 10 years?
 
-
-
 ### What do you want from this role
 
 I'm in a 动态环境，constantly learn new knowledge，
@@ -180,16 +178,17 @@ I would appreciate to take lead in some projects, Manager who can guide me throu
 That's for long term, For now I'm just looking for a good team and a good environment
 怎样了解到这个工作的
 
+### How you handled a difficult situation
 
+/ challenging point
 
-### 描述一下有没有challenging point：
+time was againest you, had to work very quickly or multitask to achieve your goal
 
-purpose是，主要工作是
-difficulty, 时间紧 人手不足等 project leader
+用STAR，situation you were faced with, task that needed doing, action you took to achieve the task, results following your actions
 如何解决问题的，规划时间 key activity   prioritize   做了一个详尽的tracker, 分工spread sheet
 cooperate with the team
 
-跟project无关的difficulty
+A valued menber of staff went off sick for a week. This was a difficult situation because their work was integral to the project we had bean working on. Now the easy thing would have been to extend the project deadline, but I wasn't prepared to do that. I decided to assess my co-workers duties and after doing so I felt that I could absorb most of their work. For the areas of their work I wasn't qualified to undertake, I found an online contractor who I hired to complete their tasks. Although this was a difficult time sensitive situation to deal with, by remaining calm , assessing my options and using creative thinking, I was able to find a solution.
 
 
 
@@ -205,7 +204,15 @@ cooperate with the team
 还是举例子
 小方向
 
+### Fail
 
+
+
+### Why quant?
+
+思路：背景合适，high passion in
+
+I choose quant mainly for two reasons. First, I have both math and finance backgroud, also I have strong programming skills, 
 
 ### expected salary
 

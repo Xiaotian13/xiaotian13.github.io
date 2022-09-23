@@ -50,7 +50,7 @@ Hi, my name is Xiaotian Li, and I'm here for the interview. Thank you very much.
 
 Thank you for giving me the opportunity to be interviewed for this position today. Having studied the job description, I am confident I have the skills and qualities needed to excel in the role. I am a fast learner, I possess excellent problem-solving capabilities, and I can manage a significant work load. 
 As a student, a major accomplishment I'm most proud of was that I have a first-author published paper. In that experience, my research ability and communication skills had been improved a lot.
-The type of person I am means I always act as a positive role in the group and I'm willing to assume responsibility. If you hire me in this position, I believe you will quickly see that on me and a positive return on your investment.
+The type of person I am means I always act as a positive role in the group and I'm willing to assume responsibility. If you hire me in this position, I believe you will quickly see a positive return on your investment.
 
 过简历：
 

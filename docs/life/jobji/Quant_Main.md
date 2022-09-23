@@ -254,59 +254,23 @@ converge in law/distribution, converge in probability
 
 ### 2.2 Questions
 
-- **Q1: Card Game**
+- **Q1: Poker Hands**
 
-  A casino offers a simple card game. There are 52 cards in a deck with 4 cards for each value 2, 3, 4, ..., J, Q, K, A. Each time the cards are thoroughly shuffled (so each card has equal probability of being selected. You pick up a card from the deck and the dealer picks another one without replacement. If you have a larger number, you win; if the numbers are equal or yours is smaller, the house wins - as in all other casinos, the hours always has better odds of winning. What is your probability of winning?
+  Poker is a card game in which each player gets a hand of 5 cards. There are 52 cards in a deck. Each card has a value and belongs to a suit (花色). There are 13 values, 2, 3, 4, 5, 6, 7, 8, 9, 10, J (jack), Q (queen), K (king), A (ace), and four suits,  spade (黑桃), club (梅花), heart (红桃), diamond (方块).
 
-  首先计算
-  $$
-  P(A = B) = 13 \times \frac{\binom{4}{2}}{\binom{52}{2}} = \frac{1}{17},
-  $$
-  则
-  $$
-  P(A < B) = P(A > B) = \frac{8}{17}.
-  $$
-  或者，总共有52张牌，抽取一张还剩51张，再抽一张跟自己一样的概率是
-  $$
-  \frac{3}{51} = \frac{1}{17}.
-  $$
-  
-  另一种思路，
-  $$
-  0 + \frac{1}{13}\times \frac{4}{51} + \frac{1}{13} \times \frac{8}{51} + \cdots = \frac{4}{13}\times\frac{1+\cdots+12}{51} = \frac{8}{17}.
-  $$
-  
-- **Q2: Drunk Passenger**
+  What are the probabilities of getting hands with four-of-a-kind (four of the five cards with the same value)? Hands with a full house (three cards of one value and two cards of another value)? Hands with two pairs?
 
-  A line of 100 airline passengers are waiting to board a plane. They each hold a ticket to one of the 100 seats on that flight. For convenience, let's say that the nth passenger in line has a ticket for the seat number n.
+  总共可能数：$\binom{52}{4}$
 
-  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number 100. What is the probability that you end up in your seat ( i.e. seat #100)?
+  Four of a kind: $\binom{1}{13} \times \binom{1}{48}$
 
-  可以 by induction，如果只有两个乘客，则被占的概率是$0.5$；如果只有三个乘客，则被占的概率是$\frac{1}{3} + \frac{1}{3}\times\frac{1}{2} = 0.5$；如果只有4个乘客，则被占的概率是$\frac{1}{4} + \frac{1}{4}\times\frac{1}{2} + \frac{1}{4}\times\frac{1}{2} = \frac{1}{2}$；以此类推，概率有$\frac{1}{n} + (n-2)\frac{1}{n}\times\frac{1}{2} = \frac{1}{2}$。
+  Full house (葫芦): $\binom{1}{13} \times \binom{3}{4} \times \binom{1}{12} \times \binom{2}{4}$
 
-  考虑全集：\{ #100在#1前被占，#1在#100前被占\}，第一种情况是肯定坐不到正确位置的，第二种情况是肯定能坐到正确位置的。这两种情况的概率是相等的：醉汉选#100还是#1的概率是相等的，如果他选了这其中其他的座位比如#$n$，那么本质上他让第$n$个人变成了醉汉，与第一个人是醉汉时的情况相同。
+  Two pairs: $\binom{2}{13} \times \binom{2}{4}^2 \times \binom{1}{44}$
 
 
 
-- **Q3: N Points on A Circle**
-
-  Give N points drawn randomly on the circumference of a circle, what is the probability that they are all within a semicircle?
-
-  先选定点$i$，剩下的$N-1$个点在该点顺时针半球内的概率概率为$\frac{1}{2^{N-1}}$。此时，对其他任意点 $j\neq i$，不能使得除了点 $j$ 外的所有点均在点 $j$ 顺时针半球内。因此，各个事件是mutually exclusive的，总概率为
-  $$
-  P\left( \bigcup_{i=1}^N E_i \right) = \sum_{i=1}^N P(E_i) = N \times \frac{1}{2^{N-1}},
-  $$
-  这个结论同样适用于弧$x\leq 1/2$。
-  $$
-  \binom{n}{1}\frac{1}{2^{N-1}}
-  $$
-  https://mathpages.com/home/kmath327/kmath327.htm
-  
-  https://www.zhihu.com/question/341018905/answer/1985433828
-
-
-
-- **Q4: Hopping Rabbit**
+- **Q2: Hopping Rabbit**
 
   A rabbit sits at the bottom of a staircase with $n$ stairs. The rabbit can hop up only one or two stairs at a time. How many different ways are there for the rabbit to ascend to the top of the stairs?
 
@@ -376,7 +340,7 @@ $$
 
 
 
-- **Q5: Chess Tournament**
+- **Q3: Chess Tournament**
 
   A chess tournament has $2^n$ players with skills $1 > 2 > \dots > 2^n$. It is organized as a knockout tournament, so that after each round only the winner proceeds to the next round. Except for the final, opponents in each round are drawn at random. Let's also assume that when two players meet in a game, the player with better skills always wins. What's the probability that players 1 and 2 will meet in the final?
 
@@ -384,34 +348,65 @@ $$
   $$
   \frac{2(2^{n-1}-1)}{2^n-1} \times \frac{2(2^{n-2}-1)}{2^{n-1}-1} \times \cdots \times \frac{2(2^{1}-1)}{2^{2}-1}=\frac{2^{n-1}}{2^n-1}.
   $$
+  
 
-
-
-- **Q6: Application Letters**
+- **Q4: Application Letters**
 
   You're sending job applications to 5 firms: Morgan Stanley, Goldman Sachs, JP Morgan, UBS and Merrill Lynch. You have 5 envelopes on the table neatly typed with names and addresses of people at these 5 firms. You even have 5 cover letters personalized to each of these firms. Your 3-year-old tried to be helpful and stuffed each cover letter into each of the envelopes for you. Unfortunately she randomly put letters into envelopes without realizing that the letters are personalized. What is the probability that all 5 cover letters are mailed to the wrong firms?
 
   首先，如果只有两张牌，那么全错只有1种情况；
-
+  
   如果只有三张牌，那么全错只有2种情况；
-
+  
   如果只有四张牌，总共有$4\times 3\times 2=24$种排列，只有一张牌是对的共有$\binom{4}{1} \times 2=8$种情况，只有两张牌是对的共有$\binom{4}{2}\times 1=6$种情况，全对有1种情况，加起来就是15种情况，因此全错只有$24 - 15=9$种情况；
-
+  
   对于题目，我们只有五张牌，总共有$5\times4\times3\times2=120$种排列，那么只有一张牌是对的共有$\binom{5}{1}\times 9=45$种情况，只有两张牌是对的共有$\binom{5}{2}\times 2=20$种情况，只有三张牌是对的共有$\binom{5}{3}\times 1=10$种情况，全对只有1种情况，因此全错只有$120 - 45 - 20 - 10 - 1=44$种情况，概率即为
   $$
   \frac{44}{120} = \frac{11}{30}.
   $$
   还有另一种解法，见绿皮书第70页。
 
-  
 
-- **Q7: Birthday Problem**
+
+- **Q5: Birthday Problem**
 
   How many people do we need in a class to make the probability that two people have the same birthday more than 0.5? (for simplicity, assume 365 days a year)
   $$
   1 - \frac{365\times364\times\cdots\times(365-N+1)}{365^N} > \frac{1}{2},
   $$
   得到$N$最小为$23$。
+
+  ```python
+  n = 1
+  
+  while 1:
+      p = 1
+      for i in range(n):
+          p *= (365 - i) / 365
+      if 1 - p > 0.5:
+          break
+      n += 1
+  
+  print(n)
+  ```
+
+
+
+- **Q6: 100th digit**
+
+  What is the 100th digit to the right of the decimal point in the decimal representation of $(1 + \sqrt 2)^{3000}$?
+
+  关键点在于，according to binomial theorem，$(1+\sqrt2)^{2n} + (1-\sqrt 2)^{2n}$ 将永远是一个整数。而 $(1 - \sqrt2)^{3000} < 10^{-100}$，因此 $(1 + \sqrt 2)^{3000}$ 的第100位一定是9。
+
+
+
+- **Q7: Cubic of Integer**
+
+  Let $x$ be an integer between $1$ and $10^{12}$, what is the probability that the cubic of $x$ ends with $11$?
+
+  首先，个位如果是1，说明 $x$ 的个位必须是 $1$。同理，影响立方十位的只有 $x$ 的十位，我们设它是 $a$，经过运算就可以得到 $x^3$ 的十位即为 $3a$ 除 $10$ 的余数。如果它是 $1$，那么 $a$ 必须是 $7$。因此，即问 $1$ 到 $10^{12}$ 里，有多少数字的后两位是 $71$。
+
+  每一百个数字中，会出现一个后两位是 $71$ 的数字，因此概率就是 $1/100$。
 
 
 
@@ -425,7 +420,7 @@ $$
 
   显然，$\frac{1}{2}$。
 
-  
+
 
 - **Q9: Unfair Coins**
 
@@ -435,7 +430,8 @@ $$
   $$
   约为0.5。
 
-  
+
+
 
 - **Q10: Fair Probability from An Unfair Coin**
 
@@ -446,6 +442,58 @@ $$
   扩展：可以等概率随机生成1\~5随机数，如何等概率随机生成1\~7随机数？
 
   生成两次，将生成的数字当做5进制，如：组合11映射为$1\times5+1=6$，组合55映射为$5\times5 + 5=30$。然后比如只保留7\~27这些数字时的结果，再对7取余。
+
+
+
+- **Q1: Card Game**
+
+  A casino offers a simple card game. There are 52 cards in a deck with 4 cards for each value 2, 3, 4, ..., J, Q, K, A. Each time the cards are thoroughly shuffled (so each card has equal probability of being selected. You pick up a card from the deck and the dealer picks another one without replacement. If you have a larger number, you win; if the numbers are equal or yours is smaller, the house wins - as in all other casinos, the hours always has better odds of winning. What is your probability of winning?
+
+  首先计算
+  $$
+  P(A = B) = 13 \times \frac{\binom{4}{2}}{\binom{52}{2}} = \frac{1}{17},
+  $$
+  则
+  $$
+  P(A < B) = P(A > B) = \frac{8}{17}.
+  $$
+  或者，总共有52张牌，抽取一张还剩51张，再抽一张跟自己一样的概率是
+  $$
+  \frac{3}{51} = \frac{1}{17}.
+  $$
+
+  另一种思路，
+  $$
+  0 + \frac{1}{13}\times \frac{4}{51} + \frac{1}{13} \times \frac{8}{51} + \cdots = \frac{4}{13}\times\frac{1+\cdots+12}{51} = \frac{8}{17}.
+  $$
+
+- **Q2: Drunk Passenger**
+
+  A line of 100 airline passengers are waiting to board a plane. They each hold a ticket to one of the 100 seats on that flight. For convenience, let's say that the nth passenger in line has a ticket for the seat number n.
+
+  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number 100. What is the probability that you end up in your seat ( i.e. seat #100)?
+
+  可以 by induction，如果只有两个乘客，则被占的概率是$0.5$；如果只有三个乘客，则被占的概率是$\frac{1}{3} + \frac{1}{3}\times\frac{1}{2} = 0.5$；如果只有4个乘客，则被占的概率是$\frac{1}{4} + \frac{1}{4}\times\frac{1}{2} + \frac{1}{4}\times\frac{1}{2} = \frac{1}{2}$；以此类推，概率有$\frac{1}{n} + (n-2)\frac{1}{n}\times\frac{1}{2} = \frac{1}{2}$。
+
+  考虑全集：\{ #100在#1前被占，#1在#100前被占\}，第一种情况是肯定坐不到正确位置的，第二种情况是肯定能坐到正确位置的。这两种情况的概率是相等的：醉汉选#100还是#1的概率是相等的，如果他选了这其中其他的座位比如#$n$，那么本质上他让第$n$个人变成了醉汉，与第一个人是醉汉时的情况相同。
+
+
+
+- **Q3: N Points on A Circle**
+
+  Give N points drawn randomly on the circumference of a circle, what is the probability that they are all within a semicircle?
+
+  先选定点$i$，剩下的$N-1$个点在该点顺时针半球内的概率概率为$\frac{1}{2^{N-1}}$。此时，对其他任意点 $j\neq i$，不能使得除了点 $j$ 外的所有点均在点 $j$ 顺时针半球内。因此，各个事件是mutually exclusive的，总概率为
+  $$
+  P\left( \bigcup_{i=1}^N E_i \right) = \sum_{i=1}^N P(E_i) = N \times \frac{1}{2^{N-1}},
+  $$
+  这个结论同样适用于弧$x\leq 1/2$。
+  $$
+  \binom{n}{1}\frac{1}{2^{N-1}}
+  $$
+  https://mathpages.com/home/kmath327/kmath327.htm
+  
+  https://www.zhihu.com/question/341018905/answer/1985433828
 
 
 
@@ -684,17 +732,7 @@ $$
   P(A > B) =P(A^*>B) + P(A^*=B) \times \frac{1}{2} = x + \frac{1}{2}y = \frac{1}{2}(2x+y) = \frac{1}{2}.
   $$
 
-
-
-- **Q23: Cubic of Integer**
-
-  Let $x$ be an integer between $1$ and $10^{12}$, what is the probability that the cubic of $x$ ends with $11$?
-
-  首先，个位如果是1，说明 $x$ 的个位必须是 $1$。同理，影响立方十位的只有 $x$ 的十位，我们设它是 $a$，经过运算就可以得到 $x^3$ 的十位即为 $3a$ 除 $10$ 的余数。如果它是 $1$，那么 $a$ 必须是 $7$。因此，即问 $1$ 到 $10^{12}$ 里，有多少数字的后两位是 $71$。
-
-  每一百个数字中，会出现一个后两位是 $71$ 的数字，因此概率就是 $1/100$。
-
-   
+ 
 
 ## 3. Statistics
 

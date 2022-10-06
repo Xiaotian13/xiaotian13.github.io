@@ -187,6 +187,7 @@
 - [ ] [1899. Merge Triplets to Form Target Triplet](https://leetcode.com/problems/merge-triplets-to-form-target-triplet/), Medium
 - [ ] [763. Partition Labels](https://leetcode.com/problems/partition-labels/), Medium
 - [ ] [678. Valid Parenthesis String](https://leetcode.com/problems/valid-parenthesis-string/), Medium
+- [x] [881. Boats to Save People](https://leetcode.com/problems/boats-to-save-people/), Medium
 
 <br>
 
@@ -214,6 +215,7 @@
 - [ ] [2013. Detect Squares](https://leetcode.com/problems/detect-squares/), Medium
 - [x] [593. Valid Square](https://leetcode.com/problems/valid-square/), Medium
 - [x] [204. Count Primes](https://leetcode.com/problems/count-primes/), Medium
+- [x] [1492. The kth Factor of n](https://leetcode.com/problems/the-kth-factor-of-n/), Medium
 
 
 
@@ -1123,7 +1125,11 @@ dp打表
 
 [678. Valid Parenthesis String](https://leetcode.com/problems/valid-parenthesis-string/)
 
+<br>
 
+[881. Boats to Save People](https://leetcode.com/problems/boats-to-save-people/)
+
+先排序，如果当前的最沉带不动最轻，那么最沉单独走；不然，则两两配对
 
 ### Intervals :id=Intervals
 
@@ -1225,7 +1231,15 @@ for i in itertools.combinations([1, 2, 3, 4], 2):
 
 用Sieve of Eratosthenes，厄拉多塞筛法。如果 $n \leq N$，且 $n$ 是合数，则 $n$ 必能被一个不大于 $\sqrt{N}$ 的素数所整除。因此，从 $2$ 开始向上搜，把所有 $2$ 的倍数全划掉，一直搜到 $\sqrt{N}$。
 
+<br>
 
+[1492. The kth Factor of n](https://leetcode.com/problems/the-kth-factor-of-n/)
+
+首先，brutal force；
+
+Half brutal force，只遍历小于1/2的；
+
+根号 brutal force，把所有小于等于根号的pair全加到集合中
 
 
 

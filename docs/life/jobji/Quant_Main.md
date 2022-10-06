@@ -349,7 +349,6 @@ $$
   \frac{2(2^{n-1}-1)}{2^n-1} \times \frac{2(2^{n-2}-1)}{2^{n-1}-1} \times \cdots \times \frac{2(2^{1}-1)}{2^{2}-1}=\frac{2^{n-1}}{2^n-1}.
   $$
   
-
 - **Q4: Application Letters**
 
   You're sending job applications to 5 firms: Morgan Stanley, Goldman Sachs, JP Morgan, UBS and Merrill Lynch. You have 5 envelopes on the table neatly typed with names and addresses of people at these 5 firms. You even have 5 cover letters personalized to each of these firms. Your 3-year-old tried to be helpful and stuffed each cover letter into each of the envelopes for you. Unfortunately she randomly put letters into envelopes without realizing that the letters are personalized. What is the probability that all 5 cover letters are mailed to the wrong firms?
@@ -445,58 +444,6 @@ $$
 
 
 
-- **Q1: Card Game**
-
-  A casino offers a simple card game. There are 52 cards in a deck with 4 cards for each value 2, 3, 4, ..., J, Q, K, A. Each time the cards are thoroughly shuffled (so each card has equal probability of being selected. You pick up a card from the deck and the dealer picks another one without replacement. If you have a larger number, you win; if the numbers are equal or yours is smaller, the house wins - as in all other casinos, the hours always has better odds of winning. What is your probability of winning?
-
-  首先计算
-  $$
-  P(A = B) = 13 \times \frac{\binom{4}{2}}{\binom{52}{2}} = \frac{1}{17},
-  $$
-  则
-  $$
-  P(A < B) = P(A > B) = \frac{8}{17}.
-  $$
-  或者，总共有52张牌，抽取一张还剩51张，再抽一张跟自己一样的概率是
-  $$
-  \frac{3}{51} = \frac{1}{17}.
-  $$
-
-  另一种思路，
-  $$
-  0 + \frac{1}{13}\times \frac{4}{51} + \frac{1}{13} \times \frac{8}{51} + \cdots = \frac{4}{13}\times\frac{1+\cdots+12}{51} = \frac{8}{17}.
-  $$
-
-- **Q2: Drunk Passenger**
-
-  A line of 100 airline passengers are waiting to board a plane. They each hold a ticket to one of the 100 seats on that flight. For convenience, let's say that the nth passenger in line has a ticket for the seat number n.
-
-  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number 100. What is the probability that you end up in your seat ( i.e. seat #100)?
-
-  可以 by induction，如果只有两个乘客，则被占的概率是$0.5$；如果只有三个乘客，则被占的概率是$\frac{1}{3} + \frac{1}{3}\times\frac{1}{2} = 0.5$；如果只有4个乘客，则被占的概率是$\frac{1}{4} + \frac{1}{4}\times\frac{1}{2} + \frac{1}{4}\times\frac{1}{2} = \frac{1}{2}$；以此类推，概率有$\frac{1}{n} + (n-2)\frac{1}{n}\times\frac{1}{2} = \frac{1}{2}$。
-
-  考虑全集：\{ #100在#1前被占，#1在#100前被占\}，第一种情况是肯定坐不到正确位置的，第二种情况是肯定能坐到正确位置的。这两种情况的概率是相等的：醉汉选#100还是#1的概率是相等的，如果他选了这其中其他的座位比如#$n$，那么本质上他让第$n$个人变成了醉汉，与第一个人是醉汉时的情况相同。
-
-
-
-- **Q3: N Points on A Circle**
-
-  Give N points drawn randomly on the circumference of a circle, what is the probability that they are all within a semicircle?
-
-  先选定点$i$，剩下的$N-1$个点在该点顺时针半球内的概率概率为$\frac{1}{2^{N-1}}$。此时，对其他任意点 $j\neq i$，不能使得除了点 $j$ 外的所有点均在点 $j$ 顺时针半球内。因此，各个事件是mutually exclusive的，总概率为
-  $$
-  P\left( \bigcup_{i=1}^N E_i \right) = \sum_{i=1}^N P(E_i) = N \times \frac{1}{2^{N-1}},
-  $$
-  这个结论同样适用于弧$x\leq 1/2$。
-  $$
-  \binom{n}{1}\frac{1}{2^{N-1}}
-  $$
-  https://mathpages.com/home/kmath327/kmath327.htm
-  
-  https://www.zhihu.com/question/341018905/answer/1985433828
-
-
-
 - **Q11: Dart Game**
 
   Jason throws two darts at a dartboard, aiming for the center. The second dart lands farther from the center than the first. If Jason throws a third dart aiming for the center, what is the probability that the third throw is farther from the center than the first? Assume Jason's skillfulness is constant.
@@ -504,7 +451,7 @@ $$
   见绿皮书76页
 
   第三次扔，跟前两次无关，那么第三次扔的最好（离中心最近）的概率是1/3，所以答案是2/3
-  
+
   扔了三次，第几次是最好的概率都是1/3
 
 
@@ -530,7 +477,7 @@ $$
   $$
   ）
 
-  
+
 
 - **Q13: Dice Order**
 
@@ -590,7 +537,7 @@ $$
 
   Two players, A and B, alternatively toss a fair coin (A tosses the coin first, then B tosses the coin, then A, then B,...). The sequence of heads and tails is recorded. If there is a head followed by a tail (HT subsequence), the game ends and the person who tosses the tail wins. What is the probability that A wins the game?
 
-  另$P(A)$为$A$赢的概率，condtion P(A) on A's first toss,
+  另 $P(A)$ 为 $A$ 赢的概率，condition P(A) on A's first toss,
   $$
   P(A) = P(A|H)P(H) + P(A|T)P(T) = \frac{1}{2}P(A|H) + \frac{1}{2}P(A|T).
   $$
@@ -606,6 +553,10 @@ $$
   $$
   P(A) = \frac{1}{2} \times \frac{1}{3} + \frac{1}{2} \times (1 - P(A)), P(A) = \frac{4}{9}.
   $$
+
+
+
+ 
 
 
 
@@ -663,7 +614,56 @@ $$
     \frac{1 - (q/p)^N}{1 - q/p}P_1 = 1, \\
     P_i = \frac{1 - (q/p)^i}{1 - q/p} \frac{1 - q/p}{1 - (q/p)^N} = \frac{1-(q/p)^i}{1-(q/p)^N}.
     $$
-    
+  
+- **Q1: Card Game**
+
+  A casino offers a simple card game. There are 52 cards in a deck with 4 cards for each value 2, 3, 4, ..., J, Q, K, A. Each time the cards are thoroughly shuffled (so each card has equal probability of being selected. You pick up a card from the deck and the dealer picks another one without replacement. If you have a larger number, you win; if the numbers are equal or yours is smaller, the house wins - as in all other casinos, the hours always has better odds of winning. What is your probability of winning?
+
+  首先计算
+  $$
+  P(A = B) = 13 \times \frac{\binom{4}{2}}{\binom{52}{2}} = \frac{1}{17},
+  $$
+  则
+  $$
+  P(A < B) = P(A > B) = \frac{8}{17}.
+  $$
+  或者，总共有52张牌，抽取一张还剩51张，再抽一张跟自己一样的概率是
+  $$
+  \frac{3}{51} = \frac{1}{17}.
+  $$
+
+  另一种思路，
+  $$
+  0 + \frac{1}{13}\times \frac{4}{51} + \frac{1}{13} \times \frac{8}{51} + \cdots = \frac{4}{13}\times\frac{1+\cdots+12}{51} = \frac{8}{17}.
+  $$
+
+- **Q2: Drunk Passenger**
+
+  A line of 100 airline passengers are waiting to board a plane. They each hold a ticket to one of the 100 seats on that flight. For convenience, let's say that the nth passenger in line has a ticket for the seat number n.
+
+  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number 100. What is the probability that you end up in your seat ( i.e. seat #100)?
+
+  可以 by induction，如果只有两个乘客，则被占的概率是$0.5$；如果只有三个乘客，则被占的概率是$\frac{1}{3} + \frac{1}{3}\times\frac{1}{2} = 0.5$；如果只有4个乘客，则被占的概率是$\frac{1}{4} + \frac{1}{4}\times\frac{1}{2} + \frac{1}{4}\times\frac{1}{2} = \frac{1}{2}$；以此类推，概率有$\frac{1}{n} + (n-2)\frac{1}{n}\times\frac{1}{2} = \frac{1}{2}$。
+
+  考虑全集：\{ #100在#1前被占，#1在#100前被占\}，第一种情况是肯定坐不到正确位置的，第二种情况是肯定能坐到正确位置的。这两种情况的概率是相等的：醉汉选#100还是#1的概率是相等的，如果他选了这其中其他的座位比如#$n$，那么本质上他让第$n$个人变成了醉汉，与第一个人是醉汉时的情况相同。
+
+
+
+- **Q3: N Points on A Circle**
+
+  Give N points drawn randomly on the circumference of a circle, what is the probability that they are all within a semicircle?
+
+  先选定点$i$，剩下的$N-1$个点在该点顺时针半球内的概率概率为$\frac{1}{2^{N-1}}$。此时，对其他任意点 $j\neq i$，不能使得除了点 $j$ 外的所有点均在点 $j$ 顺时针半球内。因此，各个事件是mutually exclusive的，总概率为
+  $$
+  P\left( \bigcup_{i=1}^N E_i \right) = \sum_{i=1}^N P(E_i) = N \times \frac{1}{2^{N-1}},
+  $$
+  这个结论同样适用于弧$x\leq 1/2$。
+  $$
+  \binom{n}{1}\frac{1}{2^{N-1}}
+  $$
+  https://mathpages.com/home/kmath327/kmath327.htm
+  
+  https://www.zhihu.com/question/341018905/answer/1985433828
 
 
 
@@ -751,7 +751,8 @@ $$
 
 Variance:
 $$
-DX = EX^2 - (EX)^2.
+DX = EX^2 - (EX)^2, \\
+\sum_{i=1}^n (x_i - \bar x)^2 = \sum_{i=1}^n x_i^2 - n \bar x^2.
 $$
 Covariance:
 $$

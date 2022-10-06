@@ -160,7 +160,7 @@ I want to join your company for several reasons. First, I have heard nothing but
 
 / How would your friend describe you?
 
-I would describe myself as diligent, energetic, and responsible. I am diligent because I workhard, I follow instructions carefully, and I complete things on time and to the requested standard. I am energetic which means I tend to get more work done than the average person. Finally, I am loyal which mean I'll always be a positive role model for the company, af will stay working here fo the long term and become a part of your ongoing success
+I would describe myself as diligent, energetic, and responsible. I am diligent because I work hard, I follow instructions carefully, and I complete things on time and to the requested standard. I am energetic which means I tend to get more work done than the average person. Finally, I am loyal which mean I'll always be a positive role model for the company, af will stay working here fo the long term and become a part of your ongoing success
 
 ### Questions to ask at the end of interview
 

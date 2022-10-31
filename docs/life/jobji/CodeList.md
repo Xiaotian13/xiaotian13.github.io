@@ -63,7 +63,8 @@
 - [x] [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/), Medium
 - [x] [153. Find Minimum in Rotated Sorted Array](https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/), Medium
 - [x] [981. Time Based Key-Value Store](https://leetcode.com/problems/time-based-key-value-store/), Medium
-- [x] [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+- [x] [34. Find First and Last Position of Element in Sorted Array](https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/), Medium
+- [x] [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/), Medium
 - [ ] [4. Median of Two Sorted Arrays](https://leetcode.com/problems/median-of-two-sorted-arrays/), Hard
 
 <br>
@@ -650,6 +651,12 @@ ls.insert(0, 'asd') # 在第0处插入'asd'
 
 本题即为找到目标值后继续搜，直到两个指针相遇；
 左边界二分搜索和右边界二分搜索
+
+<br>
+
+[1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/)
+
+这道题跟[google的OA](https://leetcode.com/discuss/interview-question/348510/Google-or-OA-2019-or-Maximum-Area-Serving-Cake)一样，用generalized binary search。首先定义函数，来确定当前的值是否满足情况；然后确定下界和上界，做二分搜索
 
 <br>
 
@@ -1243,4 +1250,81 @@ Half brutal force，只遍历小于1/2的；
 
 
 
-[返回开头](#0-刷题表纯享)
+## 2. 面经（非leetcode题目）
+
+[PowerSum](https://leetcode.com/discuss/interview-question/516442/Swiggy-or-OA-2020-or-Is-Possible-or-Minimum-start-value-or-Power-sum/457422)
+
+先把所有可能的平方数找出来，然后看范围内所有数字是否可以由这些数的平方数构成
+
+```python
+import math
+
+
+
+def countPowerNumbers(l, r):
+    # Write your code here
+    # first identify every possible a^p, b^q
+    dp = [0 for i in range(r+1)]
+    dp[0] = 1
+    dp[1] = 1
+
+    for i in range(2, int(math.sqrt(r))+1):
+        j = 2
+        temp = i**j
+        while temp <= r:
+            dp[temp] = 1
+            j += 1
+            temp = i**j
+
+    res = 0
+    for i in range(l, r+1):
+        for j in range(0, i+1):
+            if dp[j] and dp[i-j]:
+                res += 1
+                #print(i)
+                break
+
+    return res
+
+
+
+left = 10
+right = 50
+print(countPowerNumbers(left, right))
+
+
+
+def countPowerNumbers(l, r):
+    # first identify every possible a^p, b^q
+    SET = set([0])
+    if r >= 1:
+        SET.add(1)
+    for num in range(2, int(math.sqrt(r))+1):
+        start_pow = 2
+        temp = num**start_pow
+        while temp <= r:
+            SET.add(temp)
+            start_pow += 1
+            temp = num**start_pow
+    
+    res = 0
+    ls = list(SET)
+    for i in range(l, r+1):
+        for j in ls:
+            if i-j in SET:
+                res += 1
+                #print(i)
+                break
+                
+    return res
+
+
+
+print(countPowerNumbers(left, right))
+```
+
+<br>
+
+D.E.Shaw Online Assessment Question, [Bob Navigates a Maze](https://leetcode.com/discuss/interview-question/708638/sap-labs-oa-bob-navigates-a-maze)
+
+这题难度中等偏上

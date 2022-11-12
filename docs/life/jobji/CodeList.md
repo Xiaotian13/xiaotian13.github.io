@@ -123,6 +123,7 @@
 - [ ] [215. Kth Largest Element in an Array](https://leetcode.com/problems/kth-largest-element-in-an-array/), Medium
 - [ ] [621. Task Scheduler](https://leetcode.com/problems/task-scheduler/), Medium
 - [ ] [355. Design Twitter](https://leetcode.com/problems/design-twitter/), Medium
+- [x] [1642. Furthest Building You Can Reach](https://leetcode.com/problems/furthest-building-you-can-reach/), Medium
 - [ ] [295. Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/), Hard
 
 <br>
@@ -509,6 +510,62 @@ q.pop()
 q.popleft()
 ```
 deque的`popleft()`与`pop()`都是 $\mathcal O(1)$ 的操作，因此这道题是使用deque的经典题，用后只需要扫一遍就能得出答案，TC和SC为 $\mathcal O(n)$
+
+```python
+from collections import deque
+class Solution:
+    def maxSlidingWindow(self, nums, k):
+        # using deque, TC, SC O(n)
+        res = [0] * (len(nums) - k + 1)
+        l = r = 0
+        q = deque() # monotonically decreasing; composed of indices
+        
+        while r < len(nums):
+            # compared with nums[r], pop smaller one from the deque
+            # make sure the leftmost in the biggest
+            while q and nums[q[-1]] < nums[r]:
+                q.pop()
+            q.append(r) # add r
+            
+            # make sure the leftmost is in-bound
+            if l > q[0]:
+                q.popleft() # remove out-of-bound index
+                
+            # starts adding result
+            if r + 1 >= k:
+                res[l] = nums[q[0]]
+                l += 1
+            r += 1
+        
+        return res
+```
+
+同理，可以写出单调递增队列：
+
+```python
+def minSlidingWindow(nums, k):
+    dq = deque() # increasing deque, composed of indices
+    ans = [0] * (len(nums) - k + 1)
+    l = r = 0
+    while r < len(nums):
+        # make sure the right most is smaller or equal to current number
+        while dq and nums[r] < nums[dq[-1]]:
+            dq.pop()
+        # add current number('s index)
+        dq.append(r)
+        # make sure the left most is in-bound
+        while dq and dq[0] < l:
+            dq.popleft()
+        # start adding result
+        if r + 1 >= k:
+            ans[l] = nums[dq[0]]
+            l += 1
+        r += 1
+
+    return ans
+
+print(minSlidingWindow([4, 3, -2, 9, -4, 2, 7, 6], 3))
+```
 
 <br>
 
@@ -940,6 +997,12 @@ quick select，用来找出前/第 $k$ 大/小的元素，平均只需要 $\math
 
 <br>
 
+[1642. Furthest Building You Can Reach](https://leetcode.com/problems/furthest-building-you-can-reach/), Medium
+
+ladders可以爬上任意高度的楼，因此我们要把ladders留给最高的几个gap，排序较低里的gap留给bricks。考虑动态维护一个最小堆，如果堆里的gap总数大于ladders，则pop出最小的gap，用bricks去补
+
+<br>
+
 [295. Find Median from Data Stream](https://leetcode.com/problems/find-median-from-data-stream/)
 
 
@@ -1327,4 +1390,62 @@ print(countPowerNumbers(left, right))
 
 D.E.Shaw Online Assessment Question, [Bob Navigates a Maze](https://leetcode.com/discuss/interview-question/708638/sap-labs-oa-bob-navigates-a-maze)
 
-这题难度中等偏上
+这题偏难
+
+<br>
+
+Approximate Matching:
+
+![image-20221111172115463](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221111172115463.png)
+
+![image-20221111172149145](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221111172149145.png)
+
+![image-20221111172200408](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221111172200408.png)
+
+
+
+<br>
+
+Profit Analysis:
+
+![image-20221110200205163](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221110200205163.png)
+
+![image-20221110200247656](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221110200247656.png)
+
+![image-20221110200257587](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221110200257587.png)
+
+```python
+from collections import deque
+def getMaxProfit(pnl, k):
+    # Write your code here
+    # compute prefix sum
+    S = pnl.copy()
+    for i in range(len(pnl)-1):
+        S[i+1] += S[i]
+    res = max(S[:k])
+    # compute sliding window minimum (of prefix sum)
+    def minSlidingWindow(nums, k):
+        dq = deque() # increasing deque, composed of indices
+        ans = [0] * len(nums)
+        for i in range(len(nums)):
+            # make sure the right most is smaller or equal to current number
+            while dq and nums[i] < nums[dq[-1]]:
+                dq.pop()
+            # add current number('s index)
+            dq.append(i)
+            # make sure the left most is in-bound
+            while dq and dq[0] < max(0, i-k+1):
+                dq.popleft()
+            # add result
+            ans[i] = nums[dq[0]]
+        return ans
+    SlidingMin_S = minSlidingWindow(S, k)
+    for i in range(1, len(pnl)):
+        res = max(res, S[i] - SlidingMin_S[i-1])
+
+    return max(res, 0)
+
+print(getMaxProfit([4, 3, -2, 9, -4, 2, 7], 6)) # 15
+print(getMaxProfit([5, -7, 8, -6, 4, 1, -9, 5], 5)) # 8
+```
+

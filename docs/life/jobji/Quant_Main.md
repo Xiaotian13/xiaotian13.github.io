@@ -1745,6 +1745,12 @@ key value pair 键值对，根据键索引值；无序
 
 
 
+Thread可以共享内存，而Process不可以
+
+context switch
+
+
+
 ## 6. Programming Algorithms
 
 Sort Algorithms:

@@ -2014,7 +2014,7 @@ Brownian Motion:
 
 ### 8.2 Questions
 
-- **Q1: **
+- **Q1: Gambler's Ruin Problem**
 
   Player M has \$1 and player N has \$2. Each game gives the winner \$1 from the other. As a betterp layer, M wins 2/3 of the games. They play until one of the is bankrupt. What is the probability that M wins?
 
@@ -2180,7 +2180,7 @@ Brownian Motion:
   p_{7,S} = p_{S, S} = \frac{29}{36}, \\
   p_{7-7, 7-7} = p_{12, 12} = 1.
   $$
-  <img src="./fig/IMG_54C1DF4E0744-1.jpeg" alt="IMG_54C1DF4E0744-1" style="zoom:25%;" />
+  ![](fig/IMG_54C1DF4E0744-1.jpeg':size=30%')
 
   因此，类似地，假设A从 state S 开始玩赢的概率为 $p_S$，我们有 $p_{7-7}=p_{12}=1$，
   $$
@@ -2195,20 +2195,21 @@ Brownian Motion:
 
   1. If you keep on tossing a fair coin, what is the expected number of tosses such that you can have HHH (heads heads heads) in a row? What is the expected number of tosses to have THH in a row?
 
-    <img src="./fig/IMG_3EA6FF1AF834-1.jpeg" alt="IMG_3EA6FF1AF834-1" style="zoom: 25%;" />
+     ![](fig/IMG_3EA6FF1AF834-1.jpeg':size=30%')
 
-    代入公式得
-  $$
-    \mu_S = 1 + 0.5\mu_S + 0.5\mu_H,\\
-    \mu_H = 1 + 0.5\mu_S + 0.5\mu_{HH}, \\
-    \mu_{HH} = 1 + 0.5 \mu_S + 0.5 \mu_{HHH},\\
-    \mu_{HHH}=0.
-  $$
-    解得 $\mu_S = 14$。同理计算得另一个答案为8。
+     代入公式得
+     $$
+     \mu_S = 1 + 0.5\mu_S + 0.5\mu_H,\\
+       \mu_H = 1 + 0.5\mu_S + 0.5\mu_{HH}, \\
+       \mu_{HH} = 1 + 0.5 \mu_S + 0.5 \mu_{HHH},\\
+       \mu_{HHH}=0.
+     $$
+       解得 $\mu_S = 14$。同理计算得另一个答案为 $8$。
 
   2. Keep flipping a fair coin until either HHH or THH occurs in the sequence. What is the probability that you get an HHH subsequence before THH?
 
-    <img src="./fig/IMG_ADEF9C8AEB38-1.jpeg" alt="IMG_ADEF9C8AEB38-1" style="zoom: 33%;" />
+     ![](fig/IMG_ADEF9C8AEB38-1.jpeg':size=30%')
+  
 
 
 

@@ -1449,3 +1449,27 @@ print(getMaxProfit([4, 3, -2, 9, -4, 2, 7], 6)) # 15
 print(getMaxProfit([5, -7, 8, -6, 4, 1, -9, 5], 5)) # 8
 ```
 
+<br>
+
+Circular Printer:
+
+![image-20221112095743427](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221112095743427.png)
+
+![image-20221112095802944](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221112095802944.png)
+
+这题简单。
+
+```python
+def getTime(s):
+    # Write your code here
+    curr = 'A'
+    res = 0
+    for letter in s:
+        temp = abs(ord(letter) - ord(curr))
+        res += min(temp, 26-temp)
+        curr = letter
+    return res
+
+print(getTime('AZGB')) # 13
+```
+

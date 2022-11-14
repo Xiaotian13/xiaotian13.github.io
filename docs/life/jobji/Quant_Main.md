@@ -192,9 +192,9 @@
 
 
 
-## 2. Probability
+## 2. Probability and Statistics
 
-### 2.1 Probability Basic Knowledge
+### 2.1 Basic Knowledge
 
 Number of permutations (order matters) of $n$ things taken $r$ at a time:
 $$
@@ -252,9 +252,130 @@ converge in law/distribution, converge in probability
 
 
 
+注：$EX, DX$分别为$\mathbb E[X], D[X]=Var[X]$的简写。
+$$
+\mathbb E\left( \sum_{i=1}^n X_i \right) = \sum_{i=1}^n \mathbb E(X_i).
+$$
+If $X,Y$ are independent, 
+$$
+\mathbb E[f(X)g(Y)] = \mathbb E[f(X)] \mathbb E(g(Y)), \\
+Cov(X, Y) = \rho(X,Y) = 0.
+$$
+协方差为0不代表XY独立，因为它只能衡量一阶线性关系，二阶的衡量不了。
+
+Variance:
+$$
+DX = EX^2 - (EX)^2, \\
+\sum_{i=1}^n (x_i - \bar x)^2 = \sum_{i=1}^n x_i^2 - n \bar x^2.
+$$
+Covariance:
+$$
+Cov(X, Y) = \mathbb E[(X - EX)(Y-EY)] = E(XY) - EXEY, \\
+D(X\pm Y) = DX+DY\pm 2Cov(X, Y), \\
+Cov(X, X) = DX.
+$$
+Correlation:
+$$
+\rho(X, Y) = \frac{Cov(X, Y)}{\sqrt{DXDY}}, -1 \leq \rho \leq 1.
+$$
+General Rules of Variance and Covariance:
+$$
+Cov\left( \sum_{i=1}^n a_iX_i, \sum_{j=1}^m b_jX_j \right) = \sum_{i=1}^n \sum_{j=1}^m a_ib_jCov(X_i, X_j), \\
+Var\left( \sum_{i=1}^n X_i \right) = \sum_{i=1}^n DX_i + 2 \sum_{j\neq i} Cov(X_i, X_j); \\
+
+Cov(aX_1+bX_2,Y)=Cov(aX_1,Y) + Cov(bX_2,Y) = aCov(X_1, Y) + bCov(X_2, Y).
+$$
+Conditional Expectation and Variance:
+$$
+\mathbb E[g(X)|Y=y] = \sum_x g(x) p_{X|Y}(x|y) = \sum_x g(x) p(X=x|Y=y) = \int g(x)f_{X|Y}(x|y)dx.
+$$
+Law of Total Expectation:
+$$
+\mathbb E[X] = \mathbb E[\mathbb E[X|Y]] = \sum_x \mathbb E[X|Y=y]p(Y=y) = \int \mathbb E[X|Y=y]f_Y(y).
+$$
+
+
+
 ### 2.2 Questions
 
-- **Q1: Poker Hands**
+- **Q1: Coin Toss Game**
+
+  Two gamblers are playing a coin toss game. Gambler A has $n+1$ fair coins; B has $n$ fair coins. What is the probability that A will have more heads than B if both flip all their coins?
+
+  我们可以考虑将A的硬币分为两部分，$n$ 枚硬币与剩下的 $1$ 枚硬币。用 $A^*$ 代表那 $n$ 枚硬币，那么这个时候我们知道
+  $$
+  P(A^* > B) = P(A^*<B),
+  $$
+  因为大家都是 $n$ 枚硬币，所以比对方多的概率都是相同的。设 $x = P(A^*>B) = P(A^*<B), y = P(A^*=B)$，则有 $2x+y=1$。
+
+  下面考虑那多出来的一枚硬币：
+
+  - 对于 $A^*>B$ 的情况，无论如何都还是A赢；
+  - 对于 $A^* <B$ 的情况，最多能让 $A=B$，不可能让A赢；
+  - 对于 $A^* =B$ 的情况，此时多出来的一枚硬币就很重要了，因为它能决定胜负。
+
+  因此，我们可以得到
+  $$
+  P(A > B) =P(A^*>B) + P(A^*=B) \times \frac{1}{2} = x + \frac{1}{2}y = \frac{1}{2}(2x+y) = \frac{1}{2}.
+  $$
+
+<br>
+
+- **Q2: Card Game**
+
+  A casino offers a simple card game. There are 52 cards in a deck with 4 cards for each value 2, 3, 4, ..., J (jack), Q (queen), K (king), A (ace). Each time the cards are thoroughly shuffled (so each card has equal probability of being selected. You pick up a card from the deck and the dealer picks another one without replacement. If you have a larger number, you win; if the numbers are equal or yours is smaller, the house wins - as in all other casinos, the hours always has better odds of winning. What is your probability of winning?
+
+  首先计算
+  $$
+  P(A = B) = 13 \times \frac{\binom{4}{2}}{\binom{52}{2}} = \frac{1}{17},
+  $$
+  则
+  $$
+  P(A < B) = P(A > B) = \frac{8}{17}.
+  $$
+  或者，总共有52张牌，抽取一张还剩51张，再抽一张跟自己一样的概率是
+  $$
+  \frac{3}{51} = \frac{1}{17}.
+  $$
+
+  另一种思路，
+  $$
+  0 + \frac{1}{13}\times \frac{4}{51} + \frac{1}{13} \times \frac{8}{51} + \cdots = \frac{4}{13}\times\frac{1+\cdots+12}{51} = \frac{8}{17}.
+  $$
+
+<br>
+
+- **Q3: Drunk Passenger**
+
+  A line of 100 airline passengers are waiting to board a plane. They each hold a ticket to one of the 100 seats on that flight. For convenience, let's say that the nth passenger in line has a ticket for the seat number n.
+
+  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number 100. What is the probability that you end up in your seat ( i.e. seat #100)?
+
+  可以 by induction，如果只有两个乘客，则被占的概率是$0.5$；如果只有三个乘客，则被占的概率是$\frac{1}{3} + \frac{1}{3}\times\frac{1}{2} = 0.5$；如果只有4个乘客，则被占的概率是$\frac{1}{4} + \frac{1}{4}\times\frac{1}{2} + \frac{1}{4}\times\frac{1}{2} = \frac{1}{2}$；以此类推，概率有$\frac{1}{n} + (n-2)\frac{1}{n}\times\frac{1}{2} = \frac{1}{2}$。
+
+  考虑全集：\{ #100在#1前被占，#1在#100前被占\}，第一种情况是肯定坐不到正确位置的，第二种情况是肯定能坐到正确位置的。这两种情况的概率是相等的：醉汉选#100还是#1的概率是相等的，如果他选了这其中其他的座位比如#$n$，那么本质上他让第$n$个人变成了醉汉，与第一个人是醉汉时的情况相同。
+
+<br>
+
+- **Q4: N Points on A Circle**
+
+  Give N points drawn randomly on the circumference of a circle, what is the probability that they are all within a semicircle?
+
+  先选定点$i$，剩下的$N-1$个点在该点顺时针（clockwise）半球内的概率概率为$\frac{1}{2^{N-1}}$。此时，对其他任意点 $j\neq i$，不能使得除了点 $j$ 外的所有点均在点 $j$ 顺时针半球内。因此，各个事件是mutually exclusive的，总概率为
+  $$
+  P\left( \bigcup_{i=1}^N E_i \right) = \sum_{i=1}^N P(E_i) = N \times \frac{1}{2^{N-1}},
+  $$
+  这个结论同样适用于弧$x\leq 1/2$。
+  $$
+  \binom{n}{1}\frac{1}{2^{N-1}}
+  $$
+  https://mathpages.com/home/kmath327/kmath327.htm
+
+  https://www.zhihu.com/question/341018905/answer/1985433828
+
+<br>
+
+- **Q5: Poker Hands**
 
   Poker is a card game in which each player gets a hand of 5 cards. There are 52 cards in a deck. Each card has a value and belongs to a suit (花色). There are 13 values, 2, 3, 4, 5, 6, 7, 8, 9, 10, J (jack), Q (queen), K (king), A (ace), and four suits,  spade (黑桃), club (梅花), heart (红桃), diamond (方块).
 
@@ -268,9 +389,9 @@ converge in law/distribution, converge in probability
 
   Two pairs: $\binom{2}{13} \times \binom{2}{4}^2 \times \binom{1}{44}$
 
+<br>
 
-
-- **Q2: Hopping Rabbit**
+- **Q6: Hopping Rabbit**
 
   A rabbit sits at the bottom of a staircase with $n$ stairs. The rabbit can hop up only one or two stairs at a time. How many different ways are there for the rabbit to ascend to the top of the stairs?
 
@@ -338,9 +459,9 @@ F_{n}=
 \end{aligned}.
 $$
 
+<br>
 
-
-- **Q3: Chess Tournament**
+- **Q7: Chess Tournament**
 
   A chess tournament has $2^n$ players with skills $1 > 2 > \dots > 2^n$. It is organized as a knockout tournament, so that after each round only the winner proceeds to the next round. Except for the final, opponents in each round are drawn at random. Let's also assume that when two players meet in a game, the player with better skills always wins. What's the probability that players 1 and 2 will meet in the final?
 
@@ -348,26 +469,28 @@ $$
   $$
   \frac{2(2^{n-1}-1)}{2^n-1} \times \frac{2(2^{n-2}-1)}{2^{n-1}-1} \times \cdots \times \frac{2(2^{1}-1)}{2^{2}-1}=\frac{2^{n-1}}{2^n-1}.
   $$
-  
-- **Q4: Application Letters**
+
+<br>
+
+- **Q8: Application Letters**
 
   You're sending job applications to 5 firms: Morgan Stanley, Goldman Sachs, JP Morgan, UBS and Merrill Lynch. You have 5 envelopes on the table neatly typed with names and addresses of people at these 5 firms. You even have 5 cover letters personalized to each of these firms. Your 3-year-old tried to be helpful and stuffed each cover letter into each of the envelopes for you. Unfortunately she randomly put letters into envelopes without realizing that the letters are personalized. What is the probability that all 5 cover letters are mailed to the wrong firms?
 
   首先，如果只有两张牌，那么全错只有1种情况；
-  
+
   如果只有三张牌，那么全错只有2种情况；
-  
+
   如果只有四张牌，总共有$4\times 3\times 2=24$种排列，只有一张牌是对的共有$\binom{4}{1} \times 2=8$种情况，只有两张牌是对的共有$\binom{4}{2}\times 1=6$种情况，全对有1种情况，加起来就是15种情况，因此全错只有$24 - 15=9$种情况；
-  
+
   对于题目，我们只有五张牌，总共有$5\times4\times3\times2=120$种排列，那么只有一张牌是对的共有$\binom{5}{1}\times 9=45$种情况，只有两张牌是对的共有$\binom{5}{2}\times 2=20$种情况，只有三张牌是对的共有$\binom{5}{3}\times 1=10$种情况，全对只有1种情况，因此全错只有$120 - 45 - 20 - 10 - 1=44$种情况，概率即为
   $$
   \frac{44}{120} = \frac{11}{30}.
   $$
   还有另一种解法，见绿皮书第70页。
 
+<br>
 
-
-- **Q5: Birthday Problem**
+- **Q9: Birthday Problem**
 
   How many people do we need in a class to make the probability that two people have the same birthday more than 0.5? (for simplicity, assume 365 days a year)
   $$
@@ -389,17 +512,17 @@ $$
   print(n)
   ```
 
+<br>
 
-
-- **Q6: 100th digit**
+- **Q10: 100th digit**
 
   What is the 100th digit to the right of the decimal point in the decimal representation of $(1 + \sqrt 2)^{3000}$?
 
   关键点在于，according to binomial theorem，$(1+\sqrt2)^{2n} + (1-\sqrt 2)^{2n}$ 将永远是一个整数。而 $(1 - \sqrt2)^{3000} < 10^{-100}$，因此 $(1 + \sqrt 2)^{3000}$ 的第100位一定是9。
 
+<br>
 
-
-- **Q7: Cubic of Integer**
+- **Q11: Cubic of Integer**
 
   Let $x$ be an integer between $1$ and $10^{12}$, what is the probability that the cubic of $x$ ends with $11$?
 
@@ -407,9 +530,9 @@ $$
 
   每一百个数字中，会出现一个后两位是 $71$ 的数字，因此概率就是 $1/100$。
 
+<br>
 
-
-- **Q8: Boys and girls**
+- **Q12: Boys and girls**
 
   A company is holding a dinner for working mothers with at least one son. Ms. Jackson, a mother with two children is invited. What is the probability that both children are boys?
 
@@ -419,9 +542,9 @@ $$
 
   显然，$\frac{1}{2}$。
 
+<br>
 
-
-- **Q9: Unfair Coins**
+- **Q13: Unfair Coins**
 
   You are given 1000 coins. Among them, 1 coin has heads on both sides. The other 999 coins are fair coins. You randomly choose a coin and toss it 10 times. Each time, the coin turns up heads. What is the probability that the coin you choose is the unfair one?
   $$
@@ -429,10 +552,10 @@ $$
   $$
   约为0.5。
 
+<br>
 
 
-
-- **Q10: Fair Probability from An Unfair Coin**
+- **Q14: Fair Probability from An Unfair Coin**
 
   If you have an unfair coin, which may bias toward either heads or tails at an unknown probability, can you generate even odds using this coin?
   $$
@@ -442,9 +565,9 @@ $$
 
   生成两次，将生成的数字当做5进制，如：组合11映射为$1\times5+1=6$，组合55映射为$5\times5 + 5=30$。然后比如只保留7\~27这些数字时的结果，再对7取余。
 
+<br>
 
-
-- **Q11: Dart Game**
+- **Q15: Dart Game**
 
   Jason throws two darts at a dartboard, aiming for the center. The second dart lands farther from the center than the first. If Jason throws a third dart aiming for the center, what is the probability that the third throw is farther from the center than the first? Assume Jason's skillfulness is constant.
 
@@ -454,9 +577,9 @@ $$
 
   扔了三次，第几次是最好的概率都是1/3
 
+<br>
 
-
-- **Q12: Birthday Line**
+- **Q16: Birthday Line**
 
   At a movie theater, a whimsical manager announces that she will give a free ticket to the first person in line whose birthday is the same as someone who has already bought a ticket.
   You are given the opportunity to choose any position in line. Assuming that your don't know anyone else's birthday and all birthdays are distributed randomly throughout the year (assuming 365 days in a year), what position in line gives you the largest chance of getting the free ticket?
@@ -477,9 +600,9 @@ $$
   $$
   ）
 
+<br>
 
-
-- **Q13: Dice Order**
+- **Q17: Dice Order**
 
   We throw 3 dice one by one. What is the probability that we obtain 3 points in strictly increasing order?
 
@@ -489,9 +612,9 @@ $$
   $$
   这三个数字按照严格递增排序的概率为1/6，因此最后概率乘起来
 
+<br>
 
-
-- **Q14: Monty Hall problem**
+- **Q18: Monty Hall problem**
 
   Monty Hall problem is a probability puzzle based on an old American show "Let's make a deal". The problem is named after the show's host. Suppose you are on the show now, and you are given the choice of 3 doors. Behind one door is a car; behind the other two are goats. You don't know ahead of time what is behind each of the doors.
   You pick one of the doors and announce it. As soon as you pick the door, Monty opens on of the other two doors that he knows has a goat behind it. Then he gives you the option to either keep your original choice or switch to the third door. Should you switch?
@@ -499,9 +622,9 @@ $$
 
   2/3
 
+<br>
 
-
-- **Q15: Amoeba Population**
+- **Q19: Amoeba Population**
 
   There is a one amoeba in a pond. After every minute the amoeba may die, stay the same, split into two or split into three with equal probability. All its offspring(后代), if it has any, will behave the same (and independent of other amoebas). What is the probability the amoeba population will die out?
 
@@ -517,9 +640,9 @@ $$
   $$
   解得 $x = \sqrt{2} - 1$。
 
+<br>
 
-
-- **Q16: Candies in A Jar**
+- **Q20: Candies in A Jar**
 
   You are taking out candies one by one from a jar that has 10 red candies, 20 blue candies, and 30 green candies in it. What is the probability that there are at least 1 blue candy and 1 green candy left in the jar when you have taken out all the red candies?
 
@@ -531,9 +654,9 @@ $$
 
   同理得到最终计算需要的概率为30/60 * 20/30 + 20/60 * 30/40 = 1/3 + 1/4 = 7/12
 
+<br>
 
-
-- **Q17: Coin Toss Game**
+- **Q21: Coin Toss Game**
 
   Two players, A and B, alternatively toss a fair coin (A tosses the coin first, then B tosses the coin, then A, then B,...). The sequence of heads and tails is recorded. If there is a head followed by a tail (HT subsequence), the game ends and the person who tosses the tail wins. What is the probability that A wins the game?
 
@@ -554,13 +677,35 @@ $$
   P(A) = \frac{1}{2} \times \frac{1}{3} + \frac{1}{2} \times (1 - P(A)), P(A) = \frac{4}{9}.
   $$
 
+<br>
 
+- **Q22: Russian Roulette Series**
 
- 
+  1. Let's play a traditional version of Russian roulette. A single bullet is put into a 6-chamber revolver. The barrel is randomly spun so that each chamber is equally likely to be under the hammer. Two players take turns to pull the trigger - with the gun unfortunately pointing at one's own head - without further spinning until the gun goes off and the person who gets killed loses. If you, one of the players, can choose to go first or second, how will you choose? And what is your probability of loss?
 
+     总共有 $6$ 种可能的装子弹方式，这 $6$ 种中，先打后打都有 $3$ 种情况死，因此概率为 $1/2$
 
+  2. Now, let's change the rule slightly. We will spin the barrel again after every trigger pull. Will you choose to be the first or the second player? And what is your probability of loss?
 
-- **Q18: Aces**
+     如果我们选择先打，那么我们死的概率为
+     $$
+     \frac{1}{6} + \frac{5}{6}\times\frac{5}{6}\times\frac{1}{6} + \cdots = \sum_{i=0}^{\infty}\frac{1}{6}\cdot (\frac{5}{6})^{2i} = \frac{\frac{1}{6}}{1-\frac{25}{36}} = \frac{6}{11},
+     $$
+     由此可知后打赢的概率为 $\frac{6}{11}$，因此我们应该后打。
+
+     或者我们可以设先打赢的概率为 $p$，则应有 $p =\frac{1}{6}\times 0 + \frac{5}{6}(1-p)$，计算得 $p = \frac{5}{11}$。
+
+  3. If instead of one bullet, two bullets are randomly put in the chamber. Your opponent played the first and he was alive after the first trigger pull. You are given the option whether to spin the barrel. Should you spin the barrel?
+
+     不旋转的话，我们的死亡概率是 $4/\binom{2}{5} = \frac{2}{5}$，旋转的话我们的死亡概率是 $5/\binom{6}{2} = \frac{2}{6}$，显然旋转更好。
+
+  4. What if the two bullets are randomly put in two consecutive positions? If your opponent survived his first round, should you spin the barrel?
+
+     总共有 $6$ 种情况。其中，第一发没有子弹，总共有 $4$ 种情况，且这 $4$ 种情况中只有 $1$ 种情况是第二发有子弹，因此不转的话死亡概率为 $1/4$；如果转的话，等同于第一发有子弹的概率，此时死亡概率为 $2/6$，因此不转是更好的。
+
+<br>
+
+- **Q23: Aces**
 
   52 cards are randomly distributed to 4 players with each player getting 13 cards. What is the probability that each of them will have an ace?
   
@@ -574,9 +719,9 @@ $$
   $$
   也可以认为，四张A分配给52个卡槽，现在首先分配好第一张A后，第二张A不与第一张A在同一个13张卡牌的概率是39/51，以此类推。
 
+<br>
 
-
-- **Q19: Gambler's Ruin Problem**
+- **Q24: Gambler's Ruin Problem**
 
   A gambler starts with an initial fortune of i dollars. On each successive game, the gambler wins \$1with probability p, 0<p<1, or loses \$1 with probability q=1-p.
   He will stop if he either accumulates N dollars or loses all his money. What is the probability that he will end up with N dollars?
@@ -614,60 +759,36 @@ $$
     \frac{1 - (q/p)^N}{1 - q/p}P_1 = 1, \\
     P_i = \frac{1 - (q/p)^i}{1 - q/p} \frac{1 - q/p}{1 - (q/p)^N} = \frac{1-(q/p)^i}{1-(q/p)^N}.
     $$
-  
-- **Q1: Card Game**
 
-  A casino offers a simple card game. There are 52 cards in a deck with 4 cards for each value 2, 3, 4, ..., J, Q, K, A. Each time the cards are thoroughly shuffled (so each card has equal probability of being selected. You pick up a card from the deck and the dealer picks another one without replacement. If you have a larger number, you win; if the numbers are equal or yours is smaller, the house wins - as in all other casinos, the hours always has better odds of winning. What is your probability of winning?
+<br>
 
-  首先计算
+- **Q25: Basketball Scores**
+  A basketball player is taking 100 free throws. She scores one point if the ball passes through the hoop and zero point if she misses. She has scored on her first throw and missed on her second. For each of the following throw the probability of her scoring is the fraction of throws she has made so far. For example, if she has scored 23 points after the 40th throw, the probability that she will score in the 41th throw is 23/40. After 100 throws (including the first and the second), what is the probability that she scores exactly 50 baskets?
+
+  首先从最简单的情况开始看。用 $X_3$ 来表示 $3$ 次投球后投中的数量，则有：
   $$
-  P(A = B) = 13 \times \frac{\binom{4}{2}}{\binom{52}{2}} = \frac{1}{17},
+  P(X_3 = 1) = P(X_3=2) = \frac{1}{2};
   $$
-  则
+  在此基础上，计算得到：
   $$
-  P(A < B) = P(A > B) = \frac{8}{17}.
+  P(X_4 = 1) = \frac{1}{2} \times (1 - \frac{1}{3}) = \frac{1}{3}, \\
+  P(X_4 = 2) = \frac{1}{2} \times (1 - \frac{1}{3}) + \frac{1}{2} \times \frac{1}{3} = \frac{1}{3}, \\
+  P(X_4 = 3) = \frac{1}{2} \times \frac{2}{3} = \frac{1}{3};
   $$
-  或者，总共有52张牌，抽取一张还剩51张，再抽一张跟自己一样的概率是
+  由此，我们猜测 $P(X_n = k) = \frac{1}{n-1}, k = 1, \cdots, n-1$，用数学归纳，应有
   $$
-  \frac{3}{51} = \frac{1}{17}.
+  P(X_{n+1} = k) = P(X_n=k) \times (1 - \frac{k}{n}) + P(X_n=k-1) \times \frac{k-1}{n} = \frac{1}{n-1}\frac{n-k+k-1}{n} = \frac{1}{n}, \quad k = 1, \cdots, n-1,
+  $$
+  当 $k=n$ 时，即有
+  $$
+  P(X_{n+1}=n) = \frac{1}{n-1} \times \frac{n-1}{n} = \frac{1}{n}.
   $$
 
-  另一种思路，
-  $$
-  0 + \frac{1}{13}\times \frac{4}{51} + \frac{1}{13} \times \frac{8}{51} + \cdots = \frac{4}{13}\times\frac{1+\cdots+12}{51} = \frac{8}{17}.
-  $$
+- 
 
-- **Q2: Drunk Passenger**
+<br>
 
-  A line of 100 airline passengers are waiting to board a plane. They each hold a ticket to one of the 100 seats on that flight. For convenience, let's say that the nth passenger in line has a ticket for the seat number n.
-
-  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number 100. What is the probability that you end up in your seat ( i.e. seat #100)?
-
-  可以 by induction，如果只有两个乘客，则被占的概率是$0.5$；如果只有三个乘客，则被占的概率是$\frac{1}{3} + \frac{1}{3}\times\frac{1}{2} = 0.5$；如果只有4个乘客，则被占的概率是$\frac{1}{4} + \frac{1}{4}\times\frac{1}{2} + \frac{1}{4}\times\frac{1}{2} = \frac{1}{2}$；以此类推，概率有$\frac{1}{n} + (n-2)\frac{1}{n}\times\frac{1}{2} = \frac{1}{2}$。
-
-  考虑全集：\{ #100在#1前被占，#1在#100前被占\}，第一种情况是肯定坐不到正确位置的，第二种情况是肯定能坐到正确位置的。这两种情况的概率是相等的：醉汉选#100还是#1的概率是相等的，如果他选了这其中其他的座位比如#$n$，那么本质上他让第$n$个人变成了醉汉，与第一个人是醉汉时的情况相同。
-
-
-
-- **Q3: N Points on A Circle**
-
-  Give N points drawn randomly on the circumference of a circle, what is the probability that they are all within a semicircle?
-
-  先选定点$i$，剩下的$N-1$个点在该点顺时针半球内的概率概率为$\frac{1}{2^{N-1}}$。此时，对其他任意点 $j\neq i$，不能使得除了点 $j$ 外的所有点均在点 $j$ 顺时针半球内。因此，各个事件是mutually exclusive的，总概率为
-  $$
-  P\left( \bigcup_{i=1}^N E_i \right) = \sum_{i=1}^N P(E_i) = N \times \frac{1}{2^{N-1}},
-  $$
-  这个结论同样适用于弧$x\leq 1/2$。
-  $$
-  \binom{n}{1}\frac{1}{2^{N-1}}
-  $$
-  https://mathpages.com/home/kmath327/kmath327.htm
-  
-  https://www.zhihu.com/question/341018905/answer/1985433828
-
-
-
-- **Q20: Cars on the Road**
+- **Q26: Cars on the Road**
 
   If the probability of observing at least one car on a highway during any 20-minute time interval is 609/625, then what is the probability of observing at least one car during any 5-minute time interval? Assume that the probability of seeing a car at any moment is uniform (constant) for the entire 20 minutes.
 
@@ -679,7 +800,20 @@ $$
 
 
 
-- **Q21: Probability Of Triangle**
+- **Q27: Meeting Probability**
+
+  Two bankers each arrive at the station at some random time between 5:00 am and 6:00 am (arrival time for either banker is uniformly distributed). They stay exactly five minutes and then leave. What is the probability they will meet on a given day?
+
+  用线性规划，约束为 $0 \leq x, y \leq 60$，所求区域为 $|x-y|\leq 5$。该带状区域面积计算为
+  $$
+  \frac{60^2 - 55^2}{60^2} = \frac{23}{144}.
+  $$
+
+- 
+
+<br>
+
+- **Q28: Probability Of Triangle**
 
   A stick is cut twice randomly (each cut point follows a uniform distribution on the stick), what is the probability that the 3 segments can form a triangle?
 
@@ -709,107 +843,57 @@ $$
 
   最终概率即为两区域面积的比值$1/4$。
 
+<br>
 
+- **Q29: Connecting Noodles**
 
-- **Q22: Coin Toss Game**
+  You have $100$ noodles in your soup bowl. Being blindfolded, you are told to take two ends of some noodles (each end on any noodle has the same probability of being chosen) in your bowl and connect them. You continue until there are no free ends. The number of loops formed by the noodles this way is stochastic. Calculate the expected number of circles.
 
-  Two gamblers are playing a coin toss game. Gambler A has (n+1) fair coins; B has n fair coins. What is the probability that A will have more heads than B if both flip all their coins?
+  只有一根面条时，只能得到 $1$ 个圈，$E[f(1)] = 1$；
 
-  我们可以考虑将A的硬币分为两部分，$n$ 枚硬币与剩下的 $1$ 枚硬币。用 $A^*$ 代表那 $n$ 枚硬币，那么这个时候我们知道
+  有两根面条时，我们先选 $2$ 个端点连接，有 $\binom{4}{2} = 6$ 种情况，其中 $2$ 种情况是得到 $1$ 个圈和一根面条，剩下 $4$ 种情况都是得到一根面条，此时的期望为
   $$
-  P(A^* > B) = P(A^*<B),
+  E[f(2)] = \frac{2}{6} \times(1 + E[f(1)]) + \frac{4}{6} \times E[f(1)] = \frac{1}{3} + E[f(1)] = \frac{1}{3} + 1;
   $$
-  因为大家都是 $n$ 枚硬币，所以比对方多的概率都是相同的。设 $x = P(A^*>B) = P(A^*<B), y = P(A^*=B)$，则有 $2x+y=1$。
-
-  下面考虑那多出来的一枚硬币：
-
-  - 对于 $A^*>B$ 的情况，无论如何都还是A赢；
-  - 对于 $A^* <B$ 的情况，最多能让 $A=B$，不可能让A赢；
-  - 对于 $A^* =B$ 的情况，此时多出来的一枚硬币就很重要了，因为它能决定胜负。
-
-  因此，我们可以得到
+  有三根面条时，我们先选 $2$ 个端点连接，有 $\binom{6}{2} = 15$ 种情况；其中，有 $3$ 种情况使我们得到 $1$ 个圈和两根面条，剩下情况都使我们得到两根面条。因此，期望为
   $$
-  P(A > B) =P(A^*>B) + P(A^*=B) \times \frac{1}{2} = x + \frac{1}{2}y = \frac{1}{2}(2x+y) = \frac{1}{2}.
+  E[f(3)] = \frac{3}{15} \times(1 + E[f(2)]) + \frac{12}{15} \times E[f(2)] = \frac{1}{5} + E[f(2)] = \frac{1}{5} + \frac{1}{3} + 1;
+  $$
+  因此我们即得到 $E[f(n)] = \sum_{i=1}^n \frac{1}{2i-1}$。
+
+<br>
+
+- **Q30: Optimal Hedge Ratio**
+
+  You just bought one share of stock A and want to hedge it by shorting stock B. How many shares of B should you short to minimize the variance of the hedged position? Assume that the variance of stock A's return is $\sigma_A^2$; the variance of B's return is $\sigma_B^2$; their correlation coefficient is $\rho$.
+
+  假设short $h$ shares of B，则有
+  $$
+  Var(r_A - hr_B) = Var(r_A) + h^2Var(r_B) - 2h\cdot Cov(r_A, r_B) = \sigma_A^2 + h^2\sigma_B^2 - 2h\rho\sigma_A\sigma_B.
+  $$
+  易得
+  $$
+  h = \rho\frac{\sigma_A}{\sigma_B}
+  $$
+  时方差最小。
+
+<br>
+
+- **Q31: Dice Game**
+
+  Suppose that you roll a dice. For each roll, you are paid the face value. If a roll gives 4, 5 or 6, you can roll the dice again. Once you get 1, 2 or 3, the game stops. What is the expected payoff of this game?
+
+  Condition on the first toss:
+  $$
+  EX = \frac{1}{6} \times 1 + \frac{1}{6} \times 2 + \frac{1}{6} \times 3 + \frac{1}{6} \times (4 + EX) + \frac{1}{6} \times (5+EX) + \frac{1}{6} \times (6+ EX), \\
+  \Longrightarrow \quad EX = 7.
   $$
 
- 
+- 
 
-## 3. Statistics
+<br>
 
-### 3.1 Statistics Basic Knowledge
-
-注：$EX, DX$分别为$\mathbb E[X], D[X]=Var[X]$的简写。
-$$
-\mathbb E\left( \sum_{i=1}^n X_i \right) = \sum_{i=1}^n \mathbb E(X_i).
-$$
-If $X,Y$ are independent, 
-$$
-\mathbb E[f(X)g(Y)] = \mathbb E[f(X)] \mathbb E(g(Y)), \\
-Cov(X, Y) = \rho(X,Y) = 0.
-$$
-协方差为0不代表XY独立，因为它只能衡量一阶线性关系，二阶的衡量不了。
-
-Variance:
-$$
-DX = EX^2 - (EX)^2, \\
-\sum_{i=1}^n (x_i - \bar x)^2 = \sum_{i=1}^n x_i^2 - n \bar x^2.
-$$
-Covariance:
-$$
-Cov(X, Y) = \mathbb E[(X - EX)(Y-EY)] = E(XY) - EXEY, \\
-D(X\pm Y) = DX+DY\pm 2Cov(X, Y), \\
-Cov(X, X) = DX.
-$$
-Correlation:
-$$
-\rho(X, Y) = \frac{Cov(X, Y)}{\sqrt{DXDY}}, -1 \leq \rho \leq 1.
-$$
-General Rules of Variance and Covariance:
-$$
-Cov\left( \sum_{i=1}^n a_iX_i, \sum_{j=1}^m b_jX_j \right) = \sum_{i=1}^n \sum_{j=1}^m a_ib_jCov(X_i, X_j), \\
-Var\left( \sum_{i=1}^n X_i \right) = \sum_{i=1}^n DX_i + 2 \sum_{j\neq i} Cov(X_i, X_j); \\
-
-Cov(aX_1+bX_2,Y)=Cov(aX_1,Y) + Cov(bX_2,Y) = aCov(X_1, Y) + bCov(X_2, Y).
-$$
-Conditional Expectation and Variance:
-$$
-\mathbb E[g(X)|Y=y] = \sum_x g(x) p_{X|Y}(x|y) = \sum_x g(x) p(X=x|Y=y) = \int g(x)f_{X|Y}(x|y)dx.
-$$
-Law of Total Expectation:
-$$
-\mathbb E[X] = \mathbb E[\mathbb E[X|Y]] = \sum_x \mathbb E[X|Y=y]p(Y=y) = \int \mathbb E[X|Y=y]f_Y(y).
-$$
-
-
-### 3.2 Questions
-
-- **Q1: Random Varibles**
-
-  There are 3 random variables with same variance, each pair have same correlation coefficient. Calculate the possible range of this correlation.
-
-  假设三个随机变量分别为 $X, Y, Z$，方差为 $\sigma^2$，相关系数为 $\rho$，则它们两两之间的协方差为 $\rho\sigma^2$。首先 $-1 \leq \rho \leq 1$，通常判断的话 $\rho$ 可以取1，但是不可以取-1，因为三者之间不可能都满足此消彼长。
-
-  构建和事件
-  $$
-  Var(X + Y + Z),
-  $$
-  则它应当非负。因此有
-  $$
-  Var(X+Y+Z) = 3\sigma^2 + 6\rho\sigma^2 \geq 0, \quad \Longrightarrow \quad \rho \geq -\frac{1}{2}.
-  $$
-  这个问题也可以被延拓到n个随机变量的情况。
-
-  补充：
-
-  假设三个随机变量 $X_1, X_2, X_3$ 分别满足期望为0方差为1，则构造
-  $$
-  Y_i = X_i - \frac{1}{3}\sum_j X_j,
-  $$
-  此时的 $Y_i$ 之间相关系数即为-1/2。
-
-
-
-- **Q2: Card Game**
+- **Q32: Card Game**
 
   What is the expected number of cards that need to be turned over in a regular 52-card deck in order to see the first ace?
 
@@ -821,9 +905,10 @@ $$
 
   推广：有 $m$ 张普通牌，$n$ 张特殊牌，那么抽到第一张特殊牌需要的牌数期望为 $1 + m/(n+1)$。
 
-  
 
-- **Q3: Sum of Random Variables**
+<br>
+
+- **Q33: Sum of Random Variables**
 
   Assume that $X_1, X_2, \cdots,$ and Xn are independent and identically-distributed (IID) random variables with uniform distribution between 0 and 1. What is the probability that $S_n = X_1 + X_2+\cdots+X_n\leq1$?
 
@@ -845,34 +930,37 @@ $$
   &= \frac{1}{(n+1)!}.
   \end{aligned}
   $$
-  
-  
 
-- **Q4: Coupon Collection**
+
+<br>
+
+- **Q34: Coupon Collection**
 
   There are N distinct types of coupons in cereal boxes and each type, independent of prior selections, is equally likely to be in a box.
+
   1. If a child wants to collect a complete set of coupons with at least one of each type, how many coupons (boxes) on average are needed to make such a complete set?
 
      可以先从 $N=1,N=2$ 入手，有个大概的感觉。
-  
+
      首先，抽到第一张券时，我们一定有了一个从未收集过的券，因此对收集的券来说，从0种到1种期望为1；
-  
+
      在抽第二张券时，此时就变为了一个几何分布，接下来抽的每一次都有 $(N-1) / N$ 的概率抽到不是第一张抽到的券，即将我们的收集增加了一种券。几何分布的期望为发生概率的倒数，即 $N / (N-1)$，因此对收集券来说，从1种到2种期望为 $N / (N-1)$ 。
-  
+
      以此类推，把所有期望全部加起来，即为
      $$
      \sum_{k=1}^N \frac{N}{N - k + 1}.
      $$
-  
+
   2. If the child has collected n coupons, what is the expected number of distinct coupon types?
-  
+
      构造事件 $I_k$，如果这 $n$ 个券中包含第 $k$ 张券，则 $I_k = 1$，否则为 $0$。因此有
      $$
      E\left( \sum_{i=1}^N I_k \right) = NE(I_k) = N \left( 1 - \left( \frac{N-1}{N} \right)^n \right).
      $$
-     
-  
-- **Q5: Joint Default Probability**
+
+<br>
+
+- **Q35: Joint Default Probability**
 
   If there is a 50% probability that bond A will default (违约) next year and a 30% probability that bond B will default. What is the range of probability that at least one bond defaults and what is the range of their correlation?
 
@@ -899,9 +987,10 @@ $$
   $$
   其中 $E[AB]$ 的取值范围为 $[0, 0.3]$，计算得到 $\rho \in [-\sqrt{21}/7, \sqrt{21}/7]$。
 
-   
 
-- **Q6: Expected Value of Min and Max**
+<br>
+
+- **Q36: Expected Value of Min and Max**
 
   Let $X_1, X_2, \cdots, X_n$ are IID random variables with uniform distribution between 0 and 1. What are the cumulative distribution function, the probability density function and expected value of $Y_n = \min(X_1, X_2, \cdots, X_n)$ and $Z_n = \max(X_1, X_2, \cdots, X_n)$?
 
@@ -935,8 +1024,10 @@ $$
   Var[Y_n] = E[Y_n^2] - (E[Y_n])^2 = \frac{2}{(n+1)(n+2)} - \frac{1}{(n+1)^2} = \frac{n}{(n+1)^2(n+2)}; \\
   Var[Z_n] = E[Z_n^2] - (E[Z_n])^2 = \frac{n}{n+2} - (\frac{n}{n+1})^2 = \frac{n}{(n+1)^2(n+2)}.
   $$
-  
-- **Q7: Correlation of Min and Max**
+
+<br>
+
+- **Q37: Correlation of Min and Max**
 
   Let $X_1$ and $X_2$ be IID random variables with uniform distribution between 0 and 1, $Y = \min(X_1, X_2)$ and $Z = \max(X_1, X_2)$. What is the probability of $Y\geq y$ given that $Z\leq z$ for any $y, z \in [0, 1]$? What is the correlation of $Y$ and $Z$ ?
 
@@ -985,19 +1076,54 @@ $$
   Corr(Y, Z) = \frac{\frac{1}{4} - \frac{1}{3}\times\frac{2}{3}}{\frac{1}{18}} = \frac{1}{2}.
   $$
 
+<br>
 
+- **Q38: Random Ants**
 
-- **Q8: Dice Game**
+  $500$ ants are randomly put on a $1$-foot string (independent uniform distribution for each ant between $0$ and $1$). Each ant randomly moves toward one end of the string (equal probability to the left or right) at constant speed of $1$ foot/minute until it falls off at one end of the string. Also assume that the size of the ant is infinitely small. When two ants collide head-on, they both immediately change directions and keep on moving at $1$ foot/min. What is the expected time for all ants to fall off the string?
 
-  Suppose that you roll a dice. For each roll, you are paid the face value. If a roll gives 4, 5 or 6, you can roll the dice again. Once you get 1, 2 or 3, the game stops. What is the expected payoff of this game?
+  这题的关键点有两个：第一，随机挑选方向爬，那么根据对称性，从0.3处开始向左爬和从0.7处开始向右爬实际是一样的，因此我们可以固定只看蚂蚁向左爬（或向右爬）；第二，由于蚂蚁的移动速度相同，蚂蚁与蚂蚁之间也完全相同，因此，碰撞后的改变方向与不改变方向是一样的：都是一只向左爬一只向右爬。
+
+  搞清楚这些，这道题就变得十分简单。长度为 $1$，速度为 $1$，因此随机放置一只蚂蚁，它爬下绳子的时间即为从一个 $0$ 到 $1$ 的均匀分布中抽样。我们要求的期望即转化为
   $$
-  EX = \frac{1}{6} \times 1 + \frac{1}{6} \times 2 + \frac{1}{6} \times 3 + \frac{1}{6} \times (4 + EX) + \frac{1}{6} \times (5+EX) + \frac{1}{6} \times (6+ EX), \\
-  \Longrightarrow \quad EX = 7.
+  E[\max(U_1, \cdots, U_{500})].
+  $$
+  均匀分布有 $F(x) = x, 0\leq x\leq 1$，因此有
+  $$
+  F(\max U) = P(U_1\leq x) \times \cdots \times P(U_{500}\leq x) = x^{500}, \\
+  \Longrightarrow f(\max U) = 500 \cdot x^{499}, \quad 0\leq x\leq 1, \\
+  \Longrightarrow E[\max{U}] = \int_0^1 500x^{499} \cdot x \text{d}x = \frac{500}{501}.
   $$
 
+<br>
 
+- **Q39: Random Variables**
 
-- **Q9: Monte Carlo**
+  There are 3 random variables with same variance, each pair have same correlation coefficient. Calculate the possible range of this correlation.
+
+  假设三个随机变量分别为 $X, Y, Z$，方差为 $\sigma^2$，相关系数为 $\rho$，则它们两两之间的协方差为 $\rho\sigma^2$。首先 $-1 \leq \rho \leq 1$，通常判断的话 $\rho$ 可以取1，但是不可以取-1，因为三者之间不可能都满足此消彼长。
+
+  构建和事件
+  $$
+  Var(X + Y + Z),
+  $$
+  则它应当非负。因此有
+  $$
+  Var(X+Y+Z) = 3\sigma^2 + 6\rho\sigma^2 \geq 0, \quad \Longrightarrow \quad \rho \geq -\frac{1}{2}.
+  $$
+  这个问题也可以被延拓到n个随机变量的情况。
+
+  补充：
+
+  假设三个随机变量 $X_1, X_2, X_3$ 分别满足期望为0方差为1，则构造
+  $$
+  Y_i = X_i - \frac{1}{3}\sum_j X_j,
+  $$
+  此时的 $Y_i$ 之间相关系数即为-1/2。
+
+<br>
+
+- **Q40: Monte Carlo**
 
   1. If you know how to generate uncorrelated random numbers, How do you simulate random numbers that have correlation?
      $$
@@ -1082,9 +1208,9 @@ $$
      
   
 
+<br>
 
-
-- **Q10: Min of Exponential Distribution**
+- **Q41: Min of Exponential Distribution**
 
   You have ten light bulbs. Five have an average life of 100 hours, and the other five have a average life of 200 hours. These light bulbs have a memoryless property in that their current age (measured in how long they have already been on) has no bearing on their future life expectancy. Assuming they are all already on, what is the expected number of hours before the first one burns out?
 
@@ -1102,9 +1228,9 @@ $$
 
   本题中，$Y$ 服从参数为 $3/40$ 的指数分布。因此，$EY = 40/3$。
 
-  
+  <br>
 
-- **Q11:**
+- **Q42:**
 
   Given a stick, if randomly cut into 3 pieces, what's the average size of the smallest, of the middle-sized, and of the largest pieces?
 
@@ -1112,9 +1238,9 @@ $$
 
   https://www.zhihu.com/question/507262676
 
+<br>
 
-
-- **Q12:**
+- **Q43:**
 
   Consider linear regression of $Y$ on features $X_1, X_2$: Model1 - $(Y,X_1),R^2=0.1$; Model2 - $(Y, X_2),R^2=0.2$; Model3 - $(Y,X_1,X_2)$, calculate the range of $R^2$ of Model3.
 
@@ -1128,9 +1254,9 @@ $$
 
   $Y$ 与平面的夹角，比 $Y$ 与平面里任意其他线的夹角都要小，转换为余弦值即更大，因此最小即取 $\cos^2 \theta_2 = 0.2$ 的情况。
 
+<br>
 
-
-- **Q13:**
+- **Q44:**
 
   9 boys and 7girls sit in a circle, what's the expectation of the number of boy-girl neighbors?
 
@@ -1140,7 +1266,9 @@ $$
   $$
   
 
-### 3.3 Linear Regression
+<br>
+
+### 2.3 Linear Regression
 
 $$
 Y = X\beta + \epsilon.
@@ -1231,6 +1359,383 @@ Ridge regression:
 
 
 LASSO regression
+
+
+
+
+
+## 3. Stochastic Calculus
+
+### 3.1 Basic Knowledge
+
+Markov Process/Chain:
+
+(One Step) Transition matrix $P = \{p_{ij}\}$, $p_{ij}$ is the transition probability of state $i$ to state $j$；每行加起来等于1
+
+t-step transitions: $P^t$
+
+Initial probabilities: 
+$$
+P(X_0) = \left( P(X_0=1), P(X_0=2), \cdots, P(X_0 = M) \right), \quad \sum_{i=1}^M P(X_0 = i) = 1.
+$$
+The probability of a path:
+$$
+P(X_1, =i_1, X_2 =  i_2, \cdots, X_n=i_n|X_0=i_0) = p_{i_0i_1}p_{i_1i_2}\cdots p_{i_{n-1}i_n}.
+$$
+Transition graph: A transition graph is often used to express the transition matrix graphically.
+
+Expected time to absorption: $\mu_i=0$ for absorbing state, $\mu_i = \sum_{j}p_{ij}\mu_j$ for transient state.
+
+Martingale:
+$$
+E[|Z_n|] < \infty, E[Z_{m}|\mathcal F_n] = Z_n, m>n.
+$$
+Stopping time
+
+Wald's Equality: 
+$$
+S_N = X_1+ \cdots X_N, \\
+\Longrightarrow E[S_N] = E[E[S_N|N]] = E[NEX] = EXEN.
+$$
+Dynamic Programming (DP) Algorithm: 绿皮书页码122
+
+Brownian Motion:
+
+- $B_0=0$
+- $B_t-B_s$ is independent of $B_r$, $r\leq s\leq t$
+- $B_t - B_s \sim N(0, t-s)$
+- Continuous paths $t\mapsto B_t$ is a continuous function
+
+- Other properties:
+  - $B_t$ is martingale
+  - $B_t^2 - t^2$ is a martingale
+  - $e^{\lambda B_t - \frac{1}{2}\lambda^2 t}$ is a martingale (exponential martingale)
+
+
+
+### 3.2 Questions
+
+- **Q1: Gambler's Ruin Problem**
+
+  Player M has \$1 and player N has \$2. Each game gives the winner \$1 from the other. As a betterp layer, M wins 2/3 of the games. They play until one of the is bankrupt. What is the probability that M wins?
+
+  直观地，写出M的转移概率矩阵
+  $$
+  P = \left[\begin{matrix}
+  1 & 0 & 0 & 0\\
+  \frac{1}{3} & 0 & \frac{2}{3} & 0\\
+  0 & \frac{1}{3} & 0& \frac{2}{3}\\
+  0 &0 &0 & 1
+  \end{matrix}\right].
+  $$
+
+  我们用 $p_0$ 表示 $M$ 从\$0开始玩赢的概率，以此类推。显然，$p_0=0,p_3=1$。有
+  $$
+  p_1 = \frac{1}{3}p_0 + \frac{2}{3}p_2, \\
+  p_2 = \frac{1}{3}p_1 + \frac{2}{3}p_3, \\
+  $$
+  联立解得 $p_1 = 4/7$。
+
+  在这里，状态0和状态3是常返态（absorbing state），状态1和状态2是非常返态/顺过态（transient state）。对Markov链而言，对任意的 $t$，$X_t$ 都有对应的概率分布。如果我们取
+  $$
+  \pi_0 = \left(P(X_0 = 0), P(X_0 = 1),P(X_0 = 2),P(X_0 = 3) \right) = (0, 1, 0, 0),
+  $$
+  那么每把 $\pi_0$ 左乘一次概率转移矩阵，我们得到的即是对应 $X_t$ 的分布。例如，$\pi_0 P$ 得到的向量即为 $X_1$ 的分布。因此，我们可以通过无限乘 $P$，来得到 $\lim_{t\rightarrow \infty} P(X_t = 3)$，这个概率也是我们想要得到的概率。
+
+  ```python
+  import numpy as np
+  
+  P = np.array([
+      [1, 0, 0, 0],
+      [1/3, 0, 2/3, 0],
+      [0, 1/3, 0, 2/3],
+      [0, 0, 0, 1]
+  ])
+  
+  pi_0 = np.array([[0, 1, 0, 0]])
+  
+  temp = pi_0 @ P
+  for i in range(10000):
+      temp = temp @ P
+  print(temp)
+  print(4/7)
+  ```
+
+  那么如何计算 $\lim_{t\rightarrow \infty} \pi_0P^t$ 呢？常见的做法是对 $P$ 做特征值分解。这里补充另一个做法。
+
+  https://lips.cs.princeton.edu/the-fundamental-matrix-of-a-finite-markov-chain/
+
+  我们重新构建概率转移矩阵，将其化为如下形式：
+  $$
+  P = \left[\begin{matrix}
+  Q & R \\
+  0 & I
+  \end{matrix}\right],
+  $$
+  其中，$Q$ 代表 transient state 之间的转移概率，$R$ 代表 transient state 到 absorbing state 之间的转移概率，$0$ 代表 absorbing state 到 transient state 之间的转移概率，$I$ 代表 absorbing state 之间的转移概率（即为单位矩阵，以概率为1转移至自己本身）。通过简单的计算，可以得到
+  $$
+  P^t = \left[\begin{matrix}
+  Q^t & N_tR \\
+  0 & I
+  \end{matrix}\right],
+  $$
+  其中
+  $$
+  N_t = I + Q + + Q^2 + \cdots + Q^{t-1}.
+  $$
+  在极限状态下，我们留在 transient state 的概率趋近于0，因此，我们重点只需要计算 $N_tR$。根据矩阵代数，我们有
+  $$
+  \lim_{t\rightarrow \infty} N_t = (I-Q)^{-1}.
+  $$
+  在本题中，经过变换的概率转移矩阵如下：
+
+  | State / Probability |       1       |       2       |       0       |       3       |
+  | :-----------------: | :-----------: | :-----------: | :-----------: | :-----------: |
+  |        **1**        |       0       | $\frac{2}{3}$ | $\frac{1}{3}$ |       0       |
+  |        **2**        | $\frac{1}{3}$ |       0       |       0       | $\frac{2}{3}$ |
+  |        **0**        |       0       |       0       |       1       |       0       |
+  |        **3**        |       0       |       0       |       0       |       1       |
+
+  计算得到
+  $$
+  I - Q = \left[\begin{matrix}
+  1 & -\frac{2}{3} \\
+  -\frac{1}{3} & 1
+  \end{matrix}\right],
+  $$
+  其伴随矩阵（先求代数余子式，再转置）为
+  $$
+  (I-Q)^* = 
+  \left[\begin{matrix}
+  1 & \frac{2}{3} \\
+  \frac{1}{3} & 1
+  \end{matrix}\right],
+  $$
+  行列式为 $|I-Q| = 7/9$，因此逆矩阵为
+  $$
+  (I-Q)^{-1} = \frac{(I-Q)^*}{|I-Q|} =
+  \left[\begin{matrix}
+  \frac{9}{7} & \frac{6}{7} \\
+  \frac{3}{7} & \frac{9}{7}
+  \end{matrix}\right],
+  $$
+  得到
+  $$
+  P^\infty = 
+  \left[\begin{matrix}
+  0 & (I-Q)^{-1}R \\
+  0 & I
+  \end{matrix}\right],
+  $$
+  其中
+  $$
+  (I-Q)^{-1}R = 
+  \left[\begin{matrix}
+  \frac{3}{7} & \frac{4}{7} \\
+  \frac{1}{7} & \frac{6}{7}
+  \end{matrix}\right].
+  $$
+  将 $\pi_0$ 按照 state 顺序(1, 2, 0, 3)排列，得到 $\pi_0 = (1, 0, 0, 0)$，左乘 $P^{\infty}$ 即得到最终落到state为3的概率为 $4/7$。
+
+  ```python
+  P = np.array([
+      [1, 0, 0, 0],
+      [1/3, 0, 2/3, 0],
+      [0, 1/3, 0, 2/3],
+      [0, 0, 0, 1]
+  ])
+  
+  Q = np.array([
+      [0, 2/3],
+      [1/3, 0]
+  ])
+  R = np.array([
+      [1/3, 0],
+      [0, 2/3]
+  ])
+  P_ = np.block([
+      [Q, R],
+      [np.zeros((2, 2)), np.eye(2)]
+  ])
+  
+  pi_0 = np.array([[0, 1, 0, 0]])
+  
+  temp = P_
+  for i in range(10000):
+      temp = temp @ P_
+  print(temp)
+  
+  print(np.linalg.inv(np.eye(2) - Q) @ R)
+  ```
+
+<br>
+
+- **Q2: Dice Question**
+
+  Two players bet on roll(s) of the total of two standard six-face dice. Player A bets that a sum of 12 will occur first. Player B bets that two consecutive 7s will occur first. The plavers keep rolling the dice and record the sums until one player wins. What is the probability that A wins?
+
+  可以构建类似上题的Markov链。我们只需要4个state，分别是7, 7-7, 12, S，其中S代表起始状态/其他状态，可以得到
+  $$
+  p_{S,7} = p_{7, 7-7} = \frac{6}{36}, \\
+  p_{S,12} = p_{7, 12} = \frac{1}{36}, \\
+  p_{7,S} = p_{S, S} = \frac{29}{36}, \\
+  p_{7-7, 7-7} = p_{12, 12} = 1.
+  $$
+  ![](fig/IMG_54C1DF4E0744-1.jpeg ':size=30%')
+
+  因此，类似地，假设A从 state S 开始玩赢的概率为 $p_S$，我们有 $p_{7-7}=p_{12}=1$，
+  $$
+  p_S = \frac{29}{36}p_S + \frac{6}{36}p_7 + \frac{1}{36}p_{12}, \\
+  p_7 = \frac{29}{36}p_S + \frac{6}{36}\times 0 + \frac{1}{36}p_{12},
+  $$
+  联立解得 $p_S = 7/13$。
+
+<br>
+
+- **Q3: Coin Triplets**
+
+  1. If you keep on tossing a fair coin, what is the expected number of tosses such that you can have HHH (heads heads heads) in a row? What is the expected number of tosses to have THH in a row?
+
+     ![](fig/IMG_3EA6FF1AF834-1.jpeg ':size=30%')
+
+     代入公式得
+     $$
+     \mu_S = 1 + 0.5\mu_S + 0.5\mu_H,\\
+       \mu_H = 1 + 0.5\mu_S + 0.5\mu_{HH}, \\
+       \mu_{HH} = 1 + 0.5 \mu_S + 0.5 \mu_{HHH},\\
+       \mu_{HHH}=0.
+     $$
+       解得 $\mu_S = 14$。同理计算得另一个答案为 $8$。
+
+  2. Keep flipping a fair coin until either HHH or THH occurs in the sequence. What is the probability that you get an HHH subsequence before THH?
+
+     ![](fig/IMG_ADEF9C8AEB38-1.jpeg ':size=30%')
+
+<br>
+
+- **Q4: Drunk Man**
+
+  A drunk man is at the 17th meter of a 100-meter-long bridge. He has a 50% probability of staggering forward or backward one meter each step. What is the probability that he will make it to the end of the bridge (the 100th meter) before the beginning (the 0th meter)? What is the expected number of steps he takes to reach either the beginning or the end of the bridge?
+
+  以17为原点，未来的位置为 $S_N = \sum_{i=1}^NX_i$。我们有 $S_N$ 与 $S_N^2 - N$ 都是鞅，因此
+  $$
+  E[S_N] = E[S_0], \quad \Longrightarrow \quad P(S_N=83) \times83 - P(S_N=-17) \times 17 = 0,
+  $$
+  得到 $P(S_N = 83) = 0.17$；
+  $$
+  E[S_N^2 - N] = E[S_0^2], \quad \Longrightarrow \quad 83^2 \times 0.17 + 17^2 \times 0.83 - E[N] = 0,
+  $$
+  得到 $E[N] = 83 \times 17 = 1441$。
+
+<br>
+
+- **Q5: Dice Game**
+
+  Suppose that you roll a dice. For each roll, you are paid the face value. If a roll gives 4, 5 or 6, you can roll the dice again. Once you get 1, 2 or 3, the game stops. What is the expected payoff of this game?
+
+  这个题前面做过，这里用随机过程的角度求解。
+  $$
+  S = Y_1 + Y_2 + \cdots + Y_T, \\
+  E[S] = E[Y_i]E[T],
+  $$
+  $T$ 服从一个几何分布，成功率为 $1/2$，因此有
+  $$
+  E[S] = \frac{\sum_{i=1}^6 i}{6} \times 2 = 7.
+  $$
+
+<br>
+
+- **Q6: Ticket Line**
+
+  At a theater ticket office, $2n$ people are waiting to buy tickets. $n$ of them have only \$5 bills and the other $n$ people have only \$10 bills. The ticket seller has no change to start with. If each person buys one \$5 ticket, what is the probability that all people will be able to buy their tickets without having to change positions?
+
+  绿皮书118页
+
+  本质上，一张\$5的bill，就可以解决找给1一张\$10 bill的零钱，因此我们可以建模为，\$5的即+1，\$10的即-1，这样一个随机过程。题目问题即转化为有多少条above x轴的path。
+
+  如果我们将所有到达过 -1 的路径，if we reflect the path across the line $y=-1$ after a path first reaches -1, for every path that reaches (2n, 0) at step 2n, we have one corresponding reflected path that reaches (2n, -2) at step 2n.
+
+  因此，所有到达过 -1 的路径总数，与我们有 $n-1$ 次上升、$n+1$ 次下降（即最后到达(2n, -2)）的路径总数相同，为
+  $$
+  \binom{2n}{n-1}
+  $$
+  条。概率即为
+  $$
+  \frac{\binom{2n}{n} - \binom{2n}{n-1}}{\binom{2n}{n}} = \frac{1}{n+1}.
+  $$
+
+<br>
+
+- **Q7: Coin Sequence**
+
+  Assume that you have a fair coin. What is the expected number of coin tosses to get $n$ heads in a row?
+
+  易得，$E[f(1)]=2, E[f(2)]=6$，前面计算过 $E[f(3)]=14$，因此猜想 $E[f(n)] = 2^{n+1} - 2$。我们考虑马尔科夫链，仅有 $S$（开始）状态、$nH$ 状态和 $(n+1)H$ 状态，那么我们需要 $E[f(n)]$ 步来到达状态 $nH$，再condition on 状态 $nH$，有一半概率走到状态 $(n+1)H$，有一半概率走回状态 $S$ 且此时需要额外的 $E[f(n+1)]$，因此有
+  $$
+  E[f(n+1)] = E[f(n)]+\frac{1}{2}\times1+\frac{1}{2}\times E[f(n+1)],
+  $$
+  即满足我们的通式。
+
+<br>
+
+- **Q8: Brownian Motion**
+
+  1. $P(B_1 >0, B_2 < 0) = P(B_1>0)P(B_2-B_1<0)P(|B_2-B_1|>|B_1|) = 1/8$
+
+  2. What is the mean of the stopping time for a Brownian motion to reach either -1 or 1?
+
+     Using the fact that $B_t^2 - t$ is a martingale.
+     $$
+     E[B_\tau^2 - \tau] = E[B_\tau^2] - E[\tau] = 0, \quad \Longrightarrow \quad E[\tau] = 1.
+     $$
+
+  3. Let W(t) be a standard Wiener process and $\tau_x (x>0)$ be the first passage time to level x ($\tau_x = \min \{\tau_x; W(t) = x\}$).
+     What is the probability density function of $\tau_x$ and the expected value of $\tau_x$?
+
+     又称passage time
+
+     直接查阅Lawler的书
+
+  4. Suppose that X is a Brownian motion with no drift, i.e., $dX_t=dW_t$. If X starts at 0, what is the probability that X hits 3 before hitting -5? What if X has drift m, i.e., $dX_t = mdt + dW_t$?
+     $$
+     E[X_\tau] = 3 \times p - 5\times(1 - p) = E[X_0] = 0,
+     $$
+     得到 $p=5/8$。
+
+     如果 $X_t$ 不是鞅，则构建
+     $$
+     e^{\lambda W_t - 0.5\lambda^2t},
+     $$
+     它是鞅。取 $\lambda = -2m$，得到
+     $$
+     Y_t =e^{\lambda W_t - 0.5\lambda^2t} = e^{-2m (X_t - mt) - 0.5\times4m^2t} = e^{-2mX_t},
+     $$
+     因此有
+     $$
+     E[Y_\tau] = E[Y_0] = 1, \quad \Longrightarrow \quad e^{-2m\times 3}\times p + e^{2m\times 5}\times(1-p) = 1, p = \frac{e^{10m}-1}{e^{10m}-e^{-6m}}.
+     $$
+
+  5. Suppose $dX_t = dt+dW_t$, what is the probability that X ever reaches -1?
+
+     类似上一问，将上一问中的3和-5分别替换为-1与正无穷，即得到结果 $e^{-2}$。
+
+  6. Let $Z_t = \sqrt t B_t$, what is the mean and variance of $Z_t$? Is $Z_t$ a martingale process?
+
+     $EZ_t = 0, Var[Z_t] = t\times Var[B_t] = t^2$.
+     $$
+     dZ_t = \frac{1}{2\sqrt t}dt + \sqrt tdB_t,
+     $$
+      not martingale
+
+  7. Is $W_t^3$ a martingale process?
+     $$
+     dW_t^3 = 3W_tdt+3W_t^2dW_t,
+     $$
+     not martingale
+
+     补充：$W_t^n, n >1$，都不是鞅
+
+
 
 
 
@@ -1963,374 +2468,9 @@ k近邻，分类算法
 
 
 
-## 8. Stochastic Calculus
+## 8. Derivatives
 
 ### 8.1 Basic Knowledge
-
-Markov Process/Chain:
-
-(One Step) Transition matrix $P = \{p_{ij}\}$, $p_{ij}$ is the transition probability of state $i$ to state $j$；每行加起来等于1
-
-t-step transitions: $P^t$
-
-Initial probabilities: 
-$$
-P(X_0) = \left( P(X_0=1), P(X_0=2), \cdots, P(X_0 = M) \right), \quad \sum_{i=1}^M P(X_0 = i) = 1.
-$$
-The probability of a path:
-$$
-P(X_1, =i_1, X_2 =  i_2, \cdots, X_n=i_n|X_0=i_0) = p_{i_0i_1}p_{i_1i_2}\cdots p_{i_{n-1}i_n}.
-$$
-Transition graph: A transition graph is often used to express the transition matrix graphically.
-
-Expected time to absorption: $\mu_i=0$ for absorbing state, $\mu_i = \sum_{j}p_{ij}\mu_j$ for transient state.
-
-Martingale:
-$$
-E[|Z_n|] < \infty, E[Z_{m}|\mathcal F_n] = Z_n, m>n.
-$$
-Stopping time
-
-Wald's Equality: 
-$$
-S_N = X_1+ \cdots X_N, \\
-\Longrightarrow E[S_N] = E[E[S_N|N]] = E[NEX] = EXEN.
-$$
-Dynamic Programming (DP) Algorithm: 绿皮书页码122
-
-Brownian Motion:
-
-- $B_0=0$
-- $B_t-B_s$ is independent of $B_r$, $r\leq s\leq t$
-- $B_t - B_s \sim N(0, t-s)$
-- Continuous paths $t\mapsto B_t$ is a continuous function
-
-- Other properties:
-  - $B_t$ is martingale
-  - $B_t^2 - t^2$ is a martingale
-  - $e^{\lambda B_t - \frac{1}{2}\lambda^2 t}$ is a martingale (exponential martingale)
-
-
-
-### 8.2 Questions
-
-- **Q1: Gambler's Ruin Problem**
-
-  Player M has \$1 and player N has \$2. Each game gives the winner \$1 from the other. As a betterp layer, M wins 2/3 of the games. They play until one of the is bankrupt. What is the probability that M wins?
-
-  直观地，写出M的转移概率矩阵
-  $$
-  P = \left[\begin{matrix}
-  1 & 0 & 0 & 0\\
-  \frac{1}{3} & 0 & \frac{2}{3} & 0\\
-  0 & \frac{1}{3} & 0& \frac{2}{3}\\
-  0 &0 &0 & 1
-  \end{matrix}\right].
-  $$
-  
-  我们用 $p_0$ 表示 $M$ 从\$0开始玩赢的概率，以此类推。显然，$p_0=0,p_3=1$。有
-  $$
-  p_1 = \frac{1}{3}p_0 + \frac{2}{3}p_2, \\
-  p_2 = \frac{1}{3}p_1 + \frac{2}{3}p_3, \\
-  $$
-  联立解得 $p_1 = 4/7$。
-  
-  在这里，状态0和状态3是常返态（absorbing state），状态1和状态2是非常返态/顺过态（transient state）。对Markov链而言，对任意的 $t$，$X_t$ 都有对应的概率分布。如果我们取
-  $$
-  \pi_0 = \left(P(X_0 = 0), P(X_0 = 1),P(X_0 = 2),P(X_0 = 3) \right) = (0, 1, 0, 0),
-  $$
-  那么每把 $\pi_0$ 左乘一次概率转移矩阵，我们得到的即是对应 $X_t$ 的分布。例如，$\pi_0 P$ 得到的向量即为 $X_1$ 的分布。因此，我们可以通过无限乘 $P$，来得到 $\lim_{t\rightarrow \infty} P(X_t = 3)$，这个概率也是我们想要得到的概率。
-  
-  ```python
-  import numpy as np
-  
-  P = np.array([
-      [1, 0, 0, 0],
-      [1/3, 0, 2/3, 0],
-      [0, 1/3, 0, 2/3],
-      [0, 0, 0, 1]
-  ])
-  
-  pi_0 = np.array([[0, 1, 0, 0]])
-  
-  temp = pi_0 @ P
-  for i in range(10000):
-      temp = temp @ P
-  print(temp)
-  print(4/7)
-  ```
-  
-  那么如何计算 $\lim_{t\rightarrow \infty} \pi_0P^t$ 呢？常见的做法是对 $P$ 做特征值分解。这里补充另一个做法。
-  
-  https://lips.cs.princeton.edu/the-fundamental-matrix-of-a-finite-markov-chain/
-  
-  我们重新构建概率转移矩阵，将其化为如下形式：
-  $$
-  P = \left[\begin{matrix}
-  Q & R \\
-  0 & I
-  \end{matrix}\right],
-  $$
-  其中，$Q$ 代表 transient state 之间的转移概率，$R$ 代表 transient state 到 absorbing state 之间的转移概率，$0$ 代表 absorbing state 到 transient state 之间的转移概率，$I$ 代表 absorbing state 之间的转移概率（即为单位矩阵，以概率为1转移至自己本身）。通过简单的计算，可以得到
-  $$
-  P^t = \left[\begin{matrix}
-  Q^t & N_tR \\
-  0 & I
-  \end{matrix}\right],
-  $$
-  其中
-  $$
-  N_t = I + Q + + Q^2 + \cdots + Q^{t-1}.
-  $$
-  在极限状态下，我们留在 transient state 的概率趋近于0，因此，我们重点只需要计算 $N_tR$。根据矩阵代数，我们有
-  $$
-  \lim_{t\rightarrow \infty} N_t = (I-Q)^{-1}.
-  $$
-  在本题中，经过变换的概率转移矩阵如下：
-  
-  | State / Probability |       1       |       2       |       0       |       3       |
-  | :-----------------: | :-----------: | :-----------: | :-----------: | :-----------: |
-  |        **1**        |       0       | $\frac{2}{3}$ | $\frac{1}{3}$ |       0       |
-  |        **2**        | $\frac{1}{3}$ |       0       |       0       | $\frac{2}{3}$ |
-  |        **0**        |       0       |       0       |       1       |       0       |
-  |        **3**        |       0       |       0       |       0       |       1       |
-  
-  计算得到
-  $$
-  I - Q = \left[\begin{matrix}
-  1 & -\frac{2}{3} \\
-  -\frac{1}{3} & 1
-  \end{matrix}\right],
-  $$
-  其伴随矩阵（先求代数余子式，再转置）为
-  $$
-  (I-Q)^* = 
-  \left[\begin{matrix}
-  1 & \frac{2}{3} \\
-  \frac{1}{3} & 1
-  \end{matrix}\right],
-  $$
-  行列式为 $|I-Q| = 7/9$，因此逆矩阵为
-  $$
-  (I-Q)^{-1} = \frac{(I-Q)^*}{|I-Q|} =
-  \left[\begin{matrix}
-  \frac{9}{7} & \frac{6}{7} \\
-  \frac{3}{7} & \frac{9}{7}
-  \end{matrix}\right],
-  $$
-  得到
-  $$
-  P^\infty = 
-  \left[\begin{matrix}
-  0 & (I-Q)^{-1}R \\
-  0 & I
-  \end{matrix}\right],
-  $$
-  其中
-  $$
-  (I-Q)^{-1}R = 
-  \left[\begin{matrix}
-  \frac{3}{7} & \frac{4}{7} \\
-  \frac{1}{7} & \frac{6}{7}
-  \end{matrix}\right].
-  $$
-  将 $\pi_0$ 按照 state 顺序(1, 2, 0, 3)排列，得到 $\pi_0 = (1, 0, 0, 0)$，左乘 $P^{\infty}$ 即得到最终落到state为3的概率为 $4/7$。
-  
-  ```python
-  P = np.array([
-      [1, 0, 0, 0],
-      [1/3, 0, 2/3, 0],
-      [0, 1/3, 0, 2/3],
-      [0, 0, 0, 1]
-  ])
-  
-  Q = np.array([
-      [0, 2/3],
-      [1/3, 0]
-  ])
-  R = np.array([
-      [1/3, 0],
-      [0, 2/3]
-  ])
-  P_ = np.block([
-      [Q, R],
-      [np.zeros((2, 2)), np.eye(2)]
-  ])
-  
-  pi_0 = np.array([[0, 1, 0, 0]])
-  
-  temp = P_
-  for i in range(10000):
-      temp = temp @ P_
-  print(temp)
-  
-  print(np.linalg.inv(np.eye(2) - Q) @ R)
-  ```
-
-
-
-- **Q2: Dice Question**
-
-  Two players bet on roll(s) of the total of two standard six-face dice. Player A bets that a sum of 12 will occur first. Player B bets that two consecutive 7s will occur first. The plavers keep rolling the dice and record the sums until one player wins. What is the probability that A wins?
-
-  可以构建类似上题的Markov链。我们只需要4个state，分别是7, 7-7, 12, S，其中S代表起始状态/其他状态，可以得到
-  $$
-  p_{S,7} = p_{7, 7-7} = \frac{6}{36}, \\
-  p_{S,12} = p_{7, 12} = \frac{1}{36}, \\
-  p_{7,S} = p_{S, S} = \frac{29}{36}, \\
-  p_{7-7, 7-7} = p_{12, 12} = 1.
-  $$
-  ![](fig/IMG_54C1DF4E0744-1.jpeg':size=30%')
-
-  因此，类似地，假设A从 state S 开始玩赢的概率为 $p_S$，我们有 $p_{7-7}=p_{12}=1$，
-  $$
-  p_S = \frac{29}{36}p_S + \frac{6}{36}p_7 + \frac{1}{36}p_{12}, \\
-  p_7 = \frac{29}{36}p_S + \frac{6}{36}\times 0 + \frac{1}{36}p_{12},
-  $$
-  联立解得 $p_S = 7/13$。
-
-
-
-- **Q3: Coin Triplets**
-
-  1. If you keep on tossing a fair coin, what is the expected number of tosses such that you can have HHH (heads heads heads) in a row? What is the expected number of tosses to have THH in a row?
-
-     ![](fig/IMG_3EA6FF1AF834-1.jpeg':size=30%')
-
-     代入公式得
-     $$
-     \mu_S = 1 + 0.5\mu_S + 0.5\mu_H,\\
-       \mu_H = 1 + 0.5\mu_S + 0.5\mu_{HH}, \\
-       \mu_{HH} = 1 + 0.5 \mu_S + 0.5 \mu_{HHH},\\
-       \mu_{HHH}=0.
-     $$
-       解得 $\mu_S = 14$。同理计算得另一个答案为 $8$。
-
-  2. Keep flipping a fair coin until either HHH or THH occurs in the sequence. What is the probability that you get an HHH subsequence before THH?
-
-     ![](fig/IMG_ADEF9C8AEB38-1.jpeg':size=30%')
-  
-
-
-
-- **Q4: Drunk Man**
-
-  A drunk man is at the 17th meter of a 100-meter-long bridge. He has a 50% probability of staggering forward or backward one meter each step. What is the probability that he will make it to the end of the bridge (the 100th meter) before the beginning (the 0th meter)? What is the expected number of steps he takes to reach either the beginning or the end of the bridge?
-
-  以17为原点，即 $X_0=17$，未来的位置为 $S_N = X_0 + \sum_{i=1}^NX_i$。我们有 $S_N$ 与 $S_N^2 - N$ 都是鞅，因此
-  $$
-  E[S_N] = E[S_0], \quad \Longrightarrow \quad P(S_N=83) \times83 - P(S_N=-17) \times 17 = 0,
-  $$
-  得到 $P(S_N = 83) = 0.17$；
-  $$
-  E[S_N^2 - N] = E[S_0^2], \quad \Longrightarrow \quad 83^2 \times 0.17 + 17^2 \times 0.83 - E[N] = 0,
-  $$
-  得到 $E[N] = 83 \times 17 = 1441$。
-
-
-
-- **Q5: Brownian Motion**
-
-  1. $P(B_1 >0, B_2 < 0) = P(B_1>0)P(B_2-B_1<0)P(|B_2-B_1|>|B_1|) = 1/8$
-
-  2. What is the mean of the stopping time for a Brownian motion to reach either -1 or 1?
-
-     Using the fact that $B_t^2 - t$ is a martingale.
-     $$
-     E[B_\tau^2 - \tau] = E[B_\tau^2] - E[\tau] = 0, \quad \Longrightarrow \quad E[\tau] = 1.
-     $$
-
-  3. Let W(t) be a standard Wiener process and $\tau_x (x>0)$ be the first passage time to level x ($\tau_x = \min \{\tau_x; W(t) = x\}$).
-     What is the probability density function of $\tau_x$ and the expected value of $\tau_x$?
-
-     又称passage time
-
-     直接查阅Lawler的书
-
-  4. Suppose that X is a Brownian motion with no drift, i.e., $dX_t=dW_t$. If X starts at 0, what is the probability that X hits 3 before hitting -5? What if X has drift m, i.e., $dX_t = mdt + dW_t$?
-     $$
-     E[X_\tau] = 3 \times p - 5\times(1 - p) = E[X_0] = 0,
-     $$
-     得到 $p=5/8$。
-
-     如果 $X_t$ 不是鞅，则构建
-     $$
-     e^{\lambda W_t - 0.5\lambda^2t},
-     $$
-     它是鞅。取 $\lambda = -2m$，得到
-     $$
-     Y_t =e^{\lambda W_t - 0.5\lambda^2t} = e^{-2m (X_t - mt) - 0.5\times4m^2t} = e^{-2mX_t},
-     $$
-     因此有
-     $$
-     E[Y_\tau] = E[Y_0] = 1, \quad \Longrightarrow \quad e^{-2m\times 3}\times p + e^{2m\times 5}\times(1-p) = 1, p = \frac{e^{10m}-1}{e^{10m}-e^{-6m}}.
-     $$
-
-  5. Suppose $dX_t = dt+dW_t$, what is the probability that X ever reaches -1?
-
-     类似上一问，将上一问中的3和-5分别替换为-1与正无穷，即得到结果 $e^{-2}$。
-
-  6. Let $Z_t = \sqrt t B_t$, what is the mean and variance of $Z_t$? Is $Z_t$ a martingale process?
-
-     $EZ_t = 0, Var[Z_t] = t\times Var[B_t] = t^2$.
-     $$
-     dZ_t = \frac{1}{2\sqrt t}dt + \sqrt tdB_t,
-     $$
-      not martingale
-
-  7. Is $W_t^3$ a martingale process?
-     $$
-     dW_t^3 = 3W_tdt+3W_t^2dW_t,
-     $$
-     not martingale
-
-     补充：$W_t^n, n >1$，都不是鞅
-
-
-
-- **Q6: Dice Game**
-
-  Suppose that you roll a dice. For each roll, you are paid the face value. If a roll gives 4, 5 or 6, you can roll the dice again. Once you get 1, 2 or 3, the game stops. What is the expected payoff of this game?
-
-  这个题前面做过，这里用随机过程的角度求解。
-  $$
-  S = Y_1 + Y_2 + \cdots + Y_T, \\
-  E[S] = E[Y_i]E[T],
-  $$
-  $T$ 服从一个几何分布，成功率为 $1/2$，因此有
-  $$
-  E[S] = \frac{\sum_{i=1}^6 i}{6} \times 2 = 7.
-  $$
-
-- 
-
-
-
-- **Q7: Ticket Line**
-
-  At a theater ticket office, $2n$ people are waiting to buy tickets. $n$ of them have only \$5 bills and the other $n$ people have only \$10 bills. The ticket seller has no change to start with. If each person buys one \$5 ticket, what is the probability that all people will be able to buy their tickets without having to change positions?
-
-  绿皮书118页
-
-  本质上，一张\$5的bill，就可以解决找给1一张\$10 bill的零钱，因此我们可以建模为，\$5的即+1，\$10的即-1，这样一个随机过程。题目问题即转化为有多少条above x轴的path。
-
-  如果我们将所有到达过 -1 的路径，if we reflect the path across the line $y=-1$ after a path first reaches -1, for every path that reaches (2n, 0) at step 2n, we have one corresponding reflected path that reaches (2n, -2) at step 2n.
-
-  因此，所有到达过 -1 的路径总数，与我们有 $n-1$ 次上升、$n+1$ 次下降的路径总数相同，为
-  $$
-  \binom{2n}{n-1}
-  $$
-  条。概率即为
-  $$
-  \frac{\binom{2n}{n} - \binom{2n}{n-1}}{\binom{2n}{n}} = \frac{1}{n+1}.
-  $$
-  
-
-
-
-## 9. Derivatives
-
-### 9.1 Basic Knowledge
 
 Effect on Stock Option Pricing:
 
@@ -2415,7 +2555,7 @@ S-D-K\leq C-P\leq S-Ke^{-rt}
 $$
 
 
-### 9.2 Questions
+### 8.2 Questions
 
 - **Q1: American vs European Options 1**
 

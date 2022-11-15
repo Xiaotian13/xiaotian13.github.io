@@ -1394,7 +1394,7 @@ D.E.Shaw Online Assessment Question, [Bob Navigates a Maze](https://leetcode.com
 
 <br>
 
-Approximate Matching:
+Approximate Matching
 
 ![image-20221111172115463](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221111172115463.png)
 
@@ -1406,7 +1406,7 @@ Approximate Matching:
 
 <br>
 
-Profit Analysis:
+Profit Analysis
 
 ![image-20221110200205163](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221110200205163.png)
 
@@ -1451,7 +1451,7 @@ print(getMaxProfit([5, -7, 8, -6, 4, 1, -9, 5], 5)) # 8
 
 <br>
 
-Circular Printer:
+Circular Printer
 
 ![image-20221112095743427](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221112095743427.png)
 
@@ -1472,4 +1472,12 @@ def getTime(s):
 
 print(getTime('AZGB')) # 13
 ```
+
+<br>
+
+String Modification
+
+![image-20221114225031714](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221114225031714.png)
+
+![image-20221114225050047](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221114225050047.png)
 

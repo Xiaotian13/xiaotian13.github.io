@@ -12,7 +12,7 @@ life/jobji/64interviewquestions.pdf
 ## Current resume
 
 ```pdf
-life/jobji/Resume_Xiaotian_Li.pdf
+life/jobji/Resume_Xiaotian_Li Quant.pdf
 ```
 
 

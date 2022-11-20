@@ -10,7 +10,8 @@
 
   原本X，换的话2X或者1/2 * X，期望算出来是5/4 * X，问题在哪？ 漏洞在换的话就是X或者2X，不存在1/2X一说
 
-  
+
+<br>
 
 - **Q2: Screwy Pirates**
 
@@ -43,7 +44,7 @@
   |  0   |  1   |  0   |  99  |      |
   |  1   |  0   |  1   |  0   |  98  |
 
-
+<br>
 
 - **Q3: Tiger and Sheep**
 
@@ -60,16 +61,52 @@
 
   以此类推，如果我们有100只老虎，则羊不会被吃。
 
+<br>
 
+- **Q4: River Crossing**
 
-- **Q4: Burning Ropes**
-  You have 2 ropes, each of which takes 1h to burn. But either one has different densities at different points, so there's no quarantee of consistency in the time it takes different sections within the rope to burn. How do you use these two ropes to measure 45 min? 
+   Four people, A, B, C and D need to get across a river. The only way to cross the river is by an old bridge, which holds at most 2 people at a time. Being dark, they can't cross the bridge without a torch, of which they only have one. So each pair can only walk at the speed of the slower person. They need to get all of them across to the other side as quickly as possible. A is the slowest and takes 10 minutes to cross; B takes 5 minutes; C
+  takes 2 minutes; and D takes 1 minute. What is the minimum time to get all of them across to the other side?
+
+  关键在于，A和B两个时间最长的要一起过去，并且不能是第一次，因为这样二者就会有一个要折返。
+
+  首先C和D过去花 $2$ 分钟，然后D回来花 $1$ 分钟；然后A和B过去花 $10$ 分钟，然后C回来花 $2$ 分钟；最后C和D过去花 $2$ 分钟，总共 $17$ 分钟。
+
+<br>
+
+- **Q5: Birthday Problem**
+
+  You and your colleagues know that your boss A's birthday is one of the following 10 dates:
+  Mar 4, Mar 5, Mar 8
+  Jun 4, Jun 7
+  Sep 1, Sep 5
+  Dec 1, Dec 2, Dec 8
+  A told you only the month of his birthday, and told your colleague C only the day. After that, you first said: "I don't know A's birthday; C doesn't know it either." After hearing what you said, C replied: "I didn't know A's birthday, but now I know it." You smiled and said: "Now I know it, too." After looking at the 10 dates and hearing your comments, your administrative assistant wrote down A's birthday without asking any questions. So what did the assistant write?
+
+  首先，我们只知道月份，但我们可以很确定C不知道完整的生日日期，说明生日月份不是Jun 7和Dec 2这两个独特日期所在的月份；
+
+  现在，C知道月份只能是Mar或者Sep，而C又只有日期的信息，现在C立刻知道了完整日期，说明生日不可能是Mar 5和Sep 5；
+
+  如果我们拿到的月份是Mar，此时还有Mar 4和Mar 8可选，不能确定；而我们也知道了完整日期，说明只能是Sep 1。
+
+<br>
+
+- **Q6: Card Game**
+
+  A casino offers a card game using a normal deck of 52 cards. The rule is that you turn over two cards each time. For each pair, if both are black, they go to the dealer's pile; if both are red, they go to your pile; if one black and one red, they are discarded. The process is repeated until you two go through all 52 cards. If you have more cards in your pile, you win $100; otherwise (including ties) you get nothing. The casino allows you to negotiate the price you want to pay for the game. How much would you be willing to pay to play this game?
+
+  如果翻开是一黑一红，那么我们和庄家相当于都没有拿到牌，剩下卡堆里的黑牌和红牌的个数依然是相同的。因此，无论如何，最后我们手里的牌的数目都跟庄家相同，都是庄家赢。
+
+<br>
+
+- **Q7: Burning Ropes**
+  You have 2 ropes, each of which takes 1h to burn. But either one has different densities at different points, so there's no guarantee of consistency in the time it takes different sections within the rope to burn. How do you use these two ropes to measure 45 min? 
 
   1根绳子要1h才能烧完，如果我们两头都点燃的话，1根绳子就只需要30分钟就能烧完。因此，我们同时把一根绳子的两头点燃，再把另一根绳子点燃，这样当一根绳子烧完时，刚好过了30分钟，此时再把另一根没烧完的绳子另一头也点燃，那么另一根绳子就会在15分钟内烧完，就是45分钟。
 
+<br>
 
-
-- **Q5: Defective Ball**
+- **Q8: Defective Ball**
 
   You have 12 identical balls. One of the balls is heavier OR lighter than the rest (you don't know which). Using just a balance that can show you which side of the tray is heavier, how can you determine which ball is the defective one with 3 measurements?
   
@@ -77,11 +114,11 @@
   
   ![](fig/img_asdf213.png ':size=80%')
   
-  通常来说，如果知道有一个球时更轻的还是更重的，那么我们可以用不超过 n 步来找出 $3^n$ 个球中的假球，因为每次称重减少问题的 $2/3$ 复杂度。如果不知道假球是更轻还是更重，我们可以用不超过 n 步来找出 $(3^n - 3)/2$ 个球中的假球。
+  通常来说，如果知道有一个球时更轻的还是更重的，那么我们可以用不超过 $n$ 步来找出 $3^n$ 个球中的假球，因为每次称重减少问题的 $2/3$ 复杂度。如果不知道假球是更轻还是更重，我们可以用不超过 n 步来找出 $(3^n - 3)/2$ 个球中的假球。
 
+<br>
 
-
-- **Q6: Trailing Zeros**
+- **Q9: Trailing Zeros**
 
   How many trailing zeros are there in 100! (factorial of 100)?
 
@@ -89,39 +126,46 @@
 
   $100, 95, \cdots, 5$，共有20个包含因子5的数字。其中，$100, 75, 50, 25$，包含两个因子5，因此再+4，最后得到 $20+4 = 24$。
 
-- **Q7: Horse Race**
+<br>
+
+- **Q10: Horse Race**
 
   There are 25 horses, each of which runs at a constant speed that is different from the other horses'. Since the track only has 5 lanes, each race can have at most 5 horses. If you need to find the 3 fastest horses, what is the minimum number of races needed to identify them?
-  
+
   ![](fig/IMG_7F1D52AD72AB-1.jpeg ':size=80%')
-  
+
   首先，我们需要将每匹马都至少比赛一次；这一步之后，我们就可以把每组最后两名的马全部排除。
-  
+
   然后，我们将5组里的头马都比赛一次；这样，排名第4、5的头马所在的组，也可以排除掉。排名第3的头马所在的组，其他所有马可以排除掉。排名第2的头马所在的组，排名最后的马可以排除掉。
-  
+
   最后，我们只需要将除了排名第一的头马外，其他5匹马全部比一遍即可。
 
+<br>
 
+- **Q11: Infinite Sequence**
 
-- **Q8: Race Track**
+  If $x^{x^{x^{\cdots}}} = 2$, what is $x$?
 
-  Suppose that you are on a one-way circular race track. There are N gas cans randomly placed on different locations of the track and the total sum of the gas in these cans is enough for your car to run exactly one circle. Assume that your car and you can pick up the gas cans along the way to fill in your gas tank. Can you always choose a starting position on the track so that you can complete the entire circle?
+  根据构造，我们应有 $x^2 = 2$，即 $x = \sqrt 2$。
 
-  先考虑 $N=1,2$ 的情况；
-  
-  然后假设如果 $N=n$ 成立，则对任意一个 $N=N+1$，都可以找到将两个点合起来后，变成 $N=n$ 的情况，因此也成立。
-  
-  
-  
-- **Q9: Door to Offer**
+<br>
+
+- **Q12: Door to Offer**
 
   You are facing two doors. One leads to your job offer and the other leads to exit. In front of either door is a guard. One guard always tells lies and the other always tells the truth. You can only ask one guard one yes/no question. Assuming you do want to get the job offer, what question will you ask?
 
-  问：Would the other guy say  that you are guarding the door to the offer?
+  问：Would the other guy say that you are guarding the door to the offer?
 
+<br>
 
+- **Q13: Message delivery**
+  You need to communicate with your colleague in Greenwich via a messenger service. Your documents are sent in a padlock box. Unfortunately the messenger service is not secure, so anything inside an unlocked box will be lost (including any locks you place inside the box) during the delivery. The high-security padlocks you and your colleague each use have only one key which the person placing the lock owns. How can you securely send a document to your colleague?
 
-- **Q10: Last Ball**
+  我们先上锁，然后把文件送出；对方拿到后，再上锁，再送回来；我们再把我们的锁解开，这样信息就会带着对方的锁回到对方手中。
+
+<br>
+
+- **Q14: Last Ball**
 
   A bag has 20 blue balls and 14 red balls. Each time you randomly take two balls out. (Assume each ball in the bag has equal probability of being taken.) You do not put these two balls back. Instead:
   A. If both balls have the same color, you add a blue ball to the bag;
@@ -139,9 +183,61 @@
   $$
   可以看到，只有抽到两个红球时，红球的数目才会真正减少。因此，决定最后一个球是什么颜色的因素即为袋子中红球数目的奇偶。如果有偶数个红球，那么最后一个拿的球即为蓝色；如果为奇数个红球，则最后一个拿的球即为红色。
 
-  
+<br>
 
-- **Q11: Missing Integers**
+- **Q15: Light switches**
+
+  There is a light bulb inside a room and four switches outside. All switches are currently at off state and only one switch controls the light bulb. You may tum any number of switches on or off any number of times you want. How many times do you need to go into the room to figure out which switch controls the light bulb?
+
+  由于发不发光是binary的，因此一次拨动只允许我们鉴别两个开关；如果我们可以加入另外一个除发光之外因素，比如灯泡的发热，我们就可以鉴别出四个开关了。
+
+  Tum on switches 1 and 2; move on to solve some other puzzles or do whatever you like for a while; tum off switch 2 and turn on switch 3; get into the room quickly, touch the bulb and observe whether the light is on or off.
+  The light bulb is on and hot - switch 1 controls the light;
+  The light bulb is off and hot - switch 2 controls the light;
+  The light bulb is on and cold - switch 3 controls the light;
+  The light bulb is off and cold - switch 4 controls the light.
+
+<br>
+
+- **Q16: Quant Salary**
+
+  Eight quants from different banks are getting together for drinks. They are all interested in knowing the average salary of the group. Nevertheless, being cautious and humble individuals, everyone prefers not to disclose his or her own salary to the group. Can you come up with a strategy for the quants to calculate the average salary without knowing other people's salaries?
+
+  第一个人随便选取一个数字，加上自己的工资，再输入给第二个人；以此类推，最后转回来第一个人，再把随便选取的数字去掉，即可求平均。
+
+<br>
+
+- **Q17: Coin Piles**
+
+  Suppose that you are blind-folded in a room and are told that there are $1000$ coins on the floor. $980$ of the coins have tails up and the other $20$ coins have heads up. Can you separate the coins into two piles so to guarantee both piles have equal number of heads? Assume that you cannot tell a coin's side by touching it, but you are allowed to tum over any number of coins.
+
+  假设我们先选 $n$ 枚硬币，其中有 $m$ 个正面，$n-m$ 个反面；则另一堆有 $1000-n$ 枚硬币，$20-m$ 个正面。显然，通过调整  $n$，我们是不能保证两堆硬币都有相同数目的正面的。
+
+  我们可以将第一堆硬币全部反过来，使其有 $n-m$ 个正面，$m$ 个反面。此时如果有正面数目相同，一定会有 $n - m = 20 - m$，即 $n=20$。因此，我们随机选取 $20$ 枚硬币，并将他们完全反过来即可。
+
+<br>
+
+- **Q18: Mislabeled Bags**
+
+  You are given three bags of fruits. One has apples in it; one has oranges in it; and one has a mix of apples and oranges in it. Each bag has a label on it (apple, orange or mix). Unfortunately, your manager tells you that ALL bags are mislabeled. Develop a strategy to identify the bags by taking out minimum number of fruits? You can take any number of fruits from any bags.
+
+  解题的关键在于，标签全部都是乱的。即：标了橘子的袋子，只可能是苹果或者混合；标了苹果的袋子，只可能是橘子或者混合。
+
+  因此，我们从标了混合的袋子中拿一个水果，如果是苹果，即代表这一袋子全部是苹果，且标了苹果的袋子全部是橘子，标了橘子的袋子是混合；反之亦然。
+
+<br>
+
+- **Q19: Wise Men**
+
+  A sultan has captured $50$ wise men. He has a glass currently standing bottom down. Every minute he calls one of the wise men who can choose either to turn it over (set it upside down or bottom down) or do nothing. The wise men will be called randomly, possibly for an infinite number of times. When someone called to the sultan correctly states that all wise men have already been called to the sultan at least once, everyone goes free. But if his statement is wrong, the sultan puts everyone to death. The wise men are allowed to communicate only once before they get imprisoned into separate rooms (one person per room). Design a strategy that lets to the wise men go free.
+
+  选其中的 $49$ 个人，让他们在第一次看到瓶子是向上的时，将其翻成向下的，并且以后再被召见什么都不做；如果瓶子是向下的，则什么都不做。
+
+  剩下一个人，看到如果瓶子是向下的，就将其翻成向上的。只要他看到过瓶子被翻成向下的 $49$ 次后，就知道所有人都被召见过了。
+
+<br>
+
+- **Q20: Missing Integers**
 
   Suppose we have 98 distinct integers from 1 to 100. What is a good way to find out the two missing integers (within $[1, 100]$) ?
 
@@ -152,19 +248,122 @@
   $$
   直接把 $x,y$ 解出来。$\mathcal O(n)$
 
+<br>
+
+- **Q21: Counterfeit coins**
+
+  There are 10 bags with 100 identical coins in each bag. In all bags but one, each coin weighs 10 grams. However, all the coins in the counterfeit bag weigh either 9 or 11 grams. Can you find the counterfeit bag in only one weighing, using a digital scale that tells the exact weight?
+
+  从第一个袋子中抽1个硬币，从第二个袋子中抽2个硬币，以此类推。如果都是平衡的硬币，则最后总重应该为550，少/多 多少即第几个袋子有问题。
+
+<br>
+
+- **Q22: Glass Balls**
+
+  You are holding two glass balls in a 100-story building. If a ball is thrown out of the window, it will not break if the floor number is less than X, and it will always break if the floor number is equal or greater than X. You would like to determine X. What is the strategy that will minimize the number of drops for the worst case scenario?
+
+  这一问可以被等价转化为：限定只能扔球 $N$ 次，最多我们可以探索几层楼？
+
+  ![](/fig/IMG_F7410E6F4684-1.jpeg ':size=15%')
+
+  最差情况，就是 $N$ 层楼，即先从 $N$ 扔一个，碎了，接下来我们从1开始一路试上去；
+
+  如果 $N$ 的情况没有碎，我们还可以地毯式向上试 $N-1$ 次，因此我们下一个球从 $N + (N-1)$ 层楼开始丢，如果碎了，我们就从 $N+1$ 层开始向上地毯式丢球；
+
+  以此类推，我们最多可以探测出 $N(N+1)/2$ 层楼。取 $N=14$ 时，这个数字大于100，因此使用这个策略，最多探测14次。
+
+<br>
+
+- **Q23: Handshakes**
+
+  You are invited to a welcome party with $25$ fellow team members. Each of the fellow members shakes hands with you to welcome you. Since a number of people in the room haven't met each other, there's a lot of random handshaking among others as well. If you don't know the total number of handshakes, can you say with certainty that there are at least two people present who shook hands with exactly the same number of people?
+
+  总共有 $26$ 个人，而因为每个人都跟我握过手，因此每个人可能的握手次数为 $1$ 到 $25$。即，$26$ pigeons and $25$ holes，因此一定有至少两个人的握手次数相同。
+
+<br>
+
+- **Q24: Prisoner Problem**
+
+  One hundred prisoners are given the chance to be set free tomorrow. They are all told that each will be given a red or blue hat to wear. Each prisoner can see everyone else's hat but not his own. The hat colors are assigned randomly and once the hats are placed on top of each prisoner's head they cannot communicate with one another in any form, or else they are immediately executed. The prisoners will be called out in random order and the prisoner called out will guess the color of his hat. Each prisoner declares the color of his hat so that everyone else can hear it. If a prisoner guesses correctly the color of his hat, he is set free immediately; otherwise he is executed.
+  They are given the night to come up with a strategy among themselves to save as many prisoners as possible. What is the best strategy they can adopt and how many prisoners can they guarantee to save?
+
+  这个问题的关键在于，第一个人可以传递信息给剩下的所有人。如果第一个人看到其余99个人中红帽子是奇数个，那么就猜自己的是红帽子；否则猜蓝帽子。第一个人有一半概率存活，而剩下的所有人都可以通过他的信息推断出自己帽子的颜色。
+
+  What if there are 3 possible hat colors: red, green, and blue? What is the best strategy they can adopt and how many prisoners can they guarantee to save?
+
+  其实与上述情况同理。我们做编码，红为0，绿为1，蓝为2，然后全加权乘起来，再算 $s\%3$。如果余0，就猜红，其余同理。第一个人有三分之一概率存活，但对其他人：由于他观测到其他人的分数和满足 $(x+0)\%3, (x+1)\%3, (x+2)\%3$ 都是不同的数字，因此可以推断出自己的颜色。
+
+<br>
+
+- **Q25: Division by 9**
+
+  Given an arbitrary integer, come up with a rule to decide whether it is divisible by $9$ and prove it.
+
+  把所有位数的和加起来，如果能被 $9$ 整除，则该数字可以被 $9$ 整除。
+
+  设我们的数字 $x = a_n10^n + a_{n-1}10^{n-1}+\cdots + a_110^1+a_0$，取 $b = a_n+a_{n-1}+\cdots+a_1+a_0 = 9k_1, k\in \mathbb N$。此时则有
+  $$
+  x - b = x - 9k_1 = a_n(10^n-1) + a_{n-1}(10^{n-1}-1)+\cdots + a_1(10^1-1) = 9k_2,
+  $$
+  即有 $x = 9k_1+9k_2$ 必被 $9$ 整除。
+
+<br>
+
+- **Q26: Chameleon Colors**
+
+  A remote island has three types of chameleons with the following population: $13$ red chameleons, $15$ green chameleons and $17$ blue chameleons. Each time two chameleons with different colors meet, they would change their color to the third color. For example, if a green chameleon meets a red chameleon, they both change their color to blue. Is it ever possible for all chameleons to become the same color? Why or why not?
+
+  首先，我们用 $(13, 15, 17)$ 来表示我们的情况。我们应当注意到，如果 $(a, b, c)$ 可以转换为一个颜色，那么 $(a+1, b+1, c+1)$ 也应当可以。
+
+  因此，我们转为研究 $(0, 2, 4)$ 的情况。$(0, 2, 4)$ 只可能变换为 $(2, 1, 3)$，该情况等价于 $(1,0,2)$，易知该情况不可能全变为同一种颜色。
+
+  如果想要最后能全变为同一种颜色，那么必须在中间的某个状态，能够使得其中两种颜色的数目相同。
+
+<br>
+
+- **Q27: Coin Split Problem**
+
+  You split $1000$ coins into two piles and count the number of coins in each pile. If there are $x$ coins in pile one and $y$ coins in pile two, you multiple $x$ by $y$ to get $xy$. Then you split both piles further, repeat the same counting and multiplication process, and add the new multiplication results to the original. For example, you split $x$ to $x_1$, and $x_2$ , $y$ to $y_1$, and $y_2$ , then the sum is $xy+x_1x_2 + y_1y_2$. The same process is repeated until you only have piles of $1$ stone each. What is the final sum? (The final $1$'s are not included in the sum.) Prove that you always get the same answer no matter how the piles are divided.
+
+  已知无论怎么分，最后我们得到的和都是一样的，这样我们就可以用 $f(n)$ 来表示，当我们分 $n$ 个硬币时，最后得到的和，应当满足 $f(n) = f(x)+f(n-x)+x(n-x), x\in [1, n-1]$。
+
+  先从简单的情况看。易得 $f(1)=0, f(2) = 1$；由于 $f(n)$ 应当不受 $x$ 的选择影响，我们可以一直选取 $x=1$，这样计算得 $f(3)=3, f(4)=6,f(5)=10$。由此看出规律，猜想 $f(n) = n(n-1)/2$，验证：
+  $$
+  f(x)+f(n-x)+x(n-x) = \frac{x(x-1)}{2} + \frac{(n-x)(n-x-1)}{2}+x(n-x) = \frac{n(n-1)}{2} = f(n).
+  $$
+
+<br>
+
+- **Q28: Race Track**
+
+  Suppose that you are on a one-way circular race track. There are N gas cans randomly placed on different locations of the track and the total sum of the gas in these cans is enough for your car to run exactly one circle. Assume that your car and you can pick up the gas cans along the way to fill in your gas tank. Can you always choose a starting position on the track so that you can complete the entire circle?
+
+  先考虑 $N=1,2$ 的情况，显然是可以的。我们用 $x$ 来表示间隔距离，$y$ 来表示存储点的油量，那么一定有 $x_1+x_2 = 1, y_1+y_2 =1$。由于不可能存在 $x_1<y_1, x_2<y_2$ 的情况，因此 $x_1\geq y_1$ 与 $x_2\geq y_2$ 中至少有一个成立。无论哪个成立，都可以让我们完成绕圈。
+
+  然后假设如果 $N=n$ 成立，则对任意一个 $N=N+1$，都可以找到将两个点合起来后，变成 $N=n$ 的情况，因此也成立。
 
 
-- **Q12: Wise Men**
+<br>
 
-  A sultan has captured 50 wise men. He has a glass currently standing bottom down. Every minute he calls one of the wise men who can choose either to turn it over (set it upside down or bottom down) or do nothing. The wise men will be called randomly, possibly for an infinite number of times. When someone called to the sultan correctly states that all wise men have already been called to the sultan at least once, everyone goes free. But if his statement is wrong, the sultan puts everyone to death. The wise men are allowed to communicate only once before they get imprisoned into separate rooms (one person per room). Design a strategy that lets to the wise men go free.
+- **Q29: Irrational Number**
 
-  选其中的49个人，让他们在第一次看到瓶子是向上的时，将其翻成向下的，并且以后再被召见什么都不做；如果瓶子是向下的，则什么都不做。
+  Can you prove that $\sqrt 2$ is an irrational number? A rational number is a number that can be expressed as a ratio of two integers; otherwise it is irrational.
 
-  剩下一个人，看到如果瓶子是向下的，就将其翻成向上的。只要他看到过瓶子被翻成向下的49次后，就知道所有人都被召见过了。
+  如果 $\sqrt 2$ 是有理数，那么它一定可以被表示为 $m/n$。此时有 $m^2 = 2n^2$，即 $m^2$ 一定是偶数；因此 $m$ 一定是偶数。我们设 $m=2x$，则可以推出 $n^2=2x^2$，说明 $n$ 也应当是偶数；矛盾。
 
+<br>
 
+- **Q30: Rainbow hats**
 
-- **Q13: Shaking Hands**
+  Seven prisoners are given the chance to be set free tomorrow. An executioner will put a hat on each prisoner's head. Each hat can be one of the seven colors of the rainbow and the hat colors are assigned completely at the executioner's discretion. Every prisoner can see the hat colors of the other six prisoners, but not his own. They cannot communicate with others in any form, or else they are immediately executed. Then each prisoner
+  writes down his guess of his own hat color. If at least one prisoner correctly guesses the color of his hat, they all will be set free immediately; otherwise they will be executed.
+  They are given the night to come up with a strategy. Is there a strategy that they can guarantee that they will be set free?
+
+  这题比上面的类似题要难，但解题思路类似。我们依然用 $0, 1, \cdots, 6$ 分别编码七个颜色，因此一定有 $\left(\sum_{i=1}^7x_i\right) \% 7 \in \{0, \cdots, 6\}$。我们使得猜测 $g_i$ 满足 $\left( g_i + \sum_{j\neq i}x_j \right) \%7 = i$，如果 $\forall i, g_i \neq x_i$，那么对每个 $i$，应当都有 $\left( x_i + \sum_{j\neq i}x_j \right) \%7 = \left(\sum_{i=1}^7x_i\right) \% 7 \neq i$，最后得到的加总结论是 $\left(\sum_{i=1}^7x_i\right) \% 7 \notin \{0, \cdots, 6\}$，显然矛盾。因此至少有一个人能够猜对。
+
+<br>
+
+- **Q31: Shaking Hands**
 
   A couple invited four other couples to join a party (five couples in total), everyone shook hands with people they didn't know. Then, the host asked everyone how many times they've shook hands and they gave all different answers. Assuming no one shook hands with their own partner, how many times did the hostess shake hands in the party?
 
@@ -173,22 +372,6 @@
   从0到8对他们依次编号，那么8号除了自己的另一半和自己外，与其他任何人都握了手；因此，0号一定是8号的另一半，不然他不会握手次数为0；
 
   同理，得到7号与1号是夫妻，依次类推，主人的另一半握手次数必为4，自己的握手次数也为4。
-
-
-
-- **Q14: Glass Balls**
-
-  You are holding two glass balls in a 100-story building. If a ball is thrown out of the window, it will not break if the floor number is less than X, and it will always break if the floor number is equal or greater than X. You would like to determine X. What is the strategy that will minimize the number of drops for the worst case scenario?
-  
-  这一问可以被等价转化为：限定只能扔球 $N$ 次，最多我们可以探索几层楼？
-  
-  ![](/fig/IMG_F7410E6F4684-1.jpeg ':size=15%')
-  
-  最差情况，就是 $N$ 层楼，即先从 $N$ 扔一个，碎了，接下来我们从1开始一路试上去；
-  
-  如果 $N$ 的情况没有碎，我们还可以地毯式向上试 $N-1$ 次，因此我们下一个球从 $N + (N-1)$ 层楼开始丢，如果碎了，我们就从 $N+1$ 层开始向上地毯式丢球；
-  
-  以此类推，我们最多可以探测出 $N(N+1)/2$ 层楼。取 $N=14$ 时，这个数字大于100，因此使用这个策略，最多探测14次。
 
 
 

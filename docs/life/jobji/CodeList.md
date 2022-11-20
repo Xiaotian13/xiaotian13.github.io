@@ -144,6 +144,8 @@
 
 [**1-D Dynamic Programming:**](#1D_Dynamic_Programming)
 
+https://leetcode.com/study-plan/dynamic-programming/
+
 - [x] [70. Climbing Stairs](https://leetcode.com/problems/climbing-stairs/), Easy
 - [ ] [746. Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/), Easy
 - [x] [198. House Robber](https://leetcode.com/problems/house-robber/), Medium
@@ -1480,4 +1482,33 @@ String Modification
 ![image-20221114225031714](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221114225031714.png)
 
 ![image-20221114225050047](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221114225050047.png)
+
+不知道什么原理，但能过所有case：
+
+```python
+def getMinMoves(s):
+    # Write your code here
+    n = len(s) #that's the size of s
+    inf = float('inf') # create a number which is very huge
+
+    dp_good = [[inf for __ in range(26)] for _ in range(n)] # list of goods
+    dp_bad = [[0 for __ in range(26)] for _ in range(n)] # list of bads
+
+    # base case
+    for c in range(26):
+        dp_bad[0][c] = abs(ord(s[0]) - ord("a") - c)
+    # general case
+    for i in range(1, n):
+        prev_best = inf
+        for c in range(26):
+            prev_best = min(prev_best, dp_good[i-1][c]) # find the min
+        for c in range(26):
+            dp_good[i][c] = min(dp_good[i-1][c], dp_bad[i-1][c]) # find the min
+            dp_good[i][c] += abs(ord(s[i]) - ord("a") - c) # add the calculation
+            dp_bad[i][c] = prev_best + abs(ord(s[i]) - ord("a") - c)
+    ans = inf
+    for i in range(26):
+        ans = min(ans, dp_good[n - 1][i])
+    return ans
+```
 

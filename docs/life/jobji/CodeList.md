@@ -146,6 +146,8 @@
 
 https://leetcode.com/study-plan/dynamic-programming/
 
+https://leetcode.com/discuss/general-discussion/458695/dynamic-programming-patterns
+
 - [x] [70. Climbing Stairs](https://leetcode.com/problems/climbing-stairs/), Easy
 - [ ] [746. Min Cost Climbing Stairs](https://leetcode.com/problems/min-cost-climbing-stairs/), Easy
 - [x] [198. House Robber](https://leetcode.com/problems/house-robber/), Medium

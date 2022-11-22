@@ -100,8 +100,9 @@
 <br>
 
 - **Q7: Burning Ropes**
+  
   You have 2 ropes, each of which takes 1h to burn. But either one has different densities at different points, so there's no guarantee of consistency in the time it takes different sections within the rope to burn. How do you use these two ropes to measure 45 min? 
-
+  
   1根绳子要1h才能烧完，如果我们两头都点燃的话，1根绳子就只需要30分钟就能烧完。因此，我们同时把一根绳子的两头点燃，再把另一根绳子点燃，这样当一根绳子烧完时，刚好过了30分钟，此时再把另一根没烧完的绳子另一头也点燃，那么另一根绳子就会在15分钟内烧完，就是45分钟。
 
 <br>
@@ -159,8 +160,9 @@
 <br>
 
 - **Q13: Message delivery**
+  
   You need to communicate with your colleague in Greenwich via a messenger service. Your documents are sent in a padlock box. Unfortunately the messenger service is not secure, so anything inside an unlocked box will be lost (including any locks you place inside the box) during the delivery. The high-security padlocks you and your colleague each use have only one key which the person placing the lock owns. How can you securely send a document to your colleague?
-
+  
   我们先上锁，然后把文件送出；对方拿到后，再上锁，再送回来；我们再把我们的锁解开，这样信息就会带着对方的锁回到对方手中。
 
 <br>
@@ -192,10 +194,11 @@
   由于发不发光是binary的，因此一次拨动只允许我们鉴别两个开关；如果我们可以加入另外一个除发光之外因素，比如灯泡的发热，我们就可以鉴别出四个开关了。
 
   Tum on switches 1 and 2; move on to solve some other puzzles or do whatever you like for a while; tum off switch 2 and turn on switch 3; get into the room quickly, touch the bulb and observe whether the light is on or off.
-  The light bulb is on and hot - switch 1 controls the light;
-  The light bulb is off and hot - switch 2 controls the light;
-  The light bulb is on and cold - switch 3 controls the light;
-  The light bulb is off and cold - switch 4 controls the light.
+  
+  - The light bulb is on and hot - switch 1 controls the light;
+  - The light bulb is off and hot - switch 2 controls the light;
+  - The light bulb is on and cold - switch 3 controls the light;
+  - The light bulb is off and cold - switch 4 controls the light.
 
 <br>
 
@@ -211,7 +214,7 @@
 
   Suppose that you are blind-folded in a room and are told that there are $1000$ coins on the floor. $980$ of the coins have tails up and the other $20$ coins have heads up. Can you separate the coins into two piles so to guarantee both piles have equal number of heads? Assume that you cannot tell a coin's side by touching it, but you are allowed to tum over any number of coins.
 
-  假设我们先选 $n$ 枚硬币，其中有 $m$ 个正面，$n-m$ 个反面；则另一堆有 $1000-n$ 枚硬币，$20-m$ 个正面。显然，通过调整  $n$，我们是不能保证两堆硬币都有相同数目的正面的。
+  假设我们先选 $n$ 枚硬币，其中有 $m$ 个正面，$n-m$ 个反面；则另一堆有 $1000-n$ 枚硬币，$20-m$ 个正面。显然，通过调整  $n$，我们是不能保证两堆硬币都有相同数目的正面。
 
   我们可以将第一堆硬币全部反过来，使其有 $n-m$ 个正面，$m$ 个反面。此时如果有正面数目相同，一定会有 $n - m = 20 - m$，即 $n=20$。因此，我们随机选取 $20$ 枚硬币，并将他们完全反过来即可。
 
@@ -417,13 +420,23 @@ P(A) &= P(A\cap B_1) + \cdots + P(A\cap B_k) \\
 &=\sum_{i=1}^nP(A|B_i)P(B_i)
 \end{aligned}
 $$
-各种概率分布，分布函数和期望方差
+各种概率分布：
+
+|    Name     |              Probability Mass/Density Function               | $\mathbb E[X]$ | $\text{Var}[X]$ |
+| :---------: | :----------------------------------------------------------: | :------------: | :-------------: |
+|  Bernoulli  |            $P(x) = p^x(1-p)^{1-x}, \quad x=0, 1$             |      $p$       |    $p(1-p)$     |
+|  Binomial   | $P(x) = \binom{n}{x}p^x(1-p)^{n-x}, \quad x = 0, 1, \cdots, n$ |      $np$      |    $np(1-p)$    |
+|  Geometric  |         $P(x) = (1-p)^{x-1}p, \quad x=1, 2, \cdots$          |     $1/p$      |   $(1-p)/p^2$   |
+|   Poisson   | $P(x) = e^{-\lambda} \frac{\lambda^x}{x!}, \quad x = 0, 1, \cdots$ |   $\lambda$    |    $\lambda$    |
+|   Uniform   |            $P(x) = 1/(b-a), \quad a\leq x \leq b$            |   $(b+a)/2$    |  $(b-a)^2/12$   |
+| Exponential |        $P(x) = \lambda e^{-\lambda x}, \quad x\geq 0$        |  $1/\lambda$   | $1/ \lambda^2$  |
+|   Normal    | $P(x) = \frac{1}{\sqrt{2\pi}\sigma}\exp\{\frac{-(x-\mu)^2}{2\sigma^2}\}$ |     $\mu$      |   $\sigma^2$    |
 
 
 
 unbiased estimation
 
-consistant
+consistent
 
 kurtosis and skew
 
@@ -530,9 +543,9 @@ $$
 
 - **Q3: Drunk Passenger**
 
-  A line of 100 airline passengers are waiting to board a plane. They each hold a ticket to one of the 100 seats on that flight. For convenience, let's say that the nth passenger in line has a ticket for the seat number n.
+  A line of $100$ airline passengers are waiting to board a plane. They each hold a ticket to one of the $100$ seats on that flight. For convenience, let's say that the $n$th passenger in line has a ticket for the seat number $n$.
 
-  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number 100. What is the probability that you end up in your seat ( i.e. seat #100)?
+  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number $100$. What is the probability that you end up in your seat ( i.e. seat #100)?
 
   可以 by induction，如果只有两个乘客，则被占的概率是$0.5$；如果只有三个乘客，则被占的概率是$\frac{1}{3} + \frac{1}{3}\times\frac{1}{2} = 0.5$；如果只有4个乘客，则被占的概率是$\frac{1}{4} + \frac{1}{4}\times\frac{1}{2} + \frac{1}{4}\times\frac{1}{2} = \frac{1}{2}$；以此类推，概率有$\frac{1}{n} + (n-2)\frac{1}{n}\times\frac{1}{2} = \frac{1}{2}$。
 
@@ -564,7 +577,7 @@ $$
 
   What are the probabilities of getting hands with four-of-a-kind (four of the five cards with the same value)? Hands with a full house (three cards of one value and two cards of another value)? Hands with two pairs?
 
-  总共可能数：$\binom{52}{4}$
+  总共可能数：$\binom{52}{5}$
 
   Four of a kind: $\binom{1}{13} \times \binom{1}{48}$
 
@@ -601,6 +614,7 @@ $$
   \end{matrix}\right],
   $$
   对$M$做特征值分解，即可得到通式。
+  
   $$
   M = P\Lambda P^{-1}, \quad \left[\begin{matrix}
   F_n \\ F_{n+1}
@@ -644,7 +658,16 @@ $$
 
 <br>
 
-- **Q7: Chess Tournament**
+- **Q7: Screwy Pirates 2**
+
+  Having peacefully divided the loot, the pirate team goes on for more looting and expands the group to $11$ pirates. To protect their hard-won treasure, they gather together to put all the loot in a safe. Still being a democratic bunch, they decide that only a majority - any majority - of them ($\geq6$) together can open the safe. So they ask a locksmith to put a certain number of locks on the safe. To access the treasure, every lock needs to be opened. Each lock can have multiple keys; but each key only opens one lock. The locksmith can give more than one key to each pirate.
+  What is the smallest number of locks needed? And how many keys must each pirate carry?
+
+  因为 $6$ 个人是一个小团体，因此对任意的 $5$ 人团体而言，都必须有一把独特的锁，因此需要的锁的个数为 $\binom{11}{5}= 462$。每把锁需要配 $6$ 把钥匙，因此换算到每个人身上分别需要带 $(462\times6)/11 = 252$ 把钥匙。
+
+<br>
+
+- **Q8: Chess Tournament**
 
   A chess tournament has $2^n$ players with skills $1 > 2 > \dots > 2^n$. It is organized as a knockout tournament, so that after each round only the winner proceeds to the next round. Except for the final, opponents in each round are drawn at random. Let's also assume that when two players meet in a game, the player with better skills always wins. What's the probability that players 1 and 2 will meet in the final?
 
@@ -655,7 +678,7 @@ $$
 
 <br>
 
-- **Q8: Application Letters**
+- **Q9: Application Letters**
 
   You're sending job applications to 5 firms: Morgan Stanley, Goldman Sachs, JP Morgan, UBS and Merrill Lynch. You have 5 envelopes on the table neatly typed with names and addresses of people at these 5 firms. You even have 5 cover letters personalized to each of these firms. Your 3-year-old tried to be helpful and stuffed each cover letter into each of the envelopes for you. Unfortunately she randomly put letters into envelopes without realizing that the letters are personalized. What is the probability that all 5 cover letters are mailed to the wrong firms?
 
@@ -667,13 +690,13 @@ $$
 
   对于题目，我们只有五张牌，总共有$5\times4\times3\times2=120$种排列，那么只有一张牌是对的共有$\binom{5}{1}\times 9=45$种情况，只有两张牌是对的共有$\binom{5}{2}\times 2=20$种情况，只有三张牌是对的共有$\binom{5}{3}\times 1=10$种情况，全对只有1种情况，因此全错只有$120 - 45 - 20 - 10 - 1=44$种情况，概率即为
   $$
-  \frac{44}{120} = \frac{11}{30}.
+  \frac{44}{120} = \frac{11}{30} \left( =\frac{1}{2!} - \frac{1}{3!} + \frac{1}{4!} - \frac{1}{5!} \right).
   $$
   还有另一种解法，见绿皮书第70页。
 
 <br>
 
-- **Q9: Birthday Problem**
+- **Q10: Birthday Problem**
 
   How many people do we need in a class to make the probability that two people have the same birthday more than 0.5? (for simplicity, assume 365 days a year)
   $$
@@ -697,7 +720,7 @@ $$
 
 <br>
 
-- **Q10: 100th digit**
+- **Q11: 100th digit**
 
   What is the 100th digit to the right of the decimal point in the decimal representation of $(1 + \sqrt 2)^{3000}$?
 
@@ -705,7 +728,7 @@ $$
 
 <br>
 
-- **Q11: Cubic of Integer**
+- **Q12: Cubic of Integer**
 
   Let $x$ be an integer between $1$ and $10^{12}$, what is the probability that the cubic of $x$ ends with $11$?
 
@@ -715,7 +738,7 @@ $$
 
 <br>
 
-- **Q12: Boys and girls**
+- **Q13: Boys and girls**
 
   A company is holding a dinner for working mothers with at least one son. Ms. Jackson, a mother with two children is invited. What is the probability that both children are boys?
 
@@ -727,7 +750,7 @@ $$
 
 <br>
 
-- **Q13: Unfair Coins**
+- **Q14: Unfair Coins**
 
   You are given 1000 coins. Among them, 1 coin has heads on both sides. The other 999 coins are fair coins. You randomly choose a coin and toss it 10 times. Each time, the coin turns up heads. What is the probability that the coin you choose is the unfair one?
   $$
@@ -738,7 +761,7 @@ $$
 <br>
 
 
-- **Q14: Fair Probability from An Unfair Coin**
+- **Q15: Fair Probability from An Unfair Coin**
 
   If you have an unfair coin, which may bias toward either heads or tails at an unknown probability, can you generate even odds using this coin?
   $$
@@ -750,7 +773,7 @@ $$
 
 <br>
 
-- **Q15: Dart Game**
+- **Q16: Dart Game**
 
   Jason throws two darts at a dartboard, aiming for the center. The second dart lands farther from the center than the first. If Jason throws a third dart aiming for the center, what is the probability that the third throw is farther from the center than the first? Assume Jason's skillfulness is constant.
 
@@ -762,7 +785,7 @@ $$
 
 <br>
 
-- **Q16: Birthday Line**
+- **Q17: Birthday Line**
 
   At a movie theater, a whimsical manager announces that she will give a free ticket to the first person in line whose birthday is the same as someone who has already bought a ticket.
   You are given the opportunity to choose any position in line. Assuming that your don't know anyone else's birthday and all birthdays are distributed randomly throughout the year (assuming 365 days in a year), what position in line gives you the largest chance of getting the free ticket?
@@ -785,7 +808,7 @@ $$
 
 <br>
 
-- **Q17: Dice Order**
+- **Q18: Dice Order**
 
   We throw 3 dice one by one. What is the probability that we obtain 3 points in strictly increasing order?
 
@@ -793,11 +816,13 @@ $$
   $$
   \frac{6\times5\times4}{6^3},
   $$
-  这三个数字按照严格递增排序的概率为1/6，因此最后概率乘起来
+  这三个数字按照严格递增排序的概率为 $1/6$，因此最后概率乘起来为 $5/54$；
+  
+  或者直接计算，可以得到概率为 $(10+6+3+1)/6^3 = 5/54$。
 
 <br>
 
-- **Q18: Monty Hall problem**
+- **Q19: Monty Hall problem**
 
   Monty Hall problem is a probability puzzle based on an old American show "Let's make a deal". The problem is named after the show's host. Suppose you are on the show now, and you are given the choice of 3 doors. Behind one door is a car; behind the other two are goats. You don't know ahead of time what is behind each of the doors.
   You pick one of the doors and announce it. As soon as you pick the door, Monty opens on of the other two doors that he knows has a goat behind it. Then he gives you the option to either keep your original choice or switch to the third door. Should you switch?
@@ -807,7 +832,7 @@ $$
 
 <br>
 
-- **Q19: Amoeba Population**
+- **Q20: Amoeba Population**
 
   There is a one amoeba in a pond. After every minute the amoeba may die, stay the same, split into two or split into three with equal probability. All its offspring(后代), if it has any, will behave the same (and independent of other amoebas). What is the probability the amoeba population will die out?
 
@@ -825,7 +850,7 @@ $$
 
 <br>
 
-- **Q20: Candies in A Jar**
+- **Q21: Candies in A Jar**
 
   You are taking out candies one by one from a jar that has 10 red candies, 20 blue candies, and 30 green candies in it. What is the probability that there are at least 1 blue candy and 1 green candy left in the jar when you have taken out all the red candies?
 
@@ -833,13 +858,16 @@ $$
 
   考虑如果只有红糖和蓝糖，则拿到最后一颗糖为蓝糖的概率为$20 / (10 + 20)$；
 
-  因此，对总体而言，考虑拿完糖顺序为红蓝绿的概率，首先最后一颗糖为绿糖的概率为30/60，其次红糖与蓝糖而言，最后一颗糖为蓝糖的概率为20/30，因此总概率30/60 * 20/30；
+  因此，对总体而言，考虑拿完糖顺序为红蓝绿的概率，首先最后一颗糖为绿糖的概率为 $30/60$，其次红糖与蓝糖而言，最后一颗糖为蓝糖的概率为 $20/30$，因此总概率 $30/60 \times 20/30$；
 
-  同理得到最终计算需要的概率为30/60 * 20/30 + 20/60 * 30/40 = 1/3 + 1/4 = 7/12
+  同理得到最终计算需要的概率为
+  $$
+  \frac{30}{60} \times \frac{20}{30} + \frac{20}{60} \times \frac{30}{40} = \frac{1}{3} + \frac{1}{4} = \frac{7}{12}.
+  $$
 
 <br>
 
-- **Q21: Coin Toss Game**
+- **Q22: Coin Toss Game**
 
   Two players, A and B, alternatively toss a fair coin (A tosses the coin first, then B tosses the coin, then A, then B,...). The sequence of heads and tails is recorded. If there is a head followed by a tail (HT subsequence), the game ends and the person who tosses the tail wins. What is the probability that A wins the game?
 
@@ -862,7 +890,7 @@ $$
 
 <br>
 
-- **Q22: Russian Roulette Series**
+- **Q23: Russian Roulette Series**
 
   1. Let's play a traditional version of Russian roulette. A single bullet is put into a 6-chamber revolver. The barrel is randomly spun so that each chamber is equally likely to be under the hammer. Two players take turns to pull the trigger - with the gun unfortunately pointing at one's own head - without further spinning until the gun goes off and the person who gets killed loses. If you, one of the players, can choose to go first or second, how will you choose? And what is your probability of loss?
 
@@ -870,6 +898,8 @@ $$
 
   2. Now, let's change the rule slightly. We will spin the barrel again after every trigger pull. Will you choose to be the first or the second player? And what is your probability of loss?
 
+     直观上，如果每次打完后都会重新转转轮，那么后打应该是有优势的。
+  
      如果我们选择先打，那么我们死的概率为
      $$
      \frac{1}{6} + \frac{5}{6}\times\frac{5}{6}\times\frac{1}{6} + \cdots = \sum_{i=0}^{\infty}\frac{1}{6}\cdot (\frac{5}{6})^{2i} = \frac{\frac{1}{6}}{1-\frac{25}{36}} = \frac{6}{11},
@@ -883,12 +913,12 @@ $$
      不旋转的话，我们的死亡概率是 $4/\binom{2}{5} = \frac{2}{5}$，旋转的话我们的死亡概率是 $5/\binom{6}{2} = \frac{2}{6}$，显然旋转更好。
 
   4. What if the two bullets are randomly put in two consecutive positions? If your opponent survived his first round, should you spin the barrel?
-
+  
      总共有 $6$ 种情况。其中，第一发没有子弹，总共有 $4$ 种情况，且这 $4$ 种情况中只有 $1$ 种情况是第二发有子弹，因此不转的话死亡概率为 $1/4$；如果转的话，等同于第一发有子弹的概率，此时死亡概率为 $2/6$，因此不转是更好的。
 
 <br>
 
-- **Q23: Aces**
+- **Q24: Aces**
 
   52 cards are randomly distributed to 4 players with each player getting 13 cards. What is the probability that each of them will have an ace?
   
@@ -904,12 +934,12 @@ $$
 
 <br>
 
-- **Q24: Gambler's Ruin Problem**
+- **Q25: Gambler's Ruin Problem**
 
-  A gambler starts with an initial fortune of i dollars. On each successive game, the gambler wins \$1with probability p, 0<p<1, or loses \$1 with probability q=1-p.
-  He will stop if he either accumulates N dollars or loses all his money. What is the probability that he will end up with N dollars?
+  A gambler starts with an initial fortune of $i$ dollars. On each successive game, the gambler wins \$$1$ with probability $p$, $0<p<1$, or loses \$$1$ with probability $q=1-p$.
+  He will stop if he either accumulates $N$ dollars or loses all his money. What is the probability that he will end up with $N$ dollars?
 
-  假设初始为$i$时最终赢（到达$N$）的概率为$P_i$，则它应当满足
+  假设初始为 $i$ 时最终赢（到达 $N$）的概率为 $P_i$，则它应当满足
   $$
   P_i = pP_{i+1} + qP_{i-1},
   $$
@@ -919,25 +949,25 @@ $$
   p(P_{i+1} - P_i) = q(P_i - P_{i-1}), \\
   \Longrightarrow \frac{P_{i+1} - P_i}{P_i - P_{i-1}} = \frac{q}{p},
   $$
-  同时满足边界条件$P_0 = 0, P_N =1$。利用$P_0 = 0$，从$i=1$开始，计算得
+  同时满足边界条件 $P_0 = 0, P_N =1$。利用 $P_0 = 0$，从 $i=1$ 开始，计算得
   $$
   P_2 = (1 + \frac{q}{p})P_1, \\
   P_3 = \left(1 + \frac{q}{p} + \left( \frac{q}{p} \right)^2 \right)P_2,\\
   \cdots \\
   P_i = \sum_{j=1}^i \left(\frac{q}{p}\right)^{j-1}P_1.
   $$
-  同时，利用$P_N=1$，可得
+  同时，利用 $P_N=1$，可得
   $$
   P_N = 1 = \sum_{j=1}^N \left(\frac{q}{p}\right)^{j-1}P_1,
   $$
   这里分情况：
 
-  - 如果$q/p = 1$，此时有$NP_1 = 1, P_1 = 1/N$，
+  - 如果 $q/p = 1$，此时有 $NP_1 = 1, P_1 = 1/N$，
     $$
     P_i = \frac{i}{N};
     $$
 
-  - 如果$q/p \neq 1$，此时有
+  - 如果 $q/p \neq 1$，此时有
     $$
     \frac{1 - (q/p)^N}{1 - q/p}P_1 = 1, \\
     P_i = \frac{1 - (q/p)^i}{1 - q/p} \frac{1 - q/p}{1 - (q/p)^N} = \frac{1-(q/p)^i}{1-(q/p)^N}.
@@ -945,8 +975,8 @@ $$
 
 <br>
 
-- **Q25: Basketball Scores**
-  A basketball player is taking 100 free throws. She scores one point if the ball passes through the hoop and zero point if she misses. She has scored on her first throw and missed on her second. For each of the following throw the probability of her scoring is the fraction of throws she has made so far. For example, if she has scored 23 points after the 40th throw, the probability that she will score in the 41th throw is 23/40. After 100 throws (including the first and the second), what is the probability that she scores exactly 50 baskets?
+- **Q26: Basketball Scores**
+  A basketball player is taking $100$ free throws. She scores one point if the ball passes through the hoop and zero point if she misses. She has scored on her first throw and missed on her second. For each of the following throw the probability of her scoring is the fraction of throws she has made so far. For example, if she has scored $23$ points after the $40$th throw, the probability that she will score in the $41$th throw is $23/40$. After $100$ throws (including the first and the second), what is the probability that she scores exactly $50$ baskets?
 
   首先从最简单的情况开始看。用 $X_3$ 来表示 $3$ 次投球后投中的数量，则有：
   $$
@@ -967,11 +997,9 @@ $$
   P(X_{n+1}=n) = \frac{1}{n-1} \times \frac{n-1}{n} = \frac{1}{n}.
   $$
 
-- 
-
 <br>
 
-- **Q26: Cars on the Road**
+- **Q27: Cars on the Road**
 
   If the probability of observing at least one car on a highway during any 20-minute time interval is 609/625, then what is the probability of observing at least one car during any 5-minute time interval? Assume that the probability of seeing a car at any moment is uniform (constant) for the entire 20 minutes.
 
@@ -981,9 +1009,9 @@ $$
   $$
   因此，最终概率为$3/5$。
 
+<br>
 
-
-- **Q27: Meeting Probability**
+- **Q28: Meeting Probability**
 
   Two bankers each arrive at the station at some random time between 5:00 am and 6:00 am (arrival time for either banker is uniformly distributed). They stay exactly five minutes and then leave. What is the probability they will meet on a given day?
 
@@ -992,11 +1020,9 @@ $$
   \frac{60^2 - 55^2}{60^2} = \frac{23}{144}.
   $$
 
-- 
-
 <br>
 
-- **Q28: Probability Of Triangle**
+- **Q29: Probability Of Triangle**
 
   A stick is cut twice randomly (each cut point follows a uniform distribution on the stick), what is the probability that the 3 segments can form a triangle?
 
@@ -1028,7 +1054,7 @@ $$
 
 <br>
 
-- **Q29: Connecting Noodles**
+- **Q30: Connecting Noodles**
 
   You have $100$ noodles in your soup bowl. Being blindfolded, you are told to take two ends of some noodles (each end on any noodle has the same probability of being chosen) in your bowl and connect them. You continue until there are no free ends. The number of loops formed by the noodles this way is stochastic. Calculate the expected number of circles.
 
@@ -1046,7 +1072,7 @@ $$
 
 <br>
 
-- **Q30: Optimal Hedge Ratio**
+- **Q31: Optimal Hedge Ratio**
 
   You just bought one share of stock A and want to hedge it by shorting stock B. How many shares of B should you short to minimize the variance of the hedged position? Assume that the variance of stock A's return is $\sigma_A^2$; the variance of B's return is $\sigma_B^2$; their correlation coefficient is $\rho$.
 
@@ -1062,7 +1088,7 @@ $$
 
 <br>
 
-- **Q31: Dice Game**
+- **Q32: Dice Game**
 
   Suppose that you roll a dice. For each roll, you are paid the face value. If a roll gives 4, 5 or 6, you can roll the dice again. Once you get 1, 2 or 3, the game stops. What is the expected payoff of this game?
 
@@ -1072,11 +1098,9 @@ $$
   \Longrightarrow \quad EX = 7.
   $$
 
-- 
-
 <br>
 
-- **Q32: Card Game**
+- **Q33: Card Game**
 
   What is the expected number of cards that need to be turned over in a regular 52-card deck in order to see the first ace?
 
@@ -1088,10 +1112,9 @@ $$
 
   推广：有 $m$ 张普通牌，$n$ 张特殊牌，那么抽到第一张特殊牌需要的牌数期望为 $1 + m/(n+1)$。
 
-
 <br>
 
-- **Q33: Sum of Random Variables**
+- **Q34: Sum of Random Variables**
 
   Assume that $X_1, X_2, \cdots,$ and Xn are independent and identically-distributed (IID) random variables with uniform distribution between 0 and 1. What is the probability that $S_n = X_1 + X_2+\cdots+X_n\leq1$?
 
@@ -1117,35 +1140,39 @@ $$
 
 <br>
 
-- **Q34: Coupon Collection**
+- **Q35: Coupon Collection**
 
-  There are N distinct types of coupons in cereal boxes and each type, independent of prior selections, is equally likely to be in a box.
+  There are $N$ distinct types of coupons in cereal boxes and each type, independent of prior selections, is equally likely to be in a box.
 
   1. If a child wants to collect a complete set of coupons with at least one of each type, how many coupons (boxes) on average are needed to make such a complete set?
 
      可以先从 $N=1,N=2$ 入手，有个大概的感觉。
 
-     首先，抽到第一张券时，我们一定有了一个从未收集过的券，因此对收集的券来说，从0种到1种期望为1；
+     首先，抽到第一张券时，我们一定有了一个从未收集过的券，因此对收集的券来说，从 $0$ 种到 $1$ 种期望 $1$；
 
-     在抽第二张券时，此时就变为了一个几何分布，接下来抽的每一次都有 $(N-1) / N$ 的概率抽到不是第一张抽到的券，即将我们的收集增加了一种券。几何分布的期望为发生概率的倒数，即 $N / (N-1)$，因此对收集券来说，从1种到2种期望为 $N / (N-1)$ 。
+     在抽第二张券时，此时就变为了一个几何分布，接下来抽的每一次都有 $(N-1) / N$ 的概率抽到不是第一张抽到的券，即将我们的收集增加了一种券。几何分布的期望为发生概率的倒数，即 $N / (N-1)$，因此对收集券来说，从 $1$ 种到 $2$ 种期望为 $N / (N-1)$ 。
 
      以此类推，把所有期望全部加起来，即为
      $$
      \sum_{k=1}^N \frac{N}{N - k + 1}.
      $$
 
-  2. If the child has collected n coupons, what is the expected number of distinct coupon types?
+  2. If the child has collected $n$ coupons, what is the expected number of distinct coupon types?
 
-     构造事件 $I_k$，如果这 $n$ 个券中包含第 $k$ 张券，则 $I_k = 1$，否则为 $0$。因此有
+     构造事件 $I_k$，如果这 $n$ 个券中包含第 $k$ 张券，则 $I_k = 1$，否则为 $0$。这 $n$ 张券中包含第 $k$ 张券的概率为
      $$
-     E\left( \sum_{i=1}^N I_k \right) = NE(I_k) = N \left( 1 - \left( \frac{N-1}{N} \right)^n \right).
+     1 - \left(1 - \frac{1}{N} \right)^n,
+     $$
+     因此计算得期望
+     $$
+     E\left( \sum_{i=1}^N I_k \right) = NE(I_k) = N \left( 1 - \left(1 - \frac{1}{N} \right)^n \right).
      $$
 
 <br>
 
-- **Q35: Joint Default Probability**
+- **Q36: Joint Default Probability**
 
-  If there is a 50% probability that bond A will default (违约) next year and a 30% probability that bond B will default. What is the range of probability that at least one bond defaults and what is the range of their correlation?
+  If there is a $50\%$ probability that bond A will default (违约) next year and a $30\%$ probability that bond B will default. What is the range of probability that at least one bond defaults and what is the range of their correlation?
 
   注意，这里并没有说明A和B之间的关系（是否不相关）。
 
@@ -1153,7 +1180,7 @@ $$
   $$
   P(A+B) = P(A)+P(B)-P(AB),
   $$
-  其中 $P(AB)$ 取值范围为 $[0, 30\%]$，因此 $P(A+B)$ 的取值范围为 $[50\%, 80\%]$。
+  其中 $P(AB)$ 取值范围为 $[0, 30\%]$（这里用VN图考虑），因此 $P(A+B)$ 的取值范围为 $[50\%, 80\%]$。
 
   分别计算 $A, B$ 的期望和方差：
   $$
@@ -1173,7 +1200,7 @@ $$
 
 <br>
 
-- **Q36: Expected Value of Min and Max**
+- **Q37: Expected Value of Min and Max**
 
   Let $X_1, X_2, \cdots, X_n$ are IID random variables with uniform distribution between 0 and 1. What are the cumulative distribution function, the probability density function and expected value of $Y_n = \min(X_1, X_2, \cdots, X_n)$ and $Z_n = \max(X_1, X_2, \cdots, X_n)$?
 
@@ -1210,7 +1237,7 @@ $$
 
 <br>
 
-- **Q37: Correlation of Min and Max**
+- **Q38: Correlation of Min and Max**
 
   Let $X_1$ and $X_2$ be IID random variables with uniform distribution between 0 and 1, $Y = \min(X_1, X_2)$ and $Z = \max(X_1, X_2)$. What is the probability of $Y\geq y$ given that $Z\leq z$ for any $y, z \in [0, 1]$? What is the correlation of $Y$ and $Z$ ?
 
@@ -1261,7 +1288,7 @@ $$
 
 <br>
 
-- **Q38: Random Ants**
+- **Q39: Random Ants**
 
   $500$ ants are randomly put on a $1$-foot string (independent uniform distribution for each ant between $0$ and $1$). Each ant randomly moves toward one end of the string (equal probability to the left or right) at constant speed of $1$ foot/minute until it falls off at one end of the string. Also assume that the size of the ant is infinitely small. When two ants collide head-on, they both immediately change directions and keep on moving at $1$ foot/min. What is the expected time for all ants to fall off the string?
 
@@ -1280,11 +1307,11 @@ $$
 
 <br>
 
-- **Q39: Random Variables**
+- **Q40: Random Variables**
 
-  There are 3 random variables with same variance, each pair have same correlation coefficient. Calculate the possible range of this correlation.
+  There are $3$ random variables with same variance, each pair have same correlation coefficient. Calculate the possible range of this correlation.
 
-  假设三个随机变量分别为 $X, Y, Z$，方差为 $\sigma^2$，相关系数为 $\rho$，则它们两两之间的协方差为 $\rho\sigma^2$。首先 $-1 \leq \rho \leq 1$，通常判断的话 $\rho$ 可以取1，但是不可以取-1，因为三者之间不可能都满足此消彼长。
+  假设三个随机变量分别为 $X, Y, Z$，方差为 $\sigma^2$，相关系数为 $\rho$，则它们两两之间的协方差为 $\rho\sigma^2$。首先 $-1 \leq \rho \leq 1$，通常判断的话 $\rho$ 可以取 $1$，但是不可以取 $-1$，因为三者之间不可能都满足此消彼长。
 
   构建和事件
   $$
@@ -1294,19 +1321,19 @@ $$
   $$
   Var(X+Y+Z) = 3\sigma^2 + 6\rho\sigma^2 \geq 0, \quad \Longrightarrow \quad \rho \geq -\frac{1}{2}.
   $$
-  这个问题也可以被延拓到n个随机变量的情况。
+  这个问题也可以被延拓到 $n$ 个随机变量的情况。
 
   补充：
 
-  假设三个随机变量 $X_1, X_2, X_3$ 分别满足期望为0方差为1，则构造
+  假设三个随机变量 $X_1, X_2, X_3$ 分别满足期望为 $0$ 方差为 $1$，则构造
   $$
   Y_i = X_i - \frac{1}{3}\sum_j X_j,
   $$
-  此时的 $Y_i$ 之间相关系数即为-1/2。
+  此时的 $Y_i$ 之间相关系数即为 $-1/2$。
 
 <br>
 
-- **Q40: Monte Carlo**
+- **Q41: Monte Carlo**
 
   1. If you know how to generate uncorrelated random numbers, How do you simulate random numbers that have correlation?
      $$
@@ -1393,9 +1420,9 @@ $$
 
 <br>
 
-- **Q41: Min of Exponential Distribution**
+- **Q42: Min of Exponential Distribution**
 
-  You have ten light bulbs. Five have an average life of 100 hours, and the other five have a average life of 200 hours. These light bulbs have a memoryless property in that their current age (measured in how long they have already been on) has no bearing on their future life expectancy. Assuming they are all already on, what is the expected number of hours before the first one burns out?
+  You have ten light bulbs. Five have an average life of $100$ hours, and the other five have a average life of $200$ hours. These light bulbs have a memoryless property in that their current age (measured in how long they have already been on) has no bearing on their future life expectancy. Assuming they are all already on, what is the expected number of hours before the first one burns out?
 
   首先，无记忆性告诉我们只可能是几何分布（离散）和指数分布（连续），因此这里我们的灯泡寿命即满足指数分布。期望为 $100$ 即告诉我们该指数分布的参数为 $\lambda = 1/100$。先说结论：$n$ 个指数分布的最小值依然是指数分布。$Y=\min_i X_i, X_i\sim Exp(\lambda_i),$
   $$
@@ -1413,17 +1440,19 @@ $$
 
   <br>
 
-- **Q42:**
+- **Q43:**
 
-  Given a stick, if randomly cut into 3 pieces, what's the average size of the smallest, of the middle-sized, and of the largest pieces?
+  Given a stick, if randomly cut into $3$ pieces, what's the average size of the smallest, of the middle-sized, and of the largest pieces?
 
-  这题有点复杂
+  这题有点复杂，用动态规划：https://www.zhihu.com/question/507262676/answer/2306725166
 
-  https://www.zhihu.com/question/507262676
+  答案是 $1/9, 5/18, 11/18$
+  
+  如果随机切分成 $n$ 段，最短一段的期望为 $1/n^2$
 
 <br>
 
-- **Q43:**
+- **Q44:**
 
   Consider linear regression of $Y$ on features $X_1, X_2$: Model1 - $(Y,X_1),R^2=0.1$; Model2 - $(Y, X_2),R^2=0.2$; Model3 - $(Y,X_1,X_2)$, calculate the range of $R^2$ of Model3.
 
@@ -1439,11 +1468,11 @@ $$
 
 <br>
 
-- **Q44:**
+- **Q45:**
 
-  9 boys and 7girls sit in a circle, what's the expectation of the number of boy-girl neighbors?
+  $9$ boys and $7$ girls sit in a circle, what's the expectation of the number of boy-girl neighbors?
 
-  构建 $I_k$，当第 $k$ 个人与第 $k-1$ 个人是男女组合时，记为1，否则记为0.
+  构建 $I_k$，当第 $k$ 个人与第 $k-1$ 个人是男女组合时，记为 $1$，否则记为 $0$。
   $$
   E[\sum_{i=1}^{16}I_k] = 16E[I_k] = 16 \times \frac{9\times 7}{\binom{16}{2}}.
   $$
@@ -1600,7 +1629,7 @@ Brownian Motion:
 
 - **Q1: Gambler's Ruin Problem**
 
-  Player M has \$1 and player N has \$2. Each game gives the winner \$1 from the other. As a betterp layer, M wins 2/3 of the games. They play until one of the is bankrupt. What is the probability that M wins?
+  Player M has \$$1$ and player N has \$$2$. Each game gives the winner \$$1$ from the other. As a better player, M wins $2/3$ of the games. They play until one of the is bankrupt. What is the probability that M wins?
 
   直观地，写出M的转移概率矩阵
   $$
@@ -1755,7 +1784,7 @@ Brownian Motion:
 
 - **Q2: Dice Question**
 
-  Two players bet on roll(s) of the total of two standard six-face dice. Player A bets that a sum of 12 will occur first. Player B bets that two consecutive 7s will occur first. The plavers keep rolling the dice and record the sums until one player wins. What is the probability that A wins?
+  Two players bet on roll(s) of the total of two standard six-face dice. Player A bets that a sum of $12$ will occur first. Player B bets that two consecutive $7$s will occur first. The players keep rolling the dice and record the sums until one player wins. What is the probability that A wins?
 
   可以构建类似上题的Markov链。我们只需要4个state，分别是7, 7-7, 12, S，其中S代表起始状态/其他状态，可以得到
   $$
@@ -1792,13 +1821,15 @@ Brownian Motion:
 
   2. Keep flipping a fair coin until either HHH or THH occurs in the sequence. What is the probability that you get an HHH subsequence before THH?
 
+     如果摇到了T，那么要么变成TH，要么变回T自己。这说明，只要我们摇到T，就不可能使得HHH比THH更早摇到了。
+  
      ![](fig/IMG_ADEF9C8AEB38-1.jpeg ':size=30%')
 
 <br>
 
 - **Q4: Drunk Man**
 
-  A drunk man is at the 17th meter of a 100-meter-long bridge. He has a 50% probability of staggering forward or backward one meter each step. What is the probability that he will make it to the end of the bridge (the 100th meter) before the beginning (the 0th meter)? What is the expected number of steps he takes to reach either the beginning or the end of the bridge?
+  A drunk man is at the $17$th meter of a $100$-meter-long bridge. He has a $50\%$ probability of staggering forward or backward one meter each step. What is the probability that he will make it to the end of the bridge (the $100$th meter) before the beginning (the $0$th meter)? What is the expected number of steps he takes to reach either the beginning or the end of the bridge?
 
   以17为原点，未来的位置为 $S_N = \sum_{i=1}^NX_i$。我们有 $S_N$ 与 $S_N^2 - N$ 都是鞅，因此
   $$
@@ -1814,7 +1845,7 @@ Brownian Motion:
 
 - **Q5: Dice Game**
 
-  Suppose that you roll a dice. For each roll, you are paid the face value. If a roll gives 4, 5 or 6, you can roll the dice again. Once you get 1, 2 or 3, the game stops. What is the expected payoff of this game?
+  Suppose that you roll a dice. For each roll, you are paid the face value. If a roll gives $4$, $5$ or $6$, you can roll the dice again. Once you get $1$, $2$ or $3$, the game stops. What is the expected payoff of this game?
 
   这个题前面做过，这里用随机过程的角度求解。
   $$
@@ -1830,11 +1861,11 @@ Brownian Motion:
 
 - **Q6: Ticket Line**
 
-  At a theater ticket office, $2n$ people are waiting to buy tickets. $n$ of them have only \$5 bills and the other $n$ people have only \$10 bills. The ticket seller has no change to start with. If each person buys one \$5 ticket, what is the probability that all people will be able to buy their tickets without having to change positions?
+  At a theater ticket office, $2n$ people are waiting to buy tickets. $n$ of them have only \$$5$ bills and the other $n$ people have only \$$10$ bills. The ticket seller has no change to start with. If each person buys one \$$5$ ticket, what is the probability that all people will be able to buy their tickets without having to change positions?
 
   绿皮书118页
 
-  本质上，一张\$5的bill，就可以解决找给1一张\$10 bill的零钱，因此我们可以建模为，\$5的即+1，\$10的即-1，这样一个随机过程。题目问题即转化为有多少条above x轴的path。
+  本质上，一张\$$5$ 的bill，就可以解决找给一张\$$10$ bill的零钱，因此我们可以建模为，\$$5$ 的即+1，\$$10$ 的即-1，这样一个随机过程。题目问题即转化为有多少条above x轴的path。
 
   如果我们将所有到达过 -1 的路径，if we reflect the path across the line $y=-1$ after a path first reaches -1, for every path that reaches (2n, 0) at step 2n, we have one corresponding reflected path that reaches (2n, -2) at step 2n.
 
@@ -1853,11 +1884,11 @@ Brownian Motion:
 
   Assume that you have a fair coin. What is the expected number of coin tosses to get $n$ heads in a row?
 
-  易得，$E[f(1)]=2, E[f(2)]=6$，前面计算过 $E[f(3)]=14$，因此猜想 $E[f(n)] = 2^{n+1} - 2$。我们考虑马尔科夫链，仅有 $S$（开始）状态、$nH$ 状态和 $(n+1)H$ 状态，那么我们需要 $E[f(n)]$ 步来到达状态 $nH$，再condition on 状态 $nH$，有一半概率走到状态 $(n+1)H$，有一半概率走回状态 $S$ 且此时需要额外的 $E[f(n+1)]$，因此有
+  易得，$E[f_1]=2, E[f_2]=6$，前面计算过 $E[f_3]=14$，因此猜想 $E[f_n] = 2^{n+1} - 2$。我们考虑马尔科夫链，仅有 $S$（开始）状态、$nH$ 状态和 $(n+1)H$ 状态，那么我们需要 $E[f_n]$ 步来到达状态 $nH$，再condition on 状态 $nH$，有一半概率多走 $1$ 步到达状态 $(n+1)H$，有一半概率走回状态 $S$ 且此时需要额外的 $E[f_{n+1}]$，因此有
   $$
-  E[f(n+1)] = E[f(n)]+\frac{1}{2}\times1+\frac{1}{2}\times E[f(n+1)],
+  \mu_S = \left(E[f_n]+1\right) + \frac{1}{2}\mu_S + \frac{1}{2}\mu_{(n+1)H},
   $$
-  即满足我们的通式。
+  其中 $\mu_S = E[f_{n+1}], \ \mu_{(n+1)H}=0$，即满足我们的通式。
 
 <br>
 

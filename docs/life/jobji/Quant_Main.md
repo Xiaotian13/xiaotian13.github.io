@@ -1307,7 +1307,27 @@ $$
 
 <br>
 
-- **Q40: Random Variables**
+### 2.3 补充（非绿皮）
+
+- **Q1: $n$ 个小球放入 $m$ 个盒子**
+
+  1. 球同，盒不同，不能空
+
+     用隔板法，$n$ 个小球构成 $n+1$ 个空隙，由于不能空，要去掉头尾 $2$ 个间隙，即有 $n-1$ 个间隙；
+
+     要插入 $m-1$ 个隔板，因此结果为 $\binom{n-1}{m-1}$
+
+  2. 球同，盒不同，能空
+
+     给每个盒子都装入 $1$ 个球，此时的情况就于上面情况相同，因此结果为 $\binom{n+m-1}{m-1}$
+
+  3. 球不同，盒不同，可以空
+
+     每个球都有 $m$ 种方法，结果为 $m^n$
+
+<br>
+
+- **Q2: Random Variables**
 
   There are $3$ random variables with same variance, each pair have same correlation coefficient. Calculate the possible range of this correlation.
 
@@ -1333,7 +1353,7 @@ $$
 
 <br>
 
-- **Q41: Monte Carlo**
+- **Q3: Monte Carlo**
 
   1. If you know how to generate uncorrelated random numbers, How do you simulate random numbers that have correlation?
      $$
@@ -1420,11 +1440,11 @@ $$
 
 <br>
 
-- **Q42: Min of Exponential Distribution**
+- **Q4: Min of Exponential Distribution**
 
   You have ten light bulbs. Five have an average life of $100$ hours, and the other five have a average life of $200$ hours. These light bulbs have a memoryless property in that their current age (measured in how long they have already been on) has no bearing on their future life expectancy. Assuming they are all already on, what is the expected number of hours before the first one burns out?
 
-  首先，无记忆性告诉我们只可能是几何分布（离散）和指数分布（连续），因此这里我们的灯泡寿命即满足指数分布。期望为 $100$ 即告诉我们该指数分布的参数为 $\lambda = 1/100$。先说结论：$n$ 个指数分布的最小值依然是指数分布。$Y=\min_i X_i, X_i\sim Exp(\lambda_i),$
+  首先，无记忆性，$\forall s, t \geq 0, P(X>s+t|X>t)=P(X>s)$，告诉我们只可能是几何分布（离散）和指数分布（连续），因此这里我们的灯泡寿命即满足指数分布。期望为 $100$ 即告诉我们该指数分布的参数为 $\lambda = 1/100$。先说结论：$n$ 个指数分布的最小值依然是指数分布。$Y=\min_i X_i, X_i\sim Exp(\lambda_i),$
   $$
   p(x) = \lambda e^{-\lambda x}, x\geq0, \\
   P(X \leq x) = 1 - e^{-\lambda x}, x\geq 0,
@@ -1440,11 +1460,11 @@ $$
 
   <br>
 
-- **Q43:**
+- **Q5:**
 
   Given a stick, if randomly cut into $3$ pieces, what's the average size of the smallest, of the middle-sized, and of the largest pieces?
 
-  这题有点复杂，用动态规划：https://www.zhihu.com/question/507262676/answer/2306725166
+  这题有点复杂，用线性规划：https://www.zhihu.com/question/507262676/answer/2306725166
 
   答案是 $1/9, 5/18, 11/18$
   
@@ -1452,7 +1472,7 @@ $$
 
 <br>
 
-- **Q44:**
+- **Q6:**
 
   Consider linear regression of $Y$ on features $X_1, X_2$: Model1 - $(Y,X_1),R^2=0.1$; Model2 - $(Y, X_2),R^2=0.2$; Model3 - $(Y,X_1,X_2)$, calculate the range of $R^2$ of Model3.
 
@@ -1468,7 +1488,7 @@ $$
 
 <br>
 
-- **Q45:**
+- **Q7:**
 
   $9$ boys and $7$ girls sit in a circle, what's the expectation of the number of boy-girl neighbors?
 
@@ -1480,7 +1500,7 @@ $$
 
 <br>
 
-### 2.3 Linear Regression
+### 2.4 Linear Regression
 
 $$
 Y = X\beta + \epsilon.

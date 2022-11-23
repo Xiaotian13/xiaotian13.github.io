@@ -290,11 +290,11 @@
   One hundred prisoners are given the chance to be set free tomorrow. They are all told that each will be given a red or blue hat to wear. Each prisoner can see everyone else's hat but not his own. The hat colors are assigned randomly and once the hats are placed on top of each prisoner's head they cannot communicate with one another in any form, or else they are immediately executed. The prisoners will be called out in random order and the prisoner called out will guess the color of his hat. Each prisoner declares the color of his hat so that everyone else can hear it. If a prisoner guesses correctly the color of his hat, he is set free immediately; otherwise he is executed.
   They are given the night to come up with a strategy among themselves to save as many prisoners as possible. What is the best strategy they can adopt and how many prisoners can they guarantee to save?
 
-  这个问题的关键在于，第一个人可以传递信息给剩下的所有人。如果第一个人看到其余99个人中红帽子是奇数个，那么就猜自己的是红帽子；否则猜蓝帽子。第一个人有一半概率存活，而剩下的所有人都可以通过他的信息推断出自己帽子的颜色。
+  这个问题的关键在于，第一个人可以传递信息给剩下的所有人。如果第一个人看到其余 $99$ 个人中红帽子是奇数个，那么就猜自己的是红帽子；否则猜蓝帽子。第一个人有一半概率存活，而剩下的所有人都可以通过他的信息推断出自己帽子的颜色。
 
-  What if there are 3 possible hat colors: red, green, and blue? What is the best strategy they can adopt and how many prisoners can they guarantee to save?
+  What if there are $3$ possible hat colors: red, green, and blue? What is the best strategy they can adopt and how many prisoners can they guarantee to save?
 
-  其实与上述情况同理。我们做编码，红为0，绿为1，蓝为2，然后全加权乘起来，再算 $s\%3$。如果余0，就猜红，其余同理。第一个人有三分之一概率存活，但对其他人：由于他观测到其他人的分数和满足 $(x+0)\%3, (x+1)\%3, (x+2)\%3$ 都是不同的数字，因此可以推断出自己的颜色。
+  其实与上述情况同理。我们做编码，红为 $0$，绿为 $1$，蓝为 $2$，然后全加权乘起来，再算 $s\%3$。如果余 $0$，就猜红，其余同理。第一个人有三分之一概率存活，但对其他人：由于他观测到其他人的分数和满足 $(x+0)\%3, (x+1)\%3, (x+2)\%3$ 都是不同的数字，因此可以推断出自己的颜色。
 
 <br>
 
@@ -363,6 +363,8 @@
   They are given the night to come up with a strategy. Is there a strategy that they can guarantee that they will be set free?
 
   这题比上面的类似题要难，但解题思路类似。我们依然用 $0, 1, \cdots, 6$ 分别编码七个颜色，因此一定有 $\left(\sum_{i=1}^7x_i\right) \% 7 \in \{0, \cdots, 6\}$。我们使得猜测 $g_i$ 满足 $\left( g_i + \sum_{j\neq i}x_j \right) \%7 = i$，如果 $\forall i, g_i \neq x_i$，那么对每个 $i$，应当都有 $\left( x_i + \sum_{j\neq i}x_j \right) \%7 = \left(\sum_{i=1}^7x_i\right) \% 7 \neq i$，最后得到的加总结论是 $\left(\sum_{i=1}^7x_i\right) \% 7 \notin \{0, \cdots, 6\}$，显然矛盾。因此至少有一个人能够猜对。
+  
+  与上面不同的是，这里我们只能保证至少有一个人猜对；而上面的情况中，除了第一个人外，其他人都可以猜对。
 
 <br>
 
@@ -370,11 +372,11 @@
 
   A couple invited four other couples to join a party (five couples in total), everyone shook hands with people they didn't know. Then, the host asked everyone how many times they've shook hands and they gave all different answers. Assuming no one shook hands with their own partner, how many times did the hostess shake hands in the party?
 
-  总共10个人，一个人不能跟自己握手，不能跟自己的另一半握手（认识的人），因此，剩下9个人的握手次数分别应为从8到0的九个自然数。
+  总共 $10$ 个人，一个人不能跟自己握手，不能跟自己的另一半握手（认识的人），因此，剩下 $9$ 个人的握手次数分别应为从 $8$ 到 $0$ 的九个自然数。
 
-  从0到8对他们依次编号，那么8号除了自己的另一半和自己外，与其他任何人都握了手；因此，0号一定是8号的另一半，不然他不会握手次数为0；
+  从 $0$ 到 $8$ 对他们依次编号，那么 $8$ 号除了自己的另一半和自己外，与其他任何人都握了手；因此，$0$ 号一定是 $8$ 号的另一半，不然他不会握手次数为 $0$；
 
-  同理，得到7号与1号是夫妻，依次类推，主人的另一半握手次数必为4，自己的握手次数也为4。
+  同理，得到 $7$ 号与 $1$ 号是夫妻，依次类推，主人的另一半握手次数必为 $4$，自己的握手次数也为 $4$。
 
 
 
@@ -384,7 +386,7 @@
 
 Number of permutations (order matters) of $n$ things taken $r$ at a time:
 $$
-P(n, r) = \frac{n!}{(n-r)!}
+P(n, r) = \binom{n}{r} \times r! = \frac{n!}{(n-r)!}
 $$
 Number of different permutations of $n$ objects where there are $n_1$ repeated items, $n_2$ repeated items, ...
 $$
@@ -478,7 +480,6 @@ General Rules of Variance and Covariance:
 $$
 Cov\left( \sum_{i=1}^n a_iX_i, \sum_{j=1}^m b_jX_j \right) = \sum_{i=1}^n \sum_{j=1}^m a_ib_jCov(X_i, X_j), \\
 Var\left( \sum_{i=1}^n X_i \right) = \sum_{i=1}^n DX_i + 2 \sum_{j\neq i} Cov(X_i, X_j); \\
-
 Cov(aX_1+bX_2,Y)=Cov(aX_1,Y) + Cov(bX_2,Y) = aCov(X_1, Y) + bCov(X_2, Y).
 $$
 Conditional Expectation and Variance:
@@ -545,25 +546,25 @@ $$
 
   A line of $100$ airline passengers are waiting to board a plane. They each hold a ticket to one of the $100$ seats on that flight. For convenience, let's say that the $n$th passenger in line has a ticket for the seat number $n$.
 
-  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number $100$. What is the probability that you end up in your seat ( i.e. seat #100)?
+  Being drunk, the first person in line picks a random seat ( equally likely for each seat). All of the other passengers are sober, and will go to their proper seats unless it is already occupied; In that case, they will randomly choose a free seat. You're person number 100. What is the probability that you end up in your seat ( i.e. seat #100)?
 
-  可以 by induction，如果只有两个乘客，则被占的概率是$0.5$；如果只有三个乘客，则被占的概率是$\frac{1}{3} + \frac{1}{3}\times\frac{1}{2} = 0.5$；如果只有4个乘客，则被占的概率是$\frac{1}{4} + \frac{1}{4}\times\frac{1}{2} + \frac{1}{4}\times\frac{1}{2} = \frac{1}{2}$；以此类推，概率有$\frac{1}{n} + (n-2)\frac{1}{n}\times\frac{1}{2} = \frac{1}{2}$。
+  可以 by induction，如果只有两个乘客，则被占的概率是 $0.5$；如果只有 $3$ 个乘客，则被占的概率是 $\frac{1}{3} + \frac{1}{3}\times\frac{1}{2} = 0.5$；如果只有 $4$ 个乘客，则被占的概率是$\frac{1}{4} + \frac{1}{4}\times\frac{1}{2} + \frac{1}{4}\times\frac{1}{2} = \frac{1}{2}$；以此类推，概率有 $\frac{1}{n} + (n-2)\frac{1}{n}\times\frac{1}{2} = \frac{1}{2}$。
 
-  考虑全集：\{ #100在#1前被占，#1在#100前被占\}，第一种情况是肯定坐不到正确位置的，第二种情况是肯定能坐到正确位置的。这两种情况的概率是相等的：醉汉选#100还是#1的概率是相等的，如果他选了这其中其他的座位比如#$n$，那么本质上他让第$n$个人变成了醉汉，与第一个人是醉汉时的情况相同。
+  考虑全集：\{#100在#1前被占，#1在#100前被占\}，第一种情况是肯定坐不到正确位置的，第二种情况是肯定能坐到正确位置的。这两种情况的概率是相等的：醉汉选#100还是#1的概率是相等的，如果他选了这其中其他的座位比如#$n$，那么本质上他让第 $n$ 个人变成了醉汉，与第一个人是醉汉时的情况相同。
 
 <br>
 
-- **Q4: N Points on A Circle**
+- **Q4: $N$ Points on A Circle**
 
-  Give N points drawn randomly on the circumference of a circle, what is the probability that they are all within a semicircle?
+  Give $N$ points drawn randomly on the circumference of a circle, what is the probability that they are all within a semicircle?
 
-  先选定点$i$，剩下的$N-1$个点在该点顺时针（clockwise）半球内的概率概率为$\frac{1}{2^{N-1}}$。此时，对其他任意点 $j\neq i$，不能使得除了点 $j$ 外的所有点均在点 $j$ 顺时针半球内。因此，各个事件是mutually exclusive的，总概率为
+  先选定点 $i$，剩下的 $N-1$ 个点在该点顺时针（clockwise）半球内的概率概率为 $\frac{1}{2^{N-1}}$。此时，对其他任意点 $j\neq i$，不能使得除了点 $j$ 外的所有点均在点 $j$ 顺时针半球内。因此，各个事件是mutually exclusive的，总概率为
   $$
   P\left( \bigcup_{i=1}^N E_i \right) = \sum_{i=1}^N P(E_i) = N \times \frac{1}{2^{N-1}},
   $$
   这个结论同样适用于弧$x\leq 1/2$。
   $$
-  \binom{n}{1}\frac{1}{2^{N-1}}
+  \binom{N}{1}\frac{1}{2^{N-1}}
   $$
   https://mathpages.com/home/kmath327/kmath327.htm
 
@@ -573,7 +574,7 @@ $$
 
 - **Q5: Poker Hands**
 
-  Poker is a card game in which each player gets a hand of 5 cards. There are 52 cards in a deck. Each card has a value and belongs to a suit (花色). There are 13 values, 2, 3, 4, 5, 6, 7, 8, 9, 10, J (jack), Q (queen), K (king), A (ace), and four suits,  spade (黑桃), club (梅花), heart (红桃), diamond (方块).
+  Poker is a card game in which each player gets a hand of $5$ cards. There are $52$ cards in a deck. Each card has a value and belongs to a suit (花色). There are $13$ values, 2, 3, 4, 5, 6, 7, 8, 9, 10, J (jack), Q (queen), K (king), A (ace), and four suits,  spade (黑桃), club (梅花), heart (红桃), diamond (方块).
 
   What are the probabilities of getting hands with four-of-a-kind (four of the five cards with the same value)? Hands with a full house (three cards of one value and two cards of another value)? Hands with two pairs?
 
@@ -694,7 +695,7 @@ $$
 
 - **Q10: Birthday Problem**
 
-  How many people do we need in a class to make the probability that two people have the same birthday more than 0.5? (for simplicity, assume 365 days a year)
+  How many people do we need in a class to make the probability that two people have the same birthday more than $0.5$? (for simplicity, assume $365$ days a year)
   $$
   1 - \frac{365\times364\times\cdots\times(365-N+1)}{365^N} > \frac{1}{2},
   $$
@@ -718,9 +719,9 @@ $$
 
 - **Q11: 100th digit**
 
-  What is the 100th digit to the right of the decimal point in the decimal representation of $(1 + \sqrt 2)^{3000}$?
+  What is the $100$th digit to the right of the decimal point in the decimal representation of $(1 + \sqrt 2)^{3000}$?
 
-  关键点在于，according to binomial theorem，$(1+\sqrt2)^{2n} + (1-\sqrt 2)^{2n}$ 将永远是一个整数。而 $(1 - \sqrt2)^{3000} < 10^{-100}$，因此 $(1 + \sqrt 2)^{3000}$ 的第100位一定是9。
+  关键点在于，according to binomial theorem，$(1+\sqrt2)^{2n} + (1-\sqrt 2)^{2n}$ 将永远是一个整数。而 $(1 - \sqrt2)^{3000} < 10^{-100}$，因此 $(1 + \sqrt 2)^{3000}$ 的第100位一定是 $9$。
 
 <br>
 
@@ -752,7 +753,7 @@ $$
   $$
   P(\text{Unfair}|\text{10 heads}) = \frac{P(\text{Unfair}, \text{10 heads})}{P(\text{10 heads})} = \frac{\frac{1}{1000}}{\frac{1}{1000} + \frac{999}{1000}\times\frac{1}{2^{10}}} = \frac{1024}{2023},
   $$
-  约为0.5。
+  约为 $0.5$。
 
 <br>
 
@@ -775,26 +776,26 @@ $$
 
   见绿皮书76页
 
-  第三次扔，跟前两次无关，那么第三次扔的最好（离中心最近）的概率是1/3，所以答案是2/3
+  第三次扔，跟前两次无关，那么第三次扔的最好（离中心最近）的概率是 $1/3$，所以答案是 $2/3$
 
-  扔了三次，第几次是最好的概率都是1/3
+  扔了三次，第几次是最好的概率都是 $1/3$
 
 <br>
 
 - **Q17: Birthday Line**
 
   At a movie theater, a whimsical manager announces that she will give a free ticket to the first person in line whose birthday is the same as someone who has already bought a ticket.
-  You are given the opportunity to choose any position in line. Assuming that your don't know anyone else's birthday and all birthdays are distributed randomly throughout the year (assuming 365 days in a year), what position in line gives you the largest chance of getting the free ticket?
+  You are given the opportunity to choose any position in line. Assuming that your don't know anyone else's birthday and all birthdays are distributed randomly throughout the year (assuming $365$ days in a year), what position in line gives you the largest chance of getting the free ticket?
 
-  前$n-1$个人中，没有重复生日的概率为
+  前 $n-1$ 个人中，没有重复生日的概率为
   $$
   \frac{365\times \cdots \times (365-n+2)}{365^{n-1}},
   $$
-  第$n$个人与前$n-1$个人生日有重合的概率为
+  第 $n$ 个人与前 $n-1$ 个人生日有重合的概率为
   $$
   P(n)= \frac{365\times \cdots \times (365-n+2)}{365^{n-1}} \times \frac{n - 1}{365},
   $$
-  这个概率在$n=20$时最大。
+  这个概率在 $n=20$ 时最大。
 
   （
   $$
@@ -806,7 +807,7 @@ $$
 
 - **Q18: Dice Order**
 
-  We throw 3 dice one by one. What is the probability that we obtain 3 points in strictly increasing order?
+  We throw $3$ dice one by one. What is the probability that we obtain 3 points in strictly increasing order?
 
   三个数字都不一样的概率为
   $$
@@ -824,7 +825,7 @@ $$
   You pick one of the doors and announce it. As soon as you pick the door, Monty opens on of the other two doors that he knows has a goat behind it. Then he gives you the option to either keep your original choice or switch to the third door. Should you switch?
   What is the probability of winning a car if you switch?
 
-  2/3
+  $2/3$
 
 <br>
 
@@ -848,7 +849,7 @@ $$
 
 - **Q21: Candies in A Jar**
 
-  You are taking out candies one by one from a jar that has 10 red candies, 20 blue candies, and 30 green candies in it. What is the probability that there are at least 1 blue candy and 1 green candy left in the jar when you have taken out all the red candies?
+  You are taking out candies one by one from a jar that has $10$ red candies, $20$ blue candies, and $30$ green candies in it. What is the probability that there are at least $1$ blue candy and $1$ green candy left in the jar when you have taken out all the red candies?
 
   这个概率可以转化为，红糖是第一种被拿完的糖的概率。该概率可以分为两部分：拿完糖的顺序为红蓝绿和红绿蓝。
 
@@ -888,7 +889,7 @@ $$
 
 - **Q23: Russian Roulette Series**
 
-  1. Let's play a traditional version of Russian roulette. A single bullet is put into a 6-chamber revolver. The barrel is randomly spun so that each chamber is equally likely to be under the hammer. Two players take turns to pull the trigger - with the gun unfortunately pointing at one's own head - without further spinning until the gun goes off and the person who gets killed loses. If you, one of the players, can choose to go first or second, how will you choose? And what is your probability of loss?
+  1. Let's play a traditional version of Russian roulette. A single bullet is put into a $6$-chamber revolver. The barrel is randomly spun so that each chamber is equally likely to be under the hammer. Two players take turns to pull the trigger - with the gun unfortunately pointing at one's own head - without further spinning until the gun goes off and the person who gets killed loses. If you, one of the players, can choose to go first or second, how will you choose? And what is your probability of loss?
 
      总共有 $6$ 种可能的装子弹方式，这 $6$ 种中，先打后打都有 $3$ 种情况死，因此概率为 $1/2$
 
@@ -916,17 +917,17 @@ $$
 
 - **Q24: Aces**
 
-  52 cards are randomly distributed to 4 players with each player getting 13 cards. What is the probability that each of them will have an ace?
+  $52$ cards are randomly distributed to $4$ players with each player getting $13$ cards. What is the probability that each of them will have an ace?
   
-  52张牌均匀分给4个人，共有
+  $52$ 张牌均匀分给 $4$ 个人，共有
   $$
   \frac{52!}{13!13!13!13!}
   $$
-  种分法（13!代表每个人拿到的13张牌不应该考虑顺序）。再将四张A预先分给4个人，有$4!$种分法，再把剩下48张牌均匀分为4个人，计算得到概率为
+  种分法（$13!$ 代表每个人拿到的 $13$ 张牌不应该考虑顺序）。再将四张A预先分给四个人，有 $4!$ 种分法，再把剩下 $48$ 张牌均匀分给四个人，计算得到概率为
   $$
-  \frac{4!\frac{48!}{12!12!12!12!}}{\frac{52!}{13!13!13!13!}} = \frac{13^4}{52\times51\times50\times49}.
+  \frac{4!\frac{48!}{12!12!12!12!}}{\frac{52!}{13!13!13!13!}} = \frac{4! \times 13^4}{52\times51\times50\times49}.
   $$
-  也可以认为，四张A分配给52个卡槽，现在首先分配好第一张A后，第二张A不与第一张A在同一个13张卡牌的概率是39/51，以此类推。
+  也可以认为，四张A分配给 $52$ 个卡槽，现在首先分配好第一张A后，第二张A不与第一张A在同一个 $13$ 张卡牌的概率是 $39/51$，以此类推。
 
 <br>
 
@@ -972,8 +973,9 @@ $$
 <br>
 
 - **Q26: Basketball Scores**
+  
   A basketball player is taking $100$ free throws. She scores one point if the ball passes through the hoop and zero point if she misses. She has scored on her first throw and missed on her second. For each of the following throw the probability of her scoring is the fraction of throws she has made so far. For example, if she has scored $23$ points after the $40$th throw, the probability that she will score in the $41$th throw is $23/40$. After $100$ throws (including the first and the second), what is the probability that she scores exactly $50$ baskets?
-
+  
   首先从最简单的情况开始看。用 $X_3$ 来表示 $3$ 次投球后投中的数量，则有：
   $$
   P(X_3 = 1) = P(X_3=2) = \frac{1}{2};
@@ -997,9 +999,9 @@ $$
 
 - **Q27: Cars on the Road**
 
-  If the probability of observing at least one car on a highway during any 20-minute time interval is 609/625, then what is the probability of observing at least one car during any 5-minute time interval? Assume that the probability of seeing a car at any moment is uniform (constant) for the entire 20 minutes.
+  If the probability of observing at least one car on a highway during any $20$-minute time interval is $609/625$, then what is the probability of observing at least one car during any $5$-minute time interval? Assume that the probability of seeing a car at any moment is uniform (constant) for the entire $20$ minutes.
 
-  将20分钟区间分成4个不重叠5分钟区间，设任意5分钟区间上没有车出现的概率为$p$，则有
+  将 $20$ 分钟区间分成 $4$ 个不重叠 $5$ 分钟区间，设任意 $5$ 分钟区间上没有车出现的概率为 $p$，则有
   $$
   p^4 = 1 - \frac{609}{625}, \quad \Longrightarrow \quad p = \frac{2}{5}.
   $$
@@ -1020,7 +1022,7 @@ $$
 
 - **Q29: Probability Of Triangle**
 
-  A stick is cut twice randomly (each cut point follows a uniform distribution on the stick), what is the probability that the 3 segments can form a triangle?
+  A stick is cut twice randomly (each cut point follows a uniform distribution on the stick), what is the probability that the $3$ segments can form a triangle?
 
   Without loss of generality, assume the length of stick is 1. 同时假设三条边长为 $x, y, 1 - x - y$，此时它们应当满足 $0<x, y < 1, x+y<1$。该区域面积为$1/2$。
 
@@ -1044,9 +1046,9 @@ $$
   \end{aligned}
   \right.
   $$
-  该区域面积为$1/8$。
+  该区域面积为 $1/8$。
 
-  最终概率即为两区域面积的比值$1/4$。
+  最终概率即为两区域面积的比值 $1/4$。
 
 <br>
 
@@ -1086,7 +1088,7 @@ $$
 
 - **Q32: Dice Game**
 
-  Suppose that you roll a dice. For each roll, you are paid the face value. If a roll gives 4, 5 or 6, you can roll the dice again. Once you get 1, 2 or 3, the game stops. What is the expected payoff of this game?
+  Suppose that you roll a dice. For each roll, you are paid the face value. If a roll gives $4$, $5$ or $6$, you can roll the dice again. Once you get $1$, $2$ or $3$, the game stops. What is the expected payoff of this game?
 
   Condition on the first toss:
   $$
@@ -1098,13 +1100,13 @@ $$
 
 - **Q33: Card Game**
 
-  What is the expected number of cards that need to be turned over in a regular 52-card deck in order to see the first ace?
+  What is the expected number of cards that need to be turned over in a regular $52$-card deck in order to see the first ace?
 
-  假设 $X$ 为抽到第一张A时的抽牌总数，同时构造事件 $I_i, i = 1, \cdots, 48$，如果第 $i$ 张抽到的牌在第一张A前，则 $I_i=1$，否则为0。此时即有
+  假设 $X$ 为抽到第一张A时的抽牌总数，同时构造事件 $I_i, i = 1, \cdots, 48$，如果第 $i$ 张抽到的牌在第一张A前，则 $I_i=1$，否则为 $0$。此时即有
   $$
   E[X] = E\left[ \sum_{i=1}^{48} I_i \right] + 1.
   $$
-  同时，任意一张牌在第一张A前的概率都是相等的，且为1/5（想象四张A为四个锚点，然后将任一张牌插到这四个锚点构成的5个位置里），因此有 $E[I_i] = 1 \times \frac{1}{5} = 1/5$。$E[X] = 48/5 + 1 = 10.6$。
+  同时，任意一张牌在第一张A前的概率都是相等的，且为 $1/5$（想象四张A为四个锚点，然后将任一张牌插到这四个锚点构成的 $5$ 个位置里），因此有 $E[I_i] = 1 \times \frac{1}{5} = 1/5$。$E[X] = 48/5 + 1 = 10.6$。
 
   推广：有 $m$ 张普通牌，$n$ 张特殊牌，那么抽到第一张特殊牌需要的牌数期望为 $1 + m/(n+1)$。
 
@@ -1112,7 +1114,7 @@ $$
 
 - **Q34: Sum of Random Variables**
 
-  Assume that $X_1, X_2, \cdots,$ and Xn are independent and identically-distributed (IID) random variables with uniform distribution between 0 and 1. What is the probability that $S_n = X_1 + X_2+\cdots+X_n\leq1$?
+  Assume that $X_1, X_2, \cdots,$ and $X_n$ are independent and identically-distributed (IID) random variables with uniform distribution between $0$ and $1$. What is the probability that $S_n = X_1 + X_2+\cdots+X_n\leq1$?
 
   如果$n=2$，易得$1/2$；
 
@@ -1198,7 +1200,7 @@ $$
 
 - **Q37: Expected Value of Min and Max**
 
-  Let $X_1, X_2, \cdots, X_n$ are IID random variables with uniform distribution between 0 and 1. What are the cumulative distribution function, the probability density function and expected value of $Y_n = \min(X_1, X_2, \cdots, X_n)$ and $Z_n = \max(X_1, X_2, \cdots, X_n)$?
+  Let $X_1, X_2, \cdots, X_n$ are IID random variables with uniform distribution between $0$ and $1$. What are the cumulative distribution function, the probability density function and expected value of $Y_n = \min(X_1, X_2, \cdots, X_n)$ and $Z_n = \max(X_1, X_2, \cdots, X_n)$?
 
   次序统计量的关键即为：
   $$
@@ -1235,7 +1237,7 @@ $$
 
 - **Q38: Correlation of Min and Max**
 
-  Let $X_1$ and $X_2$ be IID random variables with uniform distribution between 0 and 1, $Y = \min(X_1, X_2)$ and $Z = \max(X_1, X_2)$. What is the probability of $Y\geq y$ given that $Z\leq z$ for any $y, z \in [0, 1]$? What is the correlation of $Y$ and $Z$ ?
+  Let $X_1$ and $X_2$ be IID random variables with uniform distribution between $0$ and $1$, $Y = \min(X_1, X_2)$ and $Z = \max(X_1, X_2)$. What is the probability of $Y\geq y$ given that $Z\leq z$ for any $y, z \in [0, 1]$? What is the correlation of $Y$ and $Z$ ?
 
   A figure is worth a thousand words. 画图即可得
   $$
@@ -1657,7 +1659,7 @@ Brownian Motion:
   \end{matrix}\right].
   $$
 
-  我们用 $p_0$ 表示 $M$ 从\$0开始玩赢的概率，以此类推。显然，$p_0=0,p_3=1$。有
+  我们用 $p_0$ 表示 $M$ 从\$$0$ 开始玩赢的概率，以此类推。显然，$p_0=0,p_3=1$。有
   $$
   p_1 = \frac{1}{3}p_0 + \frac{2}{3}p_2, \\
   p_2 = \frac{1}{3}p_1 + \frac{2}{3}p_3, \\

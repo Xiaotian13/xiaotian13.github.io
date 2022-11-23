@@ -3,18 +3,11 @@
 
 ## BOOK: how to answer the 64 toughest interview questions
 
-```pdf
-life/jobji/64interviewquestions.pdf
-```
-
-
+<embed src=life/jobji/64interviewquestions.pdf height=800px; width=100%>
 
 ## Current resume
 
-```pdf
-life/jobji/Resume_Xiaotian_Li Quant.pdf
-```
-
+<embed src=life/jobji/Resume_Xiaotian_Li_Quant.pdf height=800px; width=100%>
 
 
 ## Questions

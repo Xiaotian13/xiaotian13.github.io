@@ -56,9 +56,17 @@ During my time at UChicago, besides from my major courses, I also take courses i
 let me stop here if you have any question
 
 Then let's talk about the professional experience.
-At April this year, I joined a school project that was held by UChicago and DRW holdings, and it's mainly about trading volumes prediction. In that case, as one of the math major student in the group, I designed  a mechanism of outliers' regularization to  improve prediction, and I also take responsibility of 80% coding work. This project lasted for two months.
+At April this year, I joined a **school project** that was held by UChicago and DRW holdings, and it's mainly about trading volumes prediction. In that case, as one of the math major student in the group, I designed  a mechanism of outliers' regularization to  improve prediction, and I also take responsibility of 80% coding work. This project lasted for two months.
 
-Speaking of internship, I have a four month internship of investment assistant at spectrum investments. It's a small fund, so I get to directly work with the boss. In that experience, I mainly did two things. The first one is I constructed a CTA trading strategy, I inplemented and backtested the strategy on Chinese future market. I also used my math knowledge to optimize the parameters, thus improved the performance. The second thing is I introduced and built the pipeline of generating daily products for sale and also for internal usage, which is highly efficient compared to before. I got appraised a lot for doing this.
+**Course**:
+
+- future spread trading, stop loss; cointegration, bid and ask prices
+- quantile trading, price to earnings, return on investment
+- carry trade, An FX carry strategy borrows in a (low-interest-rate) currency and lends in another currency (with high interest rates). This is typically arranged via a cross-currency swap    because the portfolio is "carrying" risk
+- high frequency trading, mid price; If the trade price equals the best bid, mark as seller-initiated, If the trade price equals the best offer, mark as buyer-initiated; trade flow, regress on return
+- CAPM
+
+Speaking of **internship**, I have a four month internship of investment assistant at spectrum investments. It's a small fund, so I get to directly work with the boss. In that experience, I mainly did two things. The first one is I constructed a CTA trading strategy, I inplemented and backtested the strategy on Chinese future market. I also used my math knowledge to optimize the parameters, thus improved the performance. The second thing is I introduced and built the pipeline of generating daily products for sale and also for internal usage, which is highly efficient compared to before. I got appraised a lot for doing this.
 In my undergraduate, I have done for more than three school projects, and I only listed related one here, which is about interest rate prediction.
 
 let me stop 

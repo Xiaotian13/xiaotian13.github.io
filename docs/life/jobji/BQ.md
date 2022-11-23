@@ -64,6 +64,7 @@ let me stop here if you have any question
 
 Then let's talk about the professional experience.
 At April this year, I joined a school project that was held by UChicago and DRW holdings, and it's mainly about trading volumes prediction. In that case, as one of the math major student in the group, I designed  a mechanism of outliers' regularization to  improve prediction, and I also take responsibility of 80% coding work. This project lasted for two months.
+
 Speaking of internship, I have a four month internship of investment assistant at spectrum investments. It's a small fund, so I get to directly work with the boss. In that experience, I mainly did two things. The first one is I constructed a CTA trading strategy, I inplemented and backtested the strategy on Chinese future market. I also used my math knowledge to optimize the parameters, thus improved the performance. The second thing is I introduced and built the pipeline of generating daily products for sale and also for internal usage, which is highly efficient compared to before. I got appraised a lot for doing this.
 In my undergraduate, I have done for more than three school projects, and I only listed related one here, which is about interest rate prediction.
 

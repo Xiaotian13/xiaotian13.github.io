@@ -596,65 +596,61 @@ $$
   \#(N) = \#(N-1) + \#(N-2),
   $$
   有 $\#(1) = 1, \quad \#(2) = 2, \quad \#(3) = \#(2) + \#(1) = 3, \quad \#(4) = \#(3) + \#(2) = 5$，以此类推。
-
+  
   这其实就是Fibonacci sequence，求其通项：
   $$
-  \left[\begin{matrix}
+  \left[ \begin{matrix}
   F_n \\ F_{n+1}
-  \end{matrix}\right]
-  =
-  \left[\begin{matrix}
+  \end{matrix} \right] =
+  \left[ \begin{matrix}
   0 & 1 \\ 1 & 1
-  \end{matrix}\right]
-  \left[\begin{matrix}
+  \end{matrix} \right]
+  \left[ \begin{matrix}
   F_{n-1} \\ F_n
-  \end{matrix}\right], \text{ let } M = 
-  \left[\begin{matrix}
+  \end{matrix} \right], \text{ let } M = 
+  \left[ \begin{matrix}
   0 & 1 \\ 1 & 1
-  \end{matrix}\right],
+  \end{matrix} \right],
   $$
-  对$M$做特征值分解，即可得到通式。
+  对 $M$ 做特征值分解，
   
   $$
   M = P\Lambda P^{-1}, \quad \left[\begin{matrix}
   F_n \\ F_{n+1}
-  \end{matrix}\right]
-  =
+  \end{matrix}\right] =
   M^n
   \left[\begin{matrix}
   F_0 \\ F_1
-  \end{matrix}\right]
-  =
+  \end{matrix}\right] =
   P\Lambda^nP^{-1}\left[\begin{matrix}
   0 \\ 1
   \end{matrix}\right],
   $$
-
-$$
-\begin{aligned}
-F_{n}=
-\left[\begin{matrix}
-1 & 0
-\end{matrix}\right]
-\left[\begin{matrix}
-1 & 1 \\
-\frac{1+\sqrt{5}}{2} & \frac{1-\sqrt{5}}{2}
-\end{matrix}\right]
-\left[\begin{matrix}
-\left(\frac{1+\sqrt{5}}{2}\right)^{n} & 0 \\
-0 & \left(\frac{1-\sqrt{5}}{2}\right)^{n}
-\end{matrix}\right]
-\left[\begin{matrix}
-\frac{\sqrt{5}-1}{2 \sqrt{5}} & \frac{1}{\sqrt{5}} \\
-\frac{\sqrt{5}+1}{2 \sqrt{5}} & -\frac{1}{\sqrt{5}}
-\end{matrix}\right]
-\left[\begin{matrix}
-0 \\
-1
-\end{matrix}\right]
-= \frac{\left(\frac{1+\sqrt{5}}{2}\right)^{n}-\left(\frac{1-\sqrt{5}}{2}\right)^{n}}{\sqrt{5}}
-\end{aligned}.
-$$
+  
+  即可得到通式。
+  $$
+  F_{n}=
+  \left[\begin{matrix}
+  1 & 0
+  \end{matrix}\right]
+  \left[\begin{matrix}
+  1 & 1 \\
+  \frac{1+\sqrt{5}}{2} & \frac{1-\sqrt{5}}{2}
+  \end{matrix}\right]
+  \left[\begin{matrix}
+  \left(\frac{1+\sqrt{5}}{2}\right)^{n} & 0 \\
+  0 & \left(\frac{1-\sqrt{5}}{2}\right)^{n}
+  \end{matrix}\right]
+  \left[\begin{matrix}
+  \frac{\sqrt{5}-1}{2 \sqrt{5}} & \frac{1}{\sqrt{5}} \\
+  \frac{\sqrt{5}+1}{2 \sqrt{5}} & -\frac{1}{\sqrt{5}}
+  \end{matrix}\right]
+  \left[\begin{matrix}
+  0 \\
+  1
+  \end{matrix}\right] = \frac{\left(\frac{1+\sqrt{5}}{2}\right)^{n}-\left(\frac{1-\sqrt{5}}{2}\right)^{n}}{\sqrt{5}}
+  .
+  $$
 
 <br>
 

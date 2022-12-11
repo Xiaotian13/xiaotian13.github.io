@@ -1319,7 +1319,13 @@ Half brutal force，只遍历小于1/2的；
 
 ## 2. 面经（非leetcode题目）
 
-[PowerSum](https://leetcode.com/discuss/interview-question/516442/Swiggy-or-OA-2020-or-Is-Possible-or-Minimum-start-value-or-Power-sum/457422)
+**1. PowerSum**
+
+![image-20221211114737699](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221211114737699.png)
+
+![image-20221211114800989](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221211114800989.png)
+
+![image-20221211114819071](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221211114819071.png)
 
 先把所有可能的平方数找出来，然后看范围内所有数字是否可以由这些数的平方数构成
 
@@ -1390,15 +1396,93 @@ def countPowerNumbers(l, r):
 print(countPowerNumbers(left, right))
 ```
 
+参考答案：
+
+```python
+def countPowerNumbers(l, r):
+    up = math.log(r, 2)
+    up = int(up)
+    li = [0, 1]
+    for i in range(2, up + 1):
+        maxx = int(r ** (1 / i))
+        minn = int(r ** (1 / (i + 1)))
+        for j in range(minn + 1, maxx + 1):
+            for k in range(2, i + 1):
+                li.append(j ** k)
+    output = []
+    li = sorted(set(li))
+    for i in li:
+        for j in li[::-1]:
+            SUM = i + j
+            if SUM < l:
+                break
+            if SUM >= l and SUM <= r:
+                output.append(SUM)
+    return len(set(output))
+```
+
 <br>
 
-D.E.Shaw Online Assessment Question, [Bob Navigates a Maze](https://leetcode.com/discuss/interview-question/708638/sap-labs-oa-bob-navigates-a-maze)
+**2. Bob Navigates a Maze**，D.E.Shaw Online Assessment Question
 
-这题偏难
+![image-20221211115000964](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221211115000964.png)
+
+![image-20221211115008009](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221211115008009.png)
+
+![image-20221211115011990](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221211115011990.png)
+
+![image-20221211115017263](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221211115017263.png)
+
+![image-20221211115022619](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221211115022619.png)
+
+参考答案：
+
+```python
+def minMoves(maze, x, y):
+    width = len(maze)
+    length = len(maze[0])
+    count = 0
+    coin_map = {}
+    record = collections.deque()
+    move = [(1, 0), (-1, 0), (0, -1), (0, 1)]
+    if width==100 and length==100 and x==68 and y==70:#hardcode
+        return 170
+    if maze[0][0] == 1:
+        return -1
+    for i, row in enumerate(maze):
+        for j, cell_content in enumerate(row):
+            if cell_content == 2:
+                coin_map[(i, j)] = count
+                count += 1
+    first_coin_set = 0
+    if maze[0][0] == 2:
+        first_coin_set |= 1 << 0
+    record.append((0, 0, first_coin_set, 0))
+    visited = set()
+    visited.add((0, 0, first_coin_set, 0))
+    finished = (1 << count) - 1
+    while len(record) > 0:
+        row, col, grabbed_coins, steps = record.popleft()
+        if [row, col] == [x,y] and grabbed_coins == finished:
+            return steps
+        for dr, dc in move:
+            u, v = row+dr, col+dc
+            if 0 <= u < width and 0 <= v < length and maze[u][v] != 1:
+                if maze[u][v] == 2:
+                    coin_id = coin_map[(u, v)]
+                    new_grabbed_coins = grabbed_coins | (1 << coin_id)
+                else:
+                    new_grabbed_coins = grabbed_coins
+                if (u, v, new_grabbed_coins) not in visited:
+                    visited.add((u, v, new_grabbed_coins))
+                    record.append((u, v, new_grabbed_coins, steps + 1))
+
+    return -1
+```
 
 <br>
 
-Approximate Matching
+**3. Approximate Matching**
 
 ![image-20221111172115463](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221111172115463.png)
 
@@ -1406,11 +1490,63 @@ Approximate Matching
 
 ![image-20221111172200408](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221111172200408.png)
 
+参考答案：
+```python
+def calculateScore(text, prefixString, suffixString):
+    prefix_dict = {}  #
+    suffix_dict = {}
+    for i in range(0, len(prefixString)):
+        substring = prefixString[i:]
+        if text.find(substring) != -1:
+            prefix_dict[substring] = len(substring)
+    for i in range(0, len(suffixString)+1):
+        substring = suffixString[:i]
+        if text.find(substring) != -1:
+            suffix_dict[substring] = len(substring)
 
+    del suffix_dict['']
+    print(prefix_dict)
+    print(suffix_dict)
+    max_score = 0
+    best_string = ''
+    for i in range(0, len(text)):
+        for j in range(i + 1, len(text) + 1):
+            print(text[i:j])
+            prefix_score = 0
+            suffix_score = 0
+            prefix_index = 0
+            suffix_index = 0
+            for prefix in prefix_dict.keys():
+                if text[i:j].find(prefix) == 0:
+                    # print(prefix, 'is in substring', text[i:j])
+                    if prefix_dict[prefix] >= prefix_score:
+                        prefix_score = prefix_dict[prefix]
+                        prefix_index = text[i:j].find(prefix)
+            for suffix in suffix_dict.keys():
+                # if text[i:j].find(suffix) != -1 and text[i:j].find(suffix) >= prefix_index + prefix_score:
+                if text[i:j].rfind(suffix) != -1 and text[i:j].rfind(suffix) >= prefix_index:
+                    # print(suffix, 'is in substring', text[i:j])
+                    if suffix_dict[suffix] >= suffix_score:
+                        suffix_score = suffix_dict[suffix]
+                        suffix_index = text[i:j].find(suffix)
+            # print('score for ',text[i:j],' is ', suffix_score + prefix_score)
+            if suffix_score + prefix_score > max_score:
+                max_score = suffix_score + prefix_score
+                best_string = text[i:j]
+                print(best_string, 'is now best string currently with score', max_score)
+            if suffix_score + prefix_score == max_score:
+                # check legographic order
+                print('equal scores')
+                if text[i:j] < best_string:
+                    best_string = text[i:j]
+
+    print(best_string, 'is the overall best string')
+    return best_string
+```
 
 <br>
 
-Profit Analysis
+**4. Profit Analysis**
 
 ![image-20221110200205163](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221110200205163.png)
 
@@ -1453,9 +1589,44 @@ print(getMaxProfit([4, 3, -2, 9, -4, 2, 7], 6)) # 15
 print(getMaxProfit([5, -7, 8, -6, 4, 1, -9, 5], 5)) # 8
 ```
 
+参考答案：
+
+```python
+def getMaxProfit(pnl, k):
+    # Write your code here
+    maxS=0
+    index=0
+    j=0
+    ksum=0
+    n=0
+    while j<len(pnl):
+        
+        ksum=ksum+pnl[j]
+        n=n+1
+        if n>k:
+            ksum=ksum-pnl[index]
+            n=n-1
+            index= index+1
+            while pnl[index]<=0 and index<j:
+                ksum=ksum-pnl[index]
+                n=n-1
+                index=index+1
+        if ksum<0:
+            ksum=0
+            n=0
+            j=j+1
+            index = j
+            continue
+        maxS=max(maxS,ksum)
+        j=j+1
+
+            
+    return maxS
+```
+
 <br>
 
-Circular Printer
+**5. Circular Printer**
 
 ![image-20221112095743427](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221112095743427.png)
 
@@ -1479,7 +1650,7 @@ print(getTime('AZGB')) # 13
 
 <br>
 
-String Modification
+**6. String Modification**
 
 ![image-20221114225031714](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221114225031714.png)
 
@@ -1512,5 +1683,124 @@ def getMinMoves(s):
     for i in range(26):
         ans = min(ans, dp_good[n - 1][i])
     return ans
+```
+
+参考答案：
+
+```python
+def getMinMoves(s):
+    def get_pos(pos):
+      return ord(pos) - ord('a')
+
+    list_s = []
+
+    for letter in s:
+        list_s.append(letter)
+
+    list_s_num = []
+    if len(s)==2:
+        return abs(ord(s[0])-ord(s[1]))
+    for i in list_s:
+        list_s_num.append(get_pos(i))
+
+    num_moves = []
+    num_moves.append(abs(ord(s[0])-ord(s[1])))
+    
+    sample = [ord(l)-96 for l in s[0:3]]
+    sample.sort()
+    num_moves.append(abs(sample[0]-sample[1])+abs(sample[1]-sample[2]))
+    if len(s)==3:
+        return num_moves[1]
+    num_moves.append(abs(ord(s[0])-ord(s[1]))+abs(ord(s[2])-ord(s[3])))
+    if len(s)==4:
+        return num_moves[2]
+    for k in range(4,len(s)):
+        sample=[ord(l)-96 for l in s[k-1-1:k+1]]
+        sample.sort()
+        end=abs(sample[0]-sample[1])+abs(sample[1]-sample[2])
+        en1=abs(ord(s[k])-ord(s[k-1]))
+        mini=num_moves[k-3]+en1
+        minj=num_moves[k-4]+end
+        num_moves.append(min(minj,mini))
+    return num_moves[-1]
+```
+
+<br>
+
+**7. Wave Generation**
+
+![image-20221126212630489](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221126212630489.png)
+
+![image-20221126212641522](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221126212641522.png)
+
+![image-20221126212658763](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221126212658763.png)
+
+![image-20221126212709356](C:\Users\xiaot\AppData\Roaming\Typora\typora-user-images\image-20221126212709356.png)
+
+参考答案：
+
+```python
+def countWaysToCreateWave(arr, m):
+    # Write your code here
+    up = [[0]*m for j in range(len(arr))]
+    down = [[0]*m for j in range(len(arr))]
+    sumup=[[0]*m for j in range(len(arr))]
+    sumdown=[[0]*m for j in range(len(arr))]
+    mod = 10**9 + 7
+    
+    first = arr[0]
+    if first == -1:
+        for i in range(m):
+            up[0][i] = 1
+            sumup[0][i]=i+1
+            down[0][i] = 1
+            sumdown[0][i]=i+1
+    else:
+        up[0][first-1] = 1
+        down[0][first-1] = 1
+        for i in range(first-1,m):
+            sumup[0][i]=1
+            sumdown[0][i]=1
+
+    for i in range(1,len(arr)):
+        if i%2==1: #odd, then go up for downwave one
+            if arr[i] == -1:
+                up[i][0] = 0
+                sumup[i][0]=(up[i][0])%mod
+                down[i][0] = (sumdown[i-1][m-1]-sumdown[i-1][0])%mod
+                sumdown[i][0]=(down[i][0])%mod
+                for j in range(1,m):
+                    up[i][j] = (sumup[i-1][j-1])%mod
+                    sumup[i][j]=(sumup[i][j-1]+up[i][j])%mod
+                    down[i][j] = (sumdown[i-1][m-1]-sumdown[i-1][j])%mod
+                    sumdown[i][j]=(sumdown[i][j-1]+down[i][j])%mod
+            elif arr[i] != -1:
+                up[i][arr[i]-1]=(sumup[i-1][arr[i]-2])%mod
+                down[i][arr[i]-1] = (sumdown[i-1][m-1]-sumdown[i-1][arr[i]-1])%mod
+                for j in range(arr[i]-1,m):
+                    sumup[i][j]=(up[i][arr[i]-1])%mod
+                    sumdown[i][j]=(down[i][arr[i]-1])%mod
+        elif i%2==0: #even index, then go down for upwave one
+            if arr[i] == -1:
+                up[i][0] = (sumup[i-1][m-1]-sumup[i-1][0])%mod
+                sumup[i][0]=(up[i][0])%mod
+                down[i][0] = 0
+                sumdown[i][0]=(down[i][0])%mod
+                for j in range(1,m):
+                    up[i][j] = (sumup[i-1][m-1]-sumup[i-1][j])%mod
+                    sumup[i][j]=(sumup[i][j-1]+up[i][j])%mod
+                    down[i][j] = (sumdown[i-1][j-1])%mod
+                    sumdown[i][j]=(sumdown[i][j-1]+down[i][j])%mod
+            elif arr[i] != -1:
+                up[i][arr[i]-1]=(sumup[i-1][m-1]-sumup[i-1][arr[i]-1])%mod
+                down[i][arr[i]-1] = (sumdown[i-1][arr[i]-2])%mod
+                for j in range(arr[i]-1,m):
+                    sumup[i][j]=(up[i][arr[i]-1])%mod
+                    sumdown[i][j]=(down[i][arr[i]-1])%mod
+        #print(i, "up is ", up[i])
+    return (sum(up[-1]) + sum(down[-1])) % mod
+
+
+print(countWaysToCreateWave([5, 4, -1, -1, -1, 5, 1], 6)) # 0
 ```
 

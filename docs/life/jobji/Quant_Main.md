@@ -15,9 +15,9 @@
 
 - **Q2: Screwy Pirates**
 
-  5 pirates looted a chest full of 100 gold coins. Being a bunch of democratic pirates, they agree on the following method to divide the loot:
+  $5$ pirates looted a chest full of $100$ gold coins. Being a bunch of democratic pirates, they agree on the following method to divide the loot:
   A. The most senior pirate will propose a distribution of the coins.
-  B. All pirates, including the most senior one, will then vote. If at least 50% of the pirates (3 in this case) accept the proposal, the gold is divided as proposed. If not, the most senior pirate will be fed to shark and the process starts over with the next most senior pirate...
+  B. All pirates, including the most senior one, will then vote. If at least $50\%$ of the pirates ($3$ in this case) accept the proposal, the gold is divided as proposed. If not, the most senior pirate will be fed to shark and the process starts over with the next most senior pirate...
   C. The process is repeated until the plan is approved.
 
   You can assume all pirates are perfectly rational:
@@ -27,15 +27,15 @@
 
   How will the gold coin be divided in the end?
 
-  首先，从最简单的情况，2个人开始。我们假设按照年幼顺序排名，1<2<3<4<5
+  首先，从最简单的情况，$2$ 个人开始。我们假设按照年幼顺序排名，1<2<3<4<5
 
-  对于2个人的情况，2号海盗可以把所有金币全分配给自己，因为他投自己一票的话就可以通过提案。
+  对于 $2$ 个人的情况，2号海盗可以把所有金币全分配给自己，因为他投自己一票的话就可以通过提案。
 
-  对3个人而言，如果3号的提案不通过，那么就会回到2个人的情况，此时1号就一块钱都拿不到。但是如果3号一块钱都不分给1号，1号就会愿意杀死3号，因此3号必须要给1号一块钱，这样1号和3号两票，就可以通过提案。
+  对 $3$ 个人而言，如果3号的提案不通过，那么就会回到 $2$ 个人的情况，此时1号就一块钱都拿不到。但是如果3号一块钱都不分给1号，1号就会愿意杀死3号，因此3号必须要给1号一块钱，这样1号和3号两票，就可以通过提案。
 
-  对4个人而言，如果4号的提案不通过，那么就会回到3个人的情况，而3个人时2号是拿不到金币的。因此，4号只需要给2号提供一块钱，得到2号的一票，就可以通过分给自己99枚金币的提案。
+  对 $4$ 个人而言，如果4号的提案不通过，那么就会回到 $3$ 个人的情况，而 $3$ 个人时2号是拿不到金币的。因此，4号只需要给2号提供一块钱，得到2号的一票，就可以通过分给自己99枚金币的提案。
 
-  对5个人而言，如果5号的提案不通过，在4个人的情况时，1号和3号都没有钱拿，因此5号只需要分别给他们提供一枚金币，就可以通过提案。
+  对 $5$ 个人而言，如果5号的提案不通过，在 $4$ 个人的情况时，1号和3号都没有钱拿，因此5号只需要分别给他们提供一枚金币，就可以通过提案。
 
   | 1号  | 2号  | 3号  | 4号  | 5号  |
   | :--: | :--: | :--: | :--: | :--: |
@@ -48,25 +48,25 @@
 
 - **Q3: Tiger and Sheep**
 
-  100 tigers and 1 sheep are put on a magic island that only has grass. Tigers can eat grass, but they would rather eat sheep. Assume:
+  $100$ tigers and $1$ sheep are put on a magic island that only has grass. Tigers can eat grass, but they would rather eat sheep. Assume:
   A. Each time only one tiger can eat one sheep, and that tiger itself will become a sheep after it eats the sheep.
   B. All tigers are smart and perfectly rational and they want to survive.
   So will the sheep be eaten?
 
   还是先从最简单的情况入手。
 
-  如果只有2只老虎，那么只要有只老虎吃了羊，它就会变成羊，就会被另一只老虎吃掉，因此它不会这么做。所以在这种情况中，羊不会被吃。
+  如果只有 $2$ 只老虎，那么只要有只老虎吃了羊，它就会变成羊，就会被另一只老虎吃掉，因此它不会这么做。所以在这种情况中，羊不会被吃。
 
-  如果只有3只老虎，那么如果有老虎吃了羊，就变成了上面那种情况，因此它变成羊后不会被吃掉。所以在这种情况中，羊会被吃。
+  如果只有 $3$ 只老虎，那么如果有老虎吃了羊，就变成了上面那种情况，因此它变成羊后不会被吃掉。所以在这种情况中，羊会被吃。
 
-  以此类推，如果我们有100只老虎，则羊不会被吃。
+  以此类推，如果我们有 $100$ 只老虎，则羊不会被吃。
 
 <br>
 
 - **Q4: River Crossing**
 
-   Four people, A, B, C and D need to get across a river. The only way to cross the river is by an old bridge, which holds at most 2 people at a time. Being dark, they can't cross the bridge without a torch, of which they only have one. So each pair can only walk at the speed of the slower person. They need to get all of them across to the other side as quickly as possible. A is the slowest and takes 10 minutes to cross; B takes 5 minutes; C
-  takes 2 minutes; and D takes 1 minute. What is the minimum time to get all of them across to the other side?
+   Four people, A, B, C and D need to get across a river. The only way to cross the river is by an old bridge, which holds at most $2$ people at a time. Being dark, they can't cross the bridge without a torch, of which they only have one. So each pair can only walk at the speed of the slower person. They need to get all of them across to the other side as quickly as possible. A is the slowest and takes $10$ minutes to cross; B takes $5$ minutes; C
+  takes $2$ minutes; and D takes $1$ minute. What is the minimum time to get all of them across to the other side?
 
   关键在于，A和B两个时间最长的要一起过去，并且不能是第一次，因为这样二者就会有一个要折返。
 
@@ -93,7 +93,7 @@
 
 - **Q6: Card Game**
 
-  A casino offers a card game using a normal deck of 52 cards. The rule is that you turn over two cards each time. For each pair, if both are black, they go to the dealer's pile; if both are red, they go to your pile; if one black and one red, they are discarded. The process is repeated until you two go through all 52 cards. If you have more cards in your pile, you win $100; otherwise (including ties) you get nothing. The casino allows you to negotiate the price you want to pay for the game. How much would you be willing to pay to play this game?
+  A casino offers a card game using a normal deck of $52$ cards. The rule is that you turn over two cards each time. For each pair, if both are black, they go to the dealer's pile; if both are red, they go to your pile; if one black and one red, they are discarded. The process is repeated until you two go through all $52$ cards. If you have more cards in your pile, you win \$$100$; otherwise (including ties) you get nothing. The casino allows you to negotiate the price you want to pay for the game. How much would you be willing to pay to play this game?
 
   如果翻开是一黑一红，那么我们和庄家相当于都没有拿到牌，剩下卡堆里的黑牌和红牌的个数依然是相同的。因此，无论如何，最后我们手里的牌的数目都跟庄家相同，都是庄家赢。
 
@@ -101,7 +101,7 @@
 
 - **Q7: Burning Ropes**
   
-  You have 2 ropes, each of which takes 1h to burn. But either one has different densities at different points, so there's no guarantee of consistency in the time it takes different sections within the rope to burn. How do you use these two ropes to measure 45 min? 
+  You have $2$ ropes, each of which takes $1$h to burn. But either one has different densities at different points, so there's no guarantee of consistency in the time it takes different sections within the rope to burn. How do you use these two ropes to measure $45$ min? 
   
   1根绳子要1h才能烧完，如果我们两头都点燃的话，1根绳子就只需要30分钟就能烧完。因此，我们同时把一根绳子的两头点燃，再把另一根绳子点燃，这样当一根绳子烧完时，刚好过了30分钟，此时再把另一根没烧完的绳子另一头也点燃，那么另一根绳子就会在15分钟内烧完，就是45分钟。
 
@@ -109,7 +109,7 @@
 
 - **Q8: Defective Ball**
 
-  You have 12 identical balls. One of the balls is heavier OR lighter than the rest (you don't know which). Using just a balance that can show you which side of the tray is heavier, how can you determine which ball is the defective one with 3 measurements?
+  You have $12$ identical balls. One of the balls is heavier OR lighter than the rest (you don't know which). Using just a balance that can show you which side of the tray is heavier, how can you determine which ball is the defective one with $3$ measurements?
   
   关键点在于将所有球分为3组，而不是2组，因为称了的2组可以反映出剩下1组球的信息。
   
@@ -121,17 +121,17 @@
 
 - **Q9: Trailing Zeros**
 
-  How many trailing zeros are there in 100! (factorial of 100)?
+  How many trailing zeros are there in $100!$ (factorial of $100$)?
 
-  问trailing zeros，其实就是问100!里有多少组 $10 = 2 \times 5$ 的因子。显然，包含因子为2的数字要多于包含因子为5的数字，因此，100!的trailing zeros数目就等于100!里分解出5的因子的个数。
+  问trailing zeros，其实就是问 $100!$ 里有多少组 $10 = 2 \times 5$ 的因子。显然，包含因子为 $2$ 的数字要多于包含因子为 $5$ 的数字，因此，$100!$ 的trailing zeros数目就等于 $100!$ 里分解出 $5$ 的因子的个数。
 
-  $100, 95, \cdots, 5$，共有20个包含因子5的数字。其中，$100, 75, 50, 25$，包含两个因子5，因此再+4，最后得到 $20+4 = 24$。
+  $100, 95, \cdots, 5$，共有 $20$ 个包含因子 $5$ 的数字。其中，$100, 75, 50, 25$，包含两个因子 $5$，因此再+4，最后得到 $20+4 = 24$。
 
 <br>
 
 - **Q10: Horse Race**
 
-  There are 25 horses, each of which runs at a constant speed that is different from the other horses'. Since the track only has 5 lanes, each race can have at most 5 horses. If you need to find the 3 fastest horses, what is the minimum number of races needed to identify them?
+  There are $25$ horses, each of which runs at a constant speed that is different from the other horses. Since the track only has $5$ lanes, each race can have at most $5$ horses. If you need to find the $3$ fastest horses, what is the minimum number of races needed to identify them?
 
   ![](fig/IMG_7F1D52AD72AB-1.jpeg ':size=80%')
 
@@ -169,11 +169,11 @@
 
 - **Q14: Last Ball**
 
-  A bag has 20 blue balls and 14 red balls. Each time you randomly take two balls out. (Assume each ball in the bag has equal probability of being taken.) You do not put these two balls back. Instead:
+  A bag has $20$ blue balls and $14$ red balls. Each time you randomly take two balls out. (Assume each ball in the bag has equal probability of being taken.) You do not put these two balls back. Instead:
   A. If both balls have the same color, you add a blue ball to the bag;
   B. If they have different colors, you add a red ball to the bag.
 
-  Assume that you have an unlimited supply of blue and red balls, if you keep on repeating this process, what will be the color of the last ball left in the bag? What if the bags has 20 blue balls and 13 red balls instead?
+  Assume that you have an unlimited supply of blue and red balls, if you keep on repeating this process, what will be the color of the last ball left in the bag? What if the bags has $20$ blue balls and $13$ red balls instead?
 
   画出所有可能结果：
   $$
@@ -242,7 +242,7 @@
 
 - **Q20: Missing Integers**
 
-  Suppose we have 98 distinct integers from 1 to 100. What is a good way to find out the two missing integers (within $[1, 100]$) ?
+  Suppose we have $98$ distinct integers from $1$ to $100$. What is a good way to find out the two missing integers (within $[1, 100]$) ?
 
   （这题什么鬼 如果能做求和为啥不直接遍历一遍搜出来）
   $$
@@ -255,15 +255,15 @@
 
 - **Q21: Counterfeit coins**
 
-  There are 10 bags with 100 identical coins in each bag. In all bags but one, each coin weighs 10 grams. However, all the coins in the counterfeit bag weigh either 9 or 11 grams. Can you find the counterfeit bag in only one weighing, using a digital scale that tells the exact weight?
+  There are $10$ bags with $100$ identical coins in each bag. In all bags but one, each coin weighs $10$ grams. However, all the coins in the counterfeit bag weigh either $9$ or $11$ grams. Can you find the counterfeit bag in only one weighing, using a digital scale that tells the exact weight?
 
-  从第一个袋子中抽1个硬币，从第二个袋子中抽2个硬币，以此类推。如果都是平衡的硬币，则最后总重应该为550，少/多 多少即第几个袋子有问题。
+  从第一个袋子中抽 $1$ 个硬币，从第二个袋子中抽 $2$ 个硬币，以此类推。如果都是平衡的硬币，则最后总重应该为 $550$，少/多 多少即第几个袋子有问题。
 
 <br>
 
 - **Q22: Glass Balls**
 
-  You are holding two glass balls in a 100-story building. If a ball is thrown out of the window, it will not break if the floor number is less than X, and it will always break if the floor number is equal or greater than X. You would like to determine X. What is the strategy that will minimize the number of drops for the worst case scenario?
+  You are holding two glass balls in a $100$-story building. If a ball is thrown out of the window, it will not break if the floor number is less than $X$, and it will always break if the floor number is equal or greater than $X$. You would like to determine $X$. What is the strategy that will minimize the number of drops for the worst case scenario?
 
   这一问可以被等价转化为：限定只能扔球 $N$ 次，最多我们可以探索几层楼？
 
@@ -273,7 +273,7 @@
 
   如果 $N$ 的情况没有碎，我们还可以地毯式向上试 $N-1$ 次，因此我们下一个球从 $N + (N-1)$ 层楼开始丢，如果碎了，我们就从 $N+1$ 层开始向上地毯式丢球；
 
-  以此类推，我们最多可以探测出 $N(N+1)/2$ 层楼。取 $N=14$ 时，这个数字大于100，因此使用这个策略，最多探测14次。
+  以此类推，我们最多可以探测出 $N(N+1)/2$ 层楼。取 $N=14$ 时，这个数字大于 $100$，因此使用这个策略，最多探测 $14$ 次。
 
 <br>
 
@@ -339,7 +339,7 @@
 
 - **Q28: Race Track**
 
-  Suppose that you are on a one-way circular race track. There are N gas cans randomly placed on different locations of the track and the total sum of the gas in these cans is enough for your car to run exactly one circle. Assume that your car and you can pick up the gas cans along the way to fill in your gas tank. Can you always choose a starting position on the track so that you can complete the entire circle?
+  Suppose that you are on a one-way circular race track. There are $N$ gas cans randomly placed on different locations of the track and the total sum of the gas in these cans is enough for your car to run exactly one circle. Assume that your car and you can pick up the gas cans along the way to fill in your gas tank. Can you always choose a starting position on the track so that you can complete the entire circle?
 
   先考虑 $N=1,2$ 的情况，显然是可以的。我们用 $x$ 来表示间隔距离，$y$ 来表示存储点的油量，那么一定有 $x_1+x_2 = 1, y_1+y_2 =1$。由于不可能存在 $x_1<y_1, x_2<y_2$ 的情况，因此 $x_1\geq y_1$ 与 $x_2\geq y_2$ 中至少有一个成立。无论哪个成立，都可以让我们完成绕圈。
 
@@ -520,7 +520,7 @@ $$
 
 - **Q2: Card Game**
 
-  A casino offers a simple card game. There are 52 cards in a deck with 4 cards for each value 2, 3, 4, ..., J (jack), Q (queen), K (king), A (ace). Each time the cards are thoroughly shuffled (so each card has equal probability of being selected. You pick up a card from the deck and the dealer picks another one without replacement. If you have a larger number, you win; if the numbers are equal or yours is smaller, the house wins - as in all other casinos, the hours always has better odds of winning. What is your probability of winning?
+  A casino offers a simple card game. There are $52$ cards in a deck with $4$ cards for each value 2, 3, 4, ..., J (jack), Q (queen), K (king), A (ace). Each time the cards are thoroughly shuffled (so each card has equal probability of being selected. You pick up a card from the deck and the dealer picks another one without replacement. If you have a larger number, you win; if the numbers are equal or yours is smaller, the house wins - as in all other casinos, the hours always has better odds of winning. What is your probability of winning?
 
   首先计算
   $$
@@ -677,15 +677,15 @@ $$
 
 - **Q9: Application Letters**
 
-  You're sending job applications to 5 firms: Morgan Stanley, Goldman Sachs, JP Morgan, UBS and Merrill Lynch. You have 5 envelopes on the table neatly typed with names and addresses of people at these 5 firms. You even have 5 cover letters personalized to each of these firms. Your 3-year-old tried to be helpful and stuffed each cover letter into each of the envelopes for you. Unfortunately she randomly put letters into envelopes without realizing that the letters are personalized. What is the probability that all 5 cover letters are mailed to the wrong firms?
+  You're sending job applications to $5$ firms: Morgan Stanley, Goldman Sachs, JP Morgan, UBS and Merrill Lynch. You have $5$ envelopes on the table neatly typed with names and addresses of people at these 5 firms. You even have $5$ cover letters personalized to each of these firms. Your 3-year-old tried to be helpful and stuffed each cover letter into each of the envelopes for you. Unfortunately she randomly put letters into envelopes without realizing that the letters are personalized. What is the probability that all $5$ cover letters are mailed to the wrong firms?
 
-  首先，如果只有两张牌，那么全错只有1种情况；
+  首先，如果只有两张牌，那么全错只有 $1$ 种情况；
 
-  如果只有三张牌，那么全错只有2种情况；
+  如果只有三张牌，那么全错只有 $2$ 种情况；
 
-  如果只有四张牌，总共有$4\times 3\times 2=24$种排列，只有一张牌是对的共有$\binom{4}{1} \times 2=8$种情况，只有两张牌是对的共有$\binom{4}{2}\times 1=6$种情况，全对有1种情况，加起来就是15种情况，因此全错只有$24 - 15=9$种情况；
+  如果只有四张牌，总共有 $4\times 3\times 2=24$ 种排列，只有一张牌是对的共有 $\binom{4}{1} \times 2=8$ 种情况，只有两张牌是对的共有 $\binom{4}{2}\times 1=6$ 种情况，全对有 $1$ 种情况，加起来就是 $15$ 种情况，因此全错只有 $24 - 15=9$ 种情况；
 
-  对于题目，我们只有五张牌，总共有$5\times4\times3\times2=120$种排列，那么只有一张牌是对的共有$\binom{5}{1}\times 9=45$种情况，只有两张牌是对的共有$\binom{5}{2}\times 2=20$种情况，只有三张牌是对的共有$\binom{5}{3}\times 1=10$种情况，全对只有1种情况，因此全错只有$120 - 45 - 20 - 10 - 1=44$种情况，概率即为
+  对于题目，我们只有五张牌，总共有 $5\times4\times3\times2=120$ 种排列，那么只有一张牌是对的共有 $\binom{5}{1}\times 9=45$ 种情况，只有两张牌是对的共有 $\binom{5}{2}\times 2=20$ 种情况，只有三张牌是对的共有 $\binom{5}{3}\times 1=10$ 种情况，全对只有 $1$ 种情况，因此全错只有 $120 - 45 - 20 - 10 - 1=44$ 种情况，概率即为
   $$
   \frac{44}{120} = \frac{11}{30} \left( =\frac{1}{2!} - \frac{1}{3!} + \frac{1}{4!} - \frac{1}{5!} \right).
   $$
@@ -749,7 +749,7 @@ $$
 
 - **Q14: Unfair Coins**
 
-  You are given 1000 coins. Among them, 1 coin has heads on both sides. The other 999 coins are fair coins. You randomly choose a coin and toss it 10 times. Each time, the coin turns up heads. What is the probability that the coin you choose is the unfair one?
+  You are given $1000$ coins. Among them, $1$ coin has heads on both sides. The other $999$ coins are fair coins. You randomly choose a coin and toss it 10 times. Each time, the coin turns up heads. What is the probability that the coin you choose is the unfair one?
   $$
   P(\text{Unfair}|\text{10 heads}) = \frac{P(\text{Unfair}, \text{10 heads})}{P(\text{10 heads})} = \frac{\frac{1}{1000}}{\frac{1}{1000} + \frac{999}{1000}\times\frac{1}{2^{10}}} = \frac{1024}{2023},
   $$
@@ -821,7 +821,7 @@ $$
 
 - **Q19: Monty Hall problem**
 
-  Monty Hall problem is a probability puzzle based on an old American show "Let's make a deal". The problem is named after the show's host. Suppose you are on the show now, and you are given the choice of 3 doors. Behind one door is a car; behind the other two are goats. You don't know ahead of time what is behind each of the doors.
+  Monty Hall problem is a probability puzzle based on an old American show "Let's make a deal". The problem is named after the show's host. Suppose you are on the show now, and you are given the choice of $3$ doors. Behind one door is a car; behind the other two are goats. You don't know ahead of time what is behind each of the doors.
   You pick one of the doors and announce it. As soon as you pick the door, Monty opens on of the other two doors that he knows has a goat behind it. Then he gives you the option to either keep your original choice or switch to the third door. Should you switch?
   What is the probability of winning a car if you switch?
 
@@ -1495,6 +1495,18 @@ $$
   E[\sum_{i=1}^{16}I_k] = 16E[I_k] = 16 \times \frac{9\times 7}{\binom{16}{2}}.
   $$
   
+
+<br>
+
+- 
+
+<br>
+
+- **Q :**
+
+  50个瓶子，有一个有毒，每个嘴尝到毒后一小时会死，限定一个小时，问最少要多少张嘴才能确定
+
+  二进制编码
 
 <br>
 

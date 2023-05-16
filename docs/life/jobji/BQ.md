@@ -10,6 +10,8 @@
 <embed src=life/jobji/Resume_Xiaotian_Li_Quant.pdf height=800px; width=100%>
 
 
+<embed src=life/jobji/品种基本信息.xlsx height=800px; width=100%>
+
 ## Questions
 
 ### 1. 介绍

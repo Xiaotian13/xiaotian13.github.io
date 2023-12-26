@@ -35,13 +35,14 @@
 
 ``` json
 {
-    "python.defaultInterpreterPath": "C:\\Users\\xiaotian13\\anaconda3\\python.exe",
-    "python.linting.enabled": false,
-    "editor.fontSize": 14,
+    "python.defaultInterpreterPath": "C:\\D\\file\\miniconda3\\envs\\quant-main\\python.exe",
+    "editor.fontSize": 18,
     "editor.renderControlCharacters": true,
     "editor.renderWhitespace": "all",
     "editor.tabSize": 4,
-    "editor.fontFamily": "微软雅黑, 'Courier New', monospace",
+    "editor.fontFamily": "'Microsoft YaHei', 'Courier New', monospace",
+    "terminal.integrated.fontFamily": "monospace",
+    "workbench.tree.enableStickyScroll": true
 }
 ```
 

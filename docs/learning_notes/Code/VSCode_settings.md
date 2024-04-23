@@ -42,7 +42,8 @@
     "editor.tabSize": 4,
     "editor.fontFamily": "'Microsoft YaHei', 'Courier New', monospace",
     "terminal.integrated.fontFamily": "monospace",
-    "workbench.tree.enableStickyScroll": true
+    "workbench.tree.enableStickyScroll": true,
+    "notebook.lineNumbers": "on",
 }
 ```
 

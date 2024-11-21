@@ -4,7 +4,7 @@
 
 > launch.json
 
-``` json
+```json
 {
     // 使用 IntelliSense 了解相关属性。 
     // 悬停以查看现有属性的描述。
@@ -13,17 +13,17 @@
     "configurations": [
         {
             "name": "Python: 当前文件",
-            "type": "python",
+            "type": "debugpy",
             "request": "launch",
             "program": "${file}",
             "console": "internalConsole",
-            
+
             "python": "C:\\Users\\xiaotian13\\anaconda3\\python.exe",
             "cwd": "${workspaceRoot}",
             "env": {},
             "envFile": "${workspaceRoot}/.env",
             "stopOnEntry": false, //是否在第一条语句时程序停止，下面的这个选项都一样
-            
+
         }
     ]
 }
@@ -33,7 +33,7 @@
 
 > settings.json
 
-``` json
+```json
 {
     "python.defaultInterpreterPath": "C:\\D\\file\\miniconda3\\envs\\quant-main\\python.exe",
     "editor.fontSize": 18,
@@ -51,7 +51,7 @@
 
 > tasks.json
 
-``` json
+```json
 {
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
@@ -65,4 +65,3 @@
     ]
 }
 ```
-
